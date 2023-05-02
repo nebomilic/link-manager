@@ -6,11 +6,19 @@ import { DiscoveredCollectionsComponent } from './pages/discovered-collections/d
 import { LoginComponent } from './pages/login/login.component'
 import { MyCollectionsComponent } from './pages/my-collections/my-collections.component'
 import { SettingsComponent } from './pages/settings/settings.component'
+import { CollectionDetailsComponent } from './shared/components/collection-details/collection-details.component'
 
 const routes: Routes = [
     { path: 'login', component: LoginComponent },
     { path: 'discover', component: DiscoverComponent },
-    { path: 'my-collections', component: MyCollectionsComponent },
+    {
+        path: 'my-collections',
+        component: MyCollectionsComponent,
+    },
+    {
+        path: 'my-collections/:id',
+        component: CollectionDetailsComponent,
+    },
     {
         path: 'discovered-collections',
         component: DiscoveredCollectionsComponent,

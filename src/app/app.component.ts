@@ -7,7 +7,8 @@ const privateRoutes = [
     '/activity',
     '/settings',
 ]
-const isPrivateRoute = (route: string) => privateRoutes.includes(route)
+const isPrivateRoute = (route: string) =>
+    privateRoutes.some((privateRoute) => route.includes(privateRoute))
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
@@ -20,6 +21,8 @@ export class AppComponent implements OnInit {
     isPrivateRoute = false
 
     ngOnInit() {
+        // TODO: just a mock implementation to differentiate between private and public routes
+        // This will be removed once we have real authentication in place
         this.router.events.subscribe((e) => {
             if (e instanceof NavigationEnd) {
                 this.isPrivateRoute = isPrivateRoute(e.url)

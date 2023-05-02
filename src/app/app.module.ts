@@ -10,6 +10,7 @@ import { DiscoveredCollectionsComponent } from './pages/discovered-collections/d
 import { ActivityComponent } from './pages/activity/activity.component'
 import { SettingsComponent } from './pages/settings/settings.component'
 import { PageFrameComponent } from './shared/components/page-frame/page-frame.component'
+import { CollectionDetailsComponent } from './shared/components/collection-details/collection-details.component'
 
 @NgModule({
     declarations: [
@@ -21,6 +22,7 @@ import { PageFrameComponent } from './shared/components/page-frame/page-frame.co
         ActivityComponent,
         SettingsComponent,
         PageFrameComponent,
+        CollectionDetailsComponent,
     ],
     imports: [BrowserModule, AppRoutingModule],
     providers: [],

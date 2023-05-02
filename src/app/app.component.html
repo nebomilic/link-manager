@@ -1,2 +1,4 @@
-<app-page-frame *ngIf="isPrivateRoute"></app-page-frame>
-<router-outlet *ngIf="!isPrivateRoute"></router-outlet>
+<div style="margin: auto; width: 50%">
+  <app-page-frame *ngIf="isPrivateRoute"></app-page-frame>
+  <router-outlet *ngIf="!isPrivateRoute"></router-outlet>
+</div>

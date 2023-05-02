@@ -1,1 +1,9 @@
-<p>my-collections works!</p>
+<h2>This is a list of my collections</h2>
+<ul style="width: 100%; overflow: hidden">
+    <li *ngFor="let collection of myCollections" style="padding: 5px">
+        <a routerLink="{{collection.id}}">
+            <div>{{collection.title}}</div>
+        </a>
+        <div style="color: gray; ">{{collection.description}}</div>
+    </li>
+</ul>

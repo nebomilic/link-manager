@@ -1,0 +1,12 @@
+<div *ngIf="selectedCollection">
+ <a routerLink="/my-collections">back to my collections</a>
+<h2>{{selectedCollection.title}}</h2>
+<p>{{selectedCollection.description}}</p>
+<ul>
+    <li *ngFor="let url of selectedCollection.links">
+        <a href="{{url}}" target="_blank">{{url}}</a>
+    </li>
+</ul>
+
+</div>
+<p *ngIf="!selectedCollection">Nothing to see here 🤷</p>

@@ -1,9 +1,11 @@
-<div>
+<div style="background-color:#efefef; border-radius: 10px; display:flex; padding: 5px; overflow:hidden">
     <ul>
         <li><a routerLink="my-collections">My collections</a></li>
         <li><a routerLink="discovered-collections">Discovered collections</a></li>
         <li><a routerLink="activity">Activity</a></li>
         <li><a routerLink="settings">Settings</a></li>
   </ul>
-  <router-outlet></router-outlet>
+  <div style="width: 100%">
+    <router-outlet></router-outlet>
+  </div>
 </div>
