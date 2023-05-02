@@ -17,6 +17,7 @@ const routes: Routes = [
     },
     { path: 'activity', component: ActivityComponent },
     { path: 'settings', component: SettingsComponent },
+    { path: '', redirectTo: '/login', pathMatch: 'full' },
 ]
 
 @NgModule({
