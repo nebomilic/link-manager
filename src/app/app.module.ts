@@ -10,7 +10,8 @@ import { DiscoveredCollectionsComponent } from './pages/discovered-collections/d
 import { ActivityComponent } from './pages/activity/activity.component'
 import { SettingsComponent } from './pages/settings/settings.component'
 import { PageFrameComponent } from './shared/components/page-frame/page-frame.component'
-import { CollectionDetailsComponent } from './shared/components/collection-details/collection-details.component'
+import { CollectionDetailsComponent } from './shared/components/collection-details/collection-details.component';
+import { CollectionListComponent } from './shared/components/collection-list/collection-list.component'
 
 @NgModule({
     declarations: [
@@ -23,6 +24,7 @@ import { CollectionDetailsComponent } from './shared/components/collection-detai
         SettingsComponent,
         PageFrameComponent,
         CollectionDetailsComponent,
+        CollectionListComponent,
     ],
     imports: [BrowserModule, AppRoutingModule],
     providers: [],

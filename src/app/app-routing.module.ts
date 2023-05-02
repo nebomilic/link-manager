@@ -23,6 +23,10 @@ const routes: Routes = [
         path: 'discovered-collections',
         component: DiscoveredCollectionsComponent,
     },
+    {
+        path: 'discovered-collections/:id',
+        component: CollectionDetailsComponent,
+    },
     { path: 'activity', component: ActivityComponent },
     { path: 'settings', component: SettingsComponent },
     { path: '', redirectTo: '/login', pathMatch: 'full' },

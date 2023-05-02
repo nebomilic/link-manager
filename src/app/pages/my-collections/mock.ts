@@ -1,4 +1,4 @@
-export const MOCK_COLLECTIONS = [
+export const MOCK_MY_COLLECTIONS = [
     {
         id: '1',
         title: 'Social media websites',
@@ -37,6 +37,48 @@ export const MOCK_COLLECTIONS = [
             'https://www.udemy.com',
             'https://www.coursera.com',
             'https://www.edx.com',
+        ],
+    },
+]
+
+export const MOCK_DISCOVERED_COLLECTIONS = [
+    {
+        id: '1',
+        title: 'Online entertainment websites',
+        description: 'This is a collection of entertainment websites',
+        shared: false,
+        views: 0,
+        likes: 0,
+        links: [
+            'https://www.netflix.com',
+            'https://www.hulu.com',
+            'https://www.disneyplus.com',
+        ],
+    },
+    {
+        id: '2',
+        title: 'Online games websites',
+        description: 'This is a collection of games websites',
+        shared: false,
+        views: 0,
+        likes: 0,
+        links: [
+            'https://www.miniclip.com',
+            'https://www.pogo.com',
+            'https://www.kongregate.com',
+        ],
+    },
+    {
+        id: '3',
+        title: 'Online fashion websites',
+        description: 'This is a collection of fashion websites',
+        shared: false,
+        views: 0,
+        likes: 0,
+        links: [
+            'https://www.asos.com',
+            'https://www.zara.com',
+            'https://www.hm.com',
         ],
     },
 ]

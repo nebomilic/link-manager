@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
-import { MOCK_COLLECTIONS } from 'src/app/pages/my-collections/mock'
+import {
+    MOCK_DISCOVERED_COLLECTIONS,
+    MOCK_MY_COLLECTIONS,
+} from 'src/app/pages/my-collections/mock'
 import { Collection } from 'src/app/types'
 
 @Component({
@@ -16,9 +19,11 @@ export class CollectionDetailsComponent implements OnInit {
         this.route.params.subscribe((params) => {
             const selectedCollectionId = params['id']
             if (selectedCollectionId) {
-                const selectedCollection = MOCK_COLLECTIONS.find(
-                    (collection) => collection.id === selectedCollectionId
-                )
+                // TODO: this hack needs to be fixed asap, maybe through a service?
+                const selectedCollection = [
+                    ...MOCK_DISCOVERED_COLLECTIONS,
+                    ...MOCK_MY_COLLECTIONS,
+                ].find((collection) => collection.id === selectedCollectionId)
                 if (selectedCollection) {
                     this.selectedCollection = selectedCollection
                     return
