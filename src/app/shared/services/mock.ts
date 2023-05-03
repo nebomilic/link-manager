@@ -1,4 +1,6 @@
-export const MOCK_MY_COLLECTIONS = [
+import { Collection } from 'src/app/types'
+
+export const MOCK_MY_COLLECTIONS: Collection[] = [
     {
         id: '1',
         title: 'Social media websites',
@@ -41,7 +43,7 @@ export const MOCK_MY_COLLECTIONS = [
     },
 ]
 
-export const MOCK_DISCOVERED_COLLECTIONS = [
+export const MOCK_DISCOVERED_COLLECTIONS: Collection[] = [
     {
         id: '1',
         title: 'Online entertainment websites',
