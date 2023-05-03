@@ -6,6 +6,7 @@ const privateRoutes = [
     '/discovered-collections',
     '/activity',
     '/settings',
+    '/new-collection',
 ]
 const isPrivateRoute = (route: string) =>
     privateRoutes.some((privateRoute) => route.includes(privateRoute))

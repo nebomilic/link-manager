@@ -19,7 +19,6 @@ export class CollectionDetailsComponent implements OnInit {
         this.route.params.subscribe((params) => {
             const selectedCollectionId = params['id']
             if (selectedCollectionId) {
-                // TODO: this hack needs to be fixed asap, maybe through a service?
                 const selectedCollection = this.collectionService
                     .getCollections()
                     .find(
@@ -33,9 +32,4 @@ export class CollectionDetailsComponent implements OnInit {
             this.selectedCollection = null
         })
     }
-
-    // NOTE: Why no workie?
-    // ngOnDestroy() {
-    //     this.route.params.unsubscribe()
-    // }
 }
