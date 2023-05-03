@@ -1,7 +1,7 @@
 <h2>Create new collection</h2>
 <form [formGroup]="newCollectionForm" (ngSubmit)="save()">
     <div style="display:flex; flex-direction: column; margin-bottom: 10px">
-        <span>Title:</span>
+        <span>Title (mandatory):</span>
         <input formControlName="title" type="text" size="10" required/>
         <span *ngIf="saveAttempt && title && title.errors?.['required']"
                style="color: red">New collections must contain title ☝️ </span>
