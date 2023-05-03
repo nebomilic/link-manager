@@ -11,6 +11,7 @@ export class CollectionListComponent implements OnChanges {
     constructor(private collectionService: CollectionService) {}
 
     @Input() type: 'my' | 'discovered' = 'my'
+    @Input() editable = false
     collections: Collection[] = []
 
     ngOnChanges(changes: { [propKey: string]: SimpleChange }) {
@@ -20,5 +21,9 @@ export class CollectionListComponent implements OnChanges {
                     ? this.collectionService.getMyCollections()
                     : this.collectionService.getDiscoveredCollections()
         }
+    }
+
+    deleteCollection(id: string) {
+        this.collectionService.deleteCollection(id)
     }
 }

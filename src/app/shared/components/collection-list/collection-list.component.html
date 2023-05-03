@@ -1,8 +1,22 @@
-<ul style="width: 100%; overflow: hidden">
-    <li *ngFor="let collection of collections" style="padding: 5px">
-        <a routerLink="{{collection.id}}">
-            <div>{{collection.title}}</div>
-        </a>
-        <div style="color: gray; ">{{collection.description}}</div>
-    </li>
-</ul>
+<div>
+    <ul style="width: 100%;list-style-type: none">
+        <li *ngFor="let collection of collections" style="padding: 5px">
+            <div>
+                <a routerLink="{{collection.id}}">
+                    <div>{{collection.title}}</div>
+                </a>
+                <div *ngIf="editable">
+                    <a routerLink="{{collection.id}}">
+                        edit
+                    </a>
+                    |
+                    <a href="javascript:void(0)" (click)="deleteCollection(collection.id)">
+                        delete
+                    </a>
+                </div>
+
+            </div>
+            <div style="color: gray; ">{{collection.description}}</div>
+        </li>
+    </ul>
+</div>

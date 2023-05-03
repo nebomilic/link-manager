@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'
+import { Component } from '@angular/core'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
 
 @Component({
@@ -6,7 +6,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms'
     templateUrl: './new-collection.component.html',
     styleUrls: ['./new-collection.component.scss'],
 })
-export class NewCollectionComponent implements OnInit {
+export class NewCollectionComponent {
     newCollectionForm = new FormGroup({
         title: new FormControl('', Validators.required),
         description: new FormControl(''),
@@ -22,19 +22,9 @@ export class NewCollectionComponent implements OnInit {
 
     save() {
         this.saveAttempt = true
-        // if (this.newCollectionForm.valid) {
-        this.preview = JSON.stringify(this.newCollectionForm.value)
-        console.log(this.preview)
-        // }
-    }
-
-    ngOnInit(): void {
-        //     if (this.newCollectionControl.get('title')) {
-        //         this.newCollectionControl
-        //             .get('title')
-        //             .valueChanges.subscribe((value) => {
-        //                 console.log(value)
-        //             })
-        //     }
+        if (this.newCollectionForm.valid) {
+            this.preview = JSON.stringify(this.newCollectionForm.value)
+            console.log(this.preview)
+        }
     }
 }
