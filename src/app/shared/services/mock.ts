@@ -1,5 +1,7 @@
 import { Collection } from 'src/app/types'
 
+export const MOCK_USER_ID = '1'
+
 export const MOCK_COLLECTIONS: Collection[] = [
     {
         id: '1',
@@ -7,7 +9,7 @@ export const MOCK_COLLECTIONS: Collection[] = [
         title: 'Social media websites',
         description:
             'This is a collection of social media websites This is a collection of social media websites This is a collection of social media websites This is a collection of social media websites',
-        shared: false,
+        public: false,
         views: 0,
         likes: 0,
         links: [
@@ -21,7 +23,7 @@ export const MOCK_COLLECTIONS: Collection[] = [
         authorId: '1',
         title: 'Online shopping websites',
         description: 'This is a collection of shopping websites',
-        shared: false,
+        public: false,
         views: 0,
         likes: 0,
         links: [
@@ -35,7 +37,7 @@ export const MOCK_COLLECTIONS: Collection[] = [
         authorId: '1',
         title: 'Online courses websites',
         description: 'This is a collection of learning websites',
-        shared: false,
+        public: false,
         views: 0,
         likes: 0,
         links: [
@@ -49,7 +51,7 @@ export const MOCK_COLLECTIONS: Collection[] = [
         authorId: '2',
         title: 'Online entertainment websites',
         description: 'This is a collection of entertainment websites',
-        shared: false,
+        public: false,
         views: 0,
         likes: 0,
         links: [
@@ -63,7 +65,7 @@ export const MOCK_COLLECTIONS: Collection[] = [
         authorId: '2',
         title: 'Online games websites',
         description: 'This is a collection of games websites',
-        shared: false,
+        public: false,
         views: 0,
         likes: 0,
         links: [
@@ -77,7 +79,7 @@ export const MOCK_COLLECTIONS: Collection[] = [
         authorId: '2',
         title: 'Online fashion websites',
         description: 'This is a collection of fashion websites',
-        shared: false,
+        public: false,
         views: 0,
         likes: 0,
         links: [

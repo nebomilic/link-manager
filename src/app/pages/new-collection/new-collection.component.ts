@@ -1,5 +1,7 @@
 import { Component } from '@angular/core'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
+import { Router } from '@angular/router'
+import { CollectionService } from 'src/app/shared/services/collection.service'
 
 @Component({
     selector: 'app-new-collection',
@@ -7,6 +9,11 @@ import { FormControl, FormGroup, Validators } from '@angular/forms'
     styleUrls: ['./new-collection.component.scss'],
 })
 export class NewCollectionComponent {
+    constructor(
+        private _collectionService: CollectionService,
+        private _router: Router
+    ) {}
+
     newCollectionForm = new FormGroup({
         title: new FormControl('', Validators.required),
         description: new FormControl(''),
@@ -23,8 +30,11 @@ export class NewCollectionComponent {
     save() {
         this.saveAttempt = true
         if (this.newCollectionForm.valid) {
-            this.preview = JSON.stringify(this.newCollectionForm.value)
-            console.log(this.preview)
+            this._collectionService.addNewCollection(
+                this.newCollectionForm.value
+            )
+            this._router.navigate(['/my-collections'])
+            // TODO: show success message
         }
     }
 }
