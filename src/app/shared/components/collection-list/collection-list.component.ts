@@ -18,7 +18,15 @@ export class CollectionListComponent {
             : this.collectionService.discoveredCollections
     }
 
-    deleteCollection(id: string) {
+    promptDeleteCollection(id: string) {
+        if (
+            confirm('Are you sure you want to delete this collection?') == true
+        ) {
+            this.deleteCollection(id)
+        }
+    }
+
+    private deleteCollection(id: string) {
         this.collectionService.deleteCollection(id)
     }
 }
