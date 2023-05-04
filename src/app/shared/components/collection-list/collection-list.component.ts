@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChange } from '@angular/core'
+import { Component, Input } from '@angular/core'
 import { Collection } from 'src/app/types'
 import { CollectionService } from '../../services/collection.service'
 
@@ -7,20 +7,22 @@ import { CollectionService } from '../../services/collection.service'
     templateUrl: './collection-list.component.html',
     styleUrls: ['./collection-list.component.scss'],
 })
-export class CollectionListComponent implements OnChanges {
-    constructor(private collectionService: CollectionService) {}
+export class CollectionListComponent {
+    constructor(public collectionService: CollectionService) {}
 
     @Input() type: 'my' | 'discovered' = 'my'
     @Input() editable = false
     collections: Collection[] = []
 
-    ngOnChanges(changes: { [propKey: string]: SimpleChange }) {
-        if (changes['type']) {
-            this.collections =
-                this.type == 'my'
-                    ? this.collectionService.getMyCollections()
-                    : this.collectionService.getDiscoveredCollections()
-        }
+    getCollections() {
+        this.collections =
+            this.type == 'my'
+                ? this.collectionService.collections.filter(
+                      (collection) => collection.authorId === '1'
+                  )
+                : this.collectionService.collections.filter(
+                      (collection) => collection.authorId !== '1'
+                  )
     }
 
     deleteCollection(id: string) {

@@ -1,8 +1,9 @@
 import { Collection } from 'src/app/types'
 
-export const MOCK_MY_COLLECTIONS: Collection[] = [
+export const MOCK_COLLECTIONS: Collection[] = [
     {
         id: '1',
+        authorId: '1',
         title: 'Social media websites',
         description:
             'This is a collection of social media websites This is a collection of social media websites This is a collection of social media websites This is a collection of social media websites',
@@ -17,6 +18,7 @@ export const MOCK_MY_COLLECTIONS: Collection[] = [
     },
     {
         id: '2',
+        authorId: '1',
         title: 'Online shopping websites',
         description: 'This is a collection of shopping websites',
         shared: false,
@@ -30,6 +32,7 @@ export const MOCK_MY_COLLECTIONS: Collection[] = [
     },
     {
         id: '3',
+        authorId: '1',
         title: 'Online courses websites',
         description: 'This is a collection of learning websites',
         shared: false,
@@ -41,11 +44,9 @@ export const MOCK_MY_COLLECTIONS: Collection[] = [
             'https://www.edx.com',
         ],
     },
-]
-
-export const MOCK_DISCOVERED_COLLECTIONS: Collection[] = [
     {
-        id: '1',
+        id: '4',
+        authorId: '2',
         title: 'Online entertainment websites',
         description: 'This is a collection of entertainment websites',
         shared: false,
@@ -58,7 +59,8 @@ export const MOCK_DISCOVERED_COLLECTIONS: Collection[] = [
         ],
     },
     {
-        id: '2',
+        id: '5',
+        authorId: '2',
         title: 'Online games websites',
         description: 'This is a collection of games websites',
         shared: false,
@@ -71,7 +73,8 @@ export const MOCK_DISCOVERED_COLLECTIONS: Collection[] = [
         ],
     },
     {
-        id: '3',
+        id: '6',
+        authorId: '2',
         title: 'Online fashion websites',
         description: 'This is a collection of fashion websites',
         shared: false,

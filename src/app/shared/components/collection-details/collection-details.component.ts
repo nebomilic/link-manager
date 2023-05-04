@@ -19,9 +19,8 @@ export class CollectionDetailsComponent implements OnInit {
         this.route.params.subscribe((params) => {
             const selectedCollectionId = params['id']
             if (selectedCollectionId) {
-                const selectedCollection = this.collectionService
-                    .getCollections()
-                    .find(
+                const selectedCollection =
+                    this.collectionService.collections.find(
                         (collection) => collection.id === selectedCollectionId
                     )
                 if (selectedCollection) {
