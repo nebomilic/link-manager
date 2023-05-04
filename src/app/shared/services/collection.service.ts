@@ -43,4 +43,13 @@ export class CollectionService {
         }
         this._collections = [...this._collections, collection]
     }
+
+    updateCollection(updatedCollection: Collection) {
+        this._collections = this._collections.map((collection) => {
+            if (collection.id === updatedCollection.id) {
+                return updatedCollection
+            }
+            return collection
+        })
+    }
 }

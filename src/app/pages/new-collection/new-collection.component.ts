@@ -21,7 +21,6 @@ export class NewCollectionComponent {
     })
 
     saveAttempt = false
-    preview = ''
 
     get title() {
         return this.newCollectionForm.get('title')

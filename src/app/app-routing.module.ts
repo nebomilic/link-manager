@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router'
 import { ActivityComponent } from './pages/activity/activity.component'
 import { DiscoverComponent } from './pages/discover/discover.component'
 import { DiscoveredCollectionsComponent } from './pages/discovered-collections/discovered-collections.component'
+import { EditCollectionComponent } from './pages/edit-collection/edit-collection.component'
 import { LoginComponent } from './pages/login/login.component'
 import { MyCollectionsComponent } from './pages/my-collections/my-collections.component'
 import { NewCollectionComponent } from './pages/new-collection/new-collection.component'
@@ -19,6 +20,10 @@ const routes: Routes = [
     {
         path: 'my-collections/:id',
         component: CollectionDetailsComponent,
+    },
+    {
+        path: 'my-collections/:id/edit',
+        component: EditCollectionComponent,
     },
     {
         path: 'discovered-collections',

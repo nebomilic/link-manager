@@ -13,7 +13,8 @@ import { PageFrameComponent } from './shared/components/page-frame/page-frame.co
 import { CollectionDetailsComponent } from './shared/components/collection-details/collection-details.component'
 import { CollectionListComponent } from './shared/components/collection-list/collection-list.component'
 import { NewCollectionComponent } from './pages/new-collection/new-collection.component'
-import { ReactiveFormsModule } from '@angular/forms'
+import { ReactiveFormsModule } from '@angular/forms';
+import { EditCollectionComponent } from './pages/edit-collection/edit-collection.component'
 
 @NgModule({
     declarations: [
@@ -28,6 +29,7 @@ import { ReactiveFormsModule } from '@angular/forms'
         CollectionDetailsComponent,
         CollectionListComponent,
         NewCollectionComponent,
+        EditCollectionComponent,
     ],
     imports: [BrowserModule, AppRoutingModule, ReactiveFormsModule],
     providers: [],

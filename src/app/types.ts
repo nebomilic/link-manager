@@ -2,7 +2,7 @@ export type Collection = {
     id: string
     authorId: string
     title: string
-    description?: string
+    description: string | null
     public: boolean
     views: number
     likes: number
