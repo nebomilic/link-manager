@@ -1,5 +1,4 @@
 import { Component, Input } from '@angular/core'
-import { Collection } from 'src/app/types'
 import { CollectionService } from '../../services/collection.service'
 
 @Component({
@@ -12,17 +11,11 @@ export class CollectionListComponent {
 
     @Input() type: 'my' | 'discovered' = 'my'
     @Input() editable = false
-    collections: Collection[] = []
 
-    getCollections() {
-        this.collections =
-            this.type == 'my'
-                ? this.collectionService.collections.filter(
-                      (collection) => collection.authorId === '1'
-                  )
-                : this.collectionService.collections.filter(
-                      (collection) => collection.authorId !== '1'
-                  )
+    get collections() {
+        return this.type == 'my'
+            ? this.collectionService.myCollections
+            : this.collectionService.discoveredCollections
     }
 
     deleteCollection(id: string) {

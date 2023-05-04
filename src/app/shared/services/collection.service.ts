@@ -12,6 +12,18 @@ export class CollectionService {
         return this._collections
     }
 
+    get myCollections(): Collection[] {
+        return this._collections.filter(
+            (collection) => collection.authorId === '1'
+        )
+    }
+
+    get discoveredCollections(): Collection[] {
+        return this._collections.filter(
+            (collection) => collection.authorId !== '1'
+        )
+    }
+
     deleteCollection(id: string) {
         this._collections = this._collections.filter(
             (collection) => collection.id !== id
