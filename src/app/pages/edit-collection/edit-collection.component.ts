@@ -1,22 +1,22 @@
-import { Component, OnInit } from '@angular/core'
+import { AfterViewInit, Component } from '@angular/core'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
-import { ActivatedRoute, Router } from '@angular/router'
+import { Router } from '@angular/router'
 import { CollectionService } from 'src/app/shared/services/collection.service'
 import { Collection } from 'src/app/types'
 
+//TODO: Make it DRY, it's almost the same as new-collection.component.ts
 @Component({
     selector: 'app-edit-collection',
     templateUrl: './edit-collection.component.html',
     styleUrls: ['./edit-collection.component.scss'],
 })
-export class EditCollectionComponent implements OnInit {
+export class EditCollectionComponent implements AfterViewInit {
     constructor(
         private _collectionService: CollectionService,
-        private _router: Router,
-        private _route: ActivatedRoute
+        private _router: Router
     ) {}
 
-    private _selectedCollection: Collection | null = null
+    selectedCollection: Collection | null = null
 
     editCollectionForm = new FormGroup({
         title: new FormControl('', Validators.required),
@@ -32,9 +32,9 @@ export class EditCollectionComponent implements OnInit {
 
     save() {
         this.saveAttempt = true
-        if (this.editCollectionForm.valid && this._selectedCollection) {
+        if (this.editCollectionForm.valid && this.selectedCollection) {
             this._collectionService.updateCollection({
-                ...this._selectedCollection,
+                ...this.selectedCollection,
                 ...(this.editCollectionForm.value.title && {
                     title: this.editCollectionForm.value.title,
                 }),
@@ -50,25 +50,13 @@ export class EditCollectionComponent implements OnInit {
         }
     }
 
-    ngOnInit() {
-        this._route.params.subscribe((params) => {
-            const selectedCollectionId = params['id']
-            if (selectedCollectionId) {
-                const selectedCollection =
-                    this._collectionService.collections.find(
-                        (collection) => collection.id === selectedCollectionId
-                    )
-                if (selectedCollection) {
-                    this._selectedCollection = selectedCollection
-                    this.editCollectionForm.setValue({
-                        title: selectedCollection.title,
-                        description: selectedCollection.description,
-                        public: selectedCollection.public,
-                    })
-                    return
-                }
-            }
-            this._selectedCollection = null
-        })
+    ngAfterViewInit(): void {
+        if (this.selectedCollection) {
+            this.editCollectionForm.setValue({
+                title: this.selectedCollection.title,
+                description: this.selectedCollection.description,
+                public: this.selectedCollection.public,
+            })
+        }
     }
 }

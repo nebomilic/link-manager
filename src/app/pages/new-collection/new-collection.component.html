@@ -4,7 +4,7 @@
         <span>Title (mandatory):</span>
         <input formControlName="title" type="text" size="10" required/>
         <span *ngIf="saveAttempt && title && title.errors?.['required']"
-               style="color: red">New collections must contain title ☝️ </span>
+               style="color: red">Collection must contain title ☝️ </span>
     </div>
     <div style="display:flex; flex-direction: column; margin-bottom: 10px">
         <span>Description:</span>

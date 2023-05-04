@@ -1,12 +1,14 @@
-<div *ngIf="selectedCollection">
- <a routerLink="..">back</a>
-<h2>{{selectedCollection.title}}</h2>
-<p>{{selectedCollection.description}}</p>
-<ul>
-    <li *ngFor="let url of selectedCollection.links">
-        <a href="{{url}}" target="_blank">{{url}}</a>
-    </li>
-</ul>
+<ng-container appFetchCollectionByRoute (collectionFetched)="selectedCollection = $event">
+    <div *ngIf="selectedCollection">
+        <a routerLink="..">back</a>
+        <h2>{{selectedCollection.title}}</h2>
+        <p>{{selectedCollection.description}}</p>
+        <ul>
+            <li *ngFor="let url of selectedCollection.links">
+                <a href="{{url}}" target="_blank">{{url}}</a>
+            </li>
+        </ul>
 
-</div>
-<p *ngIf="!selectedCollection">Nothing to see here 🤷</p>
+    </div>
+    <p *ngIf="!selectedCollection">Nothing to see here 🤷</p>
+</ng-container>
