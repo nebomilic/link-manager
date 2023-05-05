@@ -16,6 +16,10 @@ import { NewCollectionComponent } from './pages/new-collection/new-collection.co
 import { ReactiveFormsModule } from '@angular/forms'
 import { EditCollectionComponent } from './pages/edit-collection/edit-collection.component'
 import { FetchCollectionByRouteDirective } from './shared/directives/fetch-collection-by-route.directive'
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app'
+import { environment } from '../environments/environment'
+import { provideAuth, getAuth } from '@angular/fire/auth'
+import { provideFirestore, getFirestore } from '@angular/fire/firestore'
 
 @NgModule({
     declarations: [
@@ -33,7 +37,14 @@ import { FetchCollectionByRouteDirective } from './shared/directives/fetch-colle
         EditCollectionComponent,
         FetchCollectionByRouteDirective,
     ],
-    imports: [BrowserModule, AppRoutingModule, ReactiveFormsModule],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        ReactiveFormsModule,
+        provideFirebaseApp(() => initializeApp(environment.firebase)),
+        provideAuth(() => getAuth()),
+        provideFirestore(() => getFirestore()),
+    ],
     providers: [],
     bootstrap: [AppComponent],
 })

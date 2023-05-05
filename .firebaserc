@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "link-manager-e73c6": {
+      "hosting": {
+        "link-manager": [
+          "link-manager-e73c6"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "link-manager-e73c6"
+  }
+}

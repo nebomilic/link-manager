@@ -106,6 +106,16 @@
               "src/**/*.html"
             ]
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "prerender": false,
+            "ssr": false,
+            "browserTarget": "link-manager:build:production",
+            "firebaseProject": "link-manager-e73c6",
+            "firebaseHostingSite": "link-manager-e73c6"
+          }
         }
       }
     }
