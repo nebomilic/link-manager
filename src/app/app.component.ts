@@ -1,33 +1,12 @@
-import { Component, OnInit } from '@angular/core'
-import { NavigationEnd, Router } from '@angular/router'
+import { Component } from '@angular/core'
+import { AuthService } from './shared/services/auth.service'
 
-const privateRoutes = [
-    '/my-collections',
-    '/discovered-collections',
-    '/activity',
-    '/settings',
-    '/new-collection',
-]
-const isPrivateRoute = (route: string) =>
-    privateRoutes.some((privateRoute) => route.includes(privateRoute))
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss'],
 })
-export class AppComponent implements OnInit {
-    constructor(private router: Router) {}
-
+export class AppComponent {
+    constructor(public auth: AuthService) {}
     title = 'link-manager'
-    isPrivateRoute = false
-
-    ngOnInit() {
-        // TODO: just a mock implementation to differentiate between private and public routes
-        // This will be removed once we have real authentication in place
-        this.router.events.subscribe((e) => {
-            if (e instanceof NavigationEnd) {
-                this.isPrivateRoute = isPrivateRoute(e.url)
-            }
-        })
-    }
 }

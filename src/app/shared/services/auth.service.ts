@@ -3,12 +3,24 @@ import { AngularFireAuth } from '@angular/fire/compat/auth'
 import { GoogleAuthProvider } from '@angular/fire/auth'
 import { Router } from '@angular/router'
 import { NavigationLink } from 'src/app/const'
+import { BehaviorSubject } from 'rxjs'
 
 @Injectable({
     providedIn: 'root',
 })
 export class AuthService {
-    constructor(private fireauth: AngularFireAuth, private router: Router) {}
+    loggedIn = new BehaviorSubject<boolean>(false)
+    loggedIn$ = this.loggedIn.asObservable()
+
+    constructor(private fireauth: AngularFireAuth, private router: Router) {
+        this.fireauth.onAuthStateChanged((user) => {
+            if (user) {
+                this.loggedIn.next(true)
+            } else {
+                this.loggedIn.next(false)
+            }
+        })
+    }
 
     async getUser() {
         return await this.fireauth.currentUser

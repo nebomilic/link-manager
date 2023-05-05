@@ -1,4 +1,6 @@
 <div style="margin: auto; width: 50%">
-  <app-page-frame *ngIf="isPrivateRoute"></app-page-frame>
-  <router-outlet *ngIf="!isPrivateRoute"></router-outlet>
+  <app-page-frame *ngIf="(auth.loggedIn$| async); else loggedOut"></app-page-frame>
+  <ng-template #loggedOut>
+    <router-outlet></router-outlet>
+  </ng-template>
 </div>
