@@ -5,7 +5,6 @@ import { NavigationLink } from 'src/app/const'
 import { CollectionService } from 'src/app/shared/services/collection/collection.service'
 import { Collection } from 'src/app/types'
 
-//TODO: Make it DRY, it's almost the same as new-collection.component.ts
 @Component({
     selector: 'app-edit-collection',
     templateUrl: './edit-collection.component.html',
