@@ -1,6 +1,11 @@
 <ng-container appFetchCollectionByRoute (collectionFetched)="selectedCollection = $event">
     <div *ngIf="selectedCollection">
-        <a routerLink="..">back</a>
+        <div style="display:flex;justify-content: space-between;">
+            <a routerLink="..">back</a>
+            <a *ngIf="editable" routerLink="edit">
+            edit
+            </a>
+        </div>
         <h2>{{selectedCollection.title}}</h2>
         <p>{{selectedCollection.description}}</p>
         <ul>
