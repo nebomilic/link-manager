@@ -1,5 +1,9 @@
 <div style="background-color:#efefef; border-radius: 10px; display:flex; padding: 5px; overflow:hidden">
   <div>
+    <div *ngIf="user">
+      <p>You are logged in as</p>
+      <p *ngIf="user"><b>{{user.displayName}}</b></p>
+    </div>
 
     <a href="javascript:void(0)" (click)="logOut()" >Log out</a>
     <ul>

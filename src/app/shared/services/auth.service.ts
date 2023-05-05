@@ -9,27 +9,29 @@ import { Router } from '@angular/router'
 export class AuthService {
     constructor(private fireauth: AngularFireAuth, private router: Router) {}
 
-    logInWithGoogle() {
-        return this.fireauth.signInWithPopup(new GoogleAuthProvider()).then(
-            (res) => {
-                this.router.navigate(['/my-collections'])
-                localStorage.setItem('token', JSON.stringify(res.user?.uid))
-            },
-            (err) => {
-                alert(err.message)
-            }
-        )
+    async getUser() {
+        return await this.fireauth.currentUser
     }
 
-    logOut() {
-        this.fireauth.signOut().then(
-            () => {
-                localStorage.removeItem('token')
-                this.router.navigate(['/login'])
-            },
-            (err) => {
-                alert(err.message)
-            }
-        )
+    async logInWithGoogle() {
+        try {
+            const result = await this.fireauth.signInWithPopup(
+                new GoogleAuthProvider()
+            )
+            this.router.navigate(['/my-collections'])
+            localStorage.setItem('token', JSON.stringify(result.user?.uid))
+        } catch (e) {
+            console.log('Login failed', e)
+        }
+    }
+
+    async logOut() {
+        try {
+            await this.fireauth.signOut()
+            localStorage.removeItem('token')
+            this.router.navigate(['/login'])
+        } catch (e) {
+            console.log('Logout failed', e)
+        }
     }
 }
