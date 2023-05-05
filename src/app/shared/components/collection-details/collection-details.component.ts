@@ -1,6 +1,6 @@
 import { AfterViewInit, Component } from '@angular/core'
 import { Collection } from 'src/app/types'
-import { MOCK_USER_ID } from '../../services/mock'
+import { MOCK_USER_ID } from '../../services/collection/mock'
 
 @Component({
     selector: 'app-collection-details',

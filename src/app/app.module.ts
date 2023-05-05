@@ -15,7 +15,8 @@ import { CollectionListComponent } from './shared/components/collection-list/col
 import { NewCollectionComponent } from './pages/new-collection/new-collection.component'
 import { ReactiveFormsModule } from '@angular/forms'
 import { EditCollectionComponent } from './pages/edit-collection/edit-collection.component'
-import { FetchCollectionByRouteDirective } from './shared/directives/fetch-collection-by-route.directive'
+import { FetchCollectionByRouteDirective } from './shared/directives/fetch-collection-by-route.directive';
+import { CollectionFormComponent } from './shared/components/collection-form/collection-form.component'
 
 @NgModule({
     declarations: [
@@ -32,6 +33,7 @@ import { FetchCollectionByRouteDirective } from './shared/directives/fetch-colle
         NewCollectionComponent,
         EditCollectionComponent,
         FetchCollectionByRouteDirective,
+        CollectionFormComponent,
     ],
     imports: [BrowserModule, AppRoutingModule, ReactiveFormsModule],
     providers: [],

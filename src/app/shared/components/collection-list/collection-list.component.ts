@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core'
-import { CollectionService } from '../../services/collection.service'
+import { CollectionService } from '../../services/collection/collection.service'
 
 @Component({
     selector: 'app-collection-list[type]', // makes "type" mandatory
