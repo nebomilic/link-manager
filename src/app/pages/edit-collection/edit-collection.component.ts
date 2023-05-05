@@ -1,6 +1,7 @@
 import { AfterViewInit, Component } from '@angular/core'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
 import { Router } from '@angular/router'
+import { NavigationLink } from 'src/app/const'
 import { CollectionService } from 'src/app/shared/services/collection/collection.service'
 import { Collection } from 'src/app/types'
 
@@ -45,7 +46,7 @@ export class EditCollectionComponent implements AfterViewInit {
                     public: this.editCollectionForm.value.public,
                 }),
             })
-            this._router.navigate(['/my-collections'])
+            this._router.navigate([NavigationLink.MyCollections])
             // TODO: show success message
         }
     }

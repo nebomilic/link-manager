@@ -14,46 +14,49 @@ import { MyCollectionsComponent } from './pages/my-collections/my-collections.co
 import { NewCollectionComponent } from './pages/new-collection/new-collection.component'
 import { SettingsComponent } from './pages/settings/settings.component'
 import { CollectionDetailsComponent } from './shared/components/collection-details/collection-details.component'
+import { NavigationLink } from './const'
 
-const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['login'])
-const redirectLoggedInToHome = () => redirectLoggedInTo(['my-collections'])
+const redirectUnauthorizedToLogin = () =>
+    redirectUnauthorizedTo([NavigationLink.Login])
+const redirectLoggedInToHome = () =>
+    redirectLoggedInTo([NavigationLink.MyCollections])
 
 const routes: Routes = [
     {
-        path: 'login',
+        path: NavigationLink.Login,
         component: LoginComponent,
         ...canActivate(redirectLoggedInToHome),
     },
     { path: 'discover', component: DiscoverComponent },
     {
-        path: 'my-collections',
+        path: NavigationLink.MyCollections,
         component: MyCollectionsComponent,
         ...canActivate(redirectUnauthorizedToLogin),
     },
     {
-        path: 'my-collections/:id',
+        path: `${NavigationLink.MyCollections}/:id`,
         component: CollectionDetailsComponent,
         ...canActivate(redirectUnauthorizedToLogin),
     },
     {
-        path: 'my-collections/:id/edit',
+        path: `${NavigationLink.MyCollections}/:id/edit`,
         component: EditCollectionComponent,
         ...canActivate(redirectUnauthorizedToLogin),
     },
     {
-        path: 'discovered-collections',
+        path: NavigationLink.DiscoveredCollections,
         component: DiscoveredCollectionsComponent,
         ...canActivate(redirectUnauthorizedToLogin),
     },
     {
-        path: 'discovered-collections/:id',
+        path: `${NavigationLink.DiscoveredCollections}/:id`,
         component: CollectionDetailsComponent,
         ...canActivate(redirectUnauthorizedToLogin),
     },
-    { path: 'activity', component: ActivityComponent },
-    { path: 'settings', component: SettingsComponent },
-    { path: 'new-collection', component: NewCollectionComponent },
-    { path: '', redirectTo: '/login', pathMatch: 'full' },
+    { path: NavigationLink.Activity, component: ActivityComponent },
+    { path: NavigationLink.Settings, component: SettingsComponent },
+    { path: NavigationLink.NewCollection, component: NewCollectionComponent },
+    { path: '', redirectTo: `/${NavigationLink.Login}`, pathMatch: 'full' },
 ]
 
 @NgModule({

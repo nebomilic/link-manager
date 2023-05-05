@@ -7,10 +7,10 @@
 
     <a href="javascript:void(0)" (click)="logOut()" >Log out</a>
     <ul>
-      <li><a routerLink="my-collections">My collections</a></li>
-      <li><a routerLink="discovered-collections">Discovered collections</a></li>
-      <li><a routerLink="activity">Activity</a></li>
-      <li><a routerLink="settings">Settings</a></li>
+      <li><a routerLink={{navigationLinks.MyCollections}}>My collections</a></li>
+      <li><a routerLink={{navigationLinks.DiscoveredCollections}}>Discovered collections</a></li>
+      <li><a routerLink={{navigationLinks.Activity}}>Activity</a></li>
+      <li><a routerLink={{navigationLinks.Settings}}>Settings</a></li>
     </ul>
   </div>
   <div style="width: 100%">

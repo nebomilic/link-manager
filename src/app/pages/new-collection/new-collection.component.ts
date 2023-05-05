@@ -1,6 +1,7 @@
 import { Component } from '@angular/core'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
 import { Router } from '@angular/router'
+import { NavigationLink } from 'src/app/const'
 import { CollectionService } from 'src/app/shared/services/collection/collection.service'
 
 @Component({
@@ -32,7 +33,7 @@ export class NewCollectionComponent {
             this._collectionService.addNewCollection(
                 this.newCollectionForm.value
             )
-            this._router.navigate(['/my-collections'])
+            this._router.navigate([NavigationLink.MyCollections])
             // TODO: show success message
         }
     }
