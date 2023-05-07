@@ -7,6 +7,7 @@ export type Collection = {
     views: number
     likes: number
     links: string[]
+    timestamp?: any
 }
 
 export type NewCollectionData = {

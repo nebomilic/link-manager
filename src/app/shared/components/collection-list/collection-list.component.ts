@@ -12,20 +12,22 @@ export class CollectionListComponent {
     @Input() type: 'my' | 'discovered' = 'my'
     @Input() editable = false
 
-    get collections() {
-        return this.type == 'my'
-            ? this.collectionService.myCollections
-            : this.collectionService.discoveredCollections
-    }
     get collection$() {
-        return this.collectionService.collection$
+        return this.type == 'my'
+            ? this.collectionService.myCollection$
+            : this.collectionService.myCollection$
     }
 
-    promptDeleteCollection(id: string) {
-        if (
-            confirm('Are you sure you want to delete this collection?') == true
-        ) {
-            this.deleteCollection(id)
+    promptDeleteCollection(id: string | undefined) {
+        if (!id) {
+            alert('Whoops, something went wrong. Please try again.')
+        } else {
+            if (
+                confirm('Are you sure you want to delete this collection?') ==
+                true
+            ) {
+                this.deleteCollection(id)
+            }
         }
     }
 

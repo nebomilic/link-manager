@@ -27,6 +27,10 @@ export class AuthService {
         return getAuth().currentUser
     }
 
+    getUserId() {
+        return this.getUser()?.uid
+    }
+
     async logInWithGoogle() {
         try {
             const result = await this.fireauth.signInWithPopup(

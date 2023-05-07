@@ -7,3 +7,8 @@ export enum NavigationLink {
     Settings = 'settings',
     NewCollection = 'new-collection',
 }
+
+export enum DBCollectionName {
+    Collections = 'collections',
+    DiscoveredCollections = 'discovered_collections',
+}

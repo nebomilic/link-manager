@@ -1,74 +1,112 @@
 import { Injectable, inject } from '@angular/core'
+import { v4 as uuidv4 } from 'uuid'
 import {
     Firestore,
     collectionData,
     collection,
-    DocumentData,
     where,
     query,
+    limit,
+    deleteDoc,
+    updateDoc,
+    orderBy,
+    setDoc,
+    doc,
 } from '@angular/fire/firestore'
 import { Observable } from 'rxjs'
-import { MOCK_COLLECTIONS, MOCK_USER_ID } from './mock'
 import { Collection, NewCollectionData } from 'src/app/types'
 import { AuthService } from '../auth.service'
+import { serverTimestamp } from '@firebase/firestore'
+import { DBCollectionName } from 'src/app/const'
+
+// TODO: implement pagination
+const COLLECTIONS_PER_PAGE = 10
 
 @Injectable({
     providedIn: 'root',
 })
 export class CollectionService {
-    private _collections: Collection[] = MOCK_COLLECTIONS
-    collection$: Observable<DocumentData[]>
+    collections: Collection[] = []
+    myCollection$: Observable<Collection[]>
+    // discoveredCollection$: Observable<DocumentData[]>
+    // TODO: get ids from discovered_collections
     firestore: Firestore = inject(Firestore)
+    auth: AuthService = inject(AuthService)
+    collectionReference = collection(
+        this.firestore,
+        DBCollectionName.Collections
+    )
 
-    constructor(_auth: AuthService) {
-        const itemCollection = collection(this.firestore, 'collections')
-        const user = _auth.getUser()
-        const q = query(itemCollection, where('authorId', '==', user?.uid))
-        this.collection$ = collectionData(q)
-    }
-
-    get collections(): Collection[] {
-        return this._collections
-    }
-
-    get myCollections(): Collection[] {
-        return this._collections.filter(
-            (collection) => collection.authorId === MOCK_USER_ID
+    constructor() {
+        console.log('user id: ', this.auth.getUserId())
+        this.collectionReference = collection(
+            this.firestore,
+            DBCollectionName.Collections
         )
-    }
-
-    get discoveredCollections(): Collection[] {
-        return this._collections.filter(
-            (collection) => collection.authorId !== MOCK_USER_ID
+        const myCollectionsQuery = query(
+            this.collectionReference,
+            where('authorId', '==', this.auth.getUserId()),
+            orderBy('timestamp', 'desc'),
+            limit(COLLECTIONS_PER_PAGE)
         )
+        this.myCollection$ = collectionData(myCollectionsQuery) as Observable<
+            Collection[]
+        >
+        this.myCollection$.subscribe((collections) => {
+            this.collections = collections
+            console.log('Collections updated: ', collections)
+        })
+
+        // const discoveredCollectionsQuery = query()
     }
 
-    deleteCollection(id: string) {
-        this._collections = this._collections.filter(
-            (collection) => collection.id !== id
-        )
+    async deleteCollection(id: string) {
+        try {
+            await deleteDoc(
+                doc(this.firestore, DBCollectionName.Collections, id)
+            )
+        } catch (e) {
+            console.log(e)
+        }
     }
 
-    addNewCollection(newCollectionData: NewCollectionData) {
-        const collection: Collection = {
+    async addNewCollection(newCollectionData: NewCollectionData) {
+        const newCollection: Collection = {
+            id: uuidv4(),
             title: newCollectionData.title || '',
             description: newCollectionData.description || '',
             public: newCollectionData.public || false,
-            id: (this._collections.length + 1).toString(),
-            authorId: MOCK_USER_ID,
+            authorId: this.auth.getUserId() || '',
             views: 0,
             likes: 0,
             links: [],
+            timestamp: serverTimestamp(),
         }
-        this._collections = [...this._collections, collection]
+        try {
+            await setDoc(
+                doc(
+                    this.firestore,
+                    DBCollectionName.Collections,
+                    newCollection.id
+                ),
+                <Collection>newCollection
+            )
+        } catch (e) {
+            console.log(e)
+        }
     }
 
-    updateCollection(updatedCollection: Collection) {
-        this._collections = this._collections.map((collection) => {
-            if (collection.id === updatedCollection.id) {
-                return updatedCollection
-            }
-            return collection
-        })
+    async updateCollection(updatedCollection: Collection) {
+        try {
+            const docRef = doc(
+                this.firestore,
+                DBCollectionName.Collections,
+                updatedCollection.id
+            )
+            await updateDoc(docRef, <Collection>updatedCollection)
+            console.log('doc updated with id: ', docRef.id)
+        } catch (e) {
+            console.log(e)
+        }
     }
 }

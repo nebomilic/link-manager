@@ -1,6 +1,6 @@
 import { AfterViewInit, Component } from '@angular/core'
 import { Collection } from 'src/app/types'
-import { MOCK_USER_ID } from '../../services/collection/mock'
+import { AuthService } from '../../services/auth.service'
 
 @Component({
     selector: 'app-collection-details',
@@ -11,8 +11,12 @@ export class CollectionDetailsComponent implements AfterViewInit {
     selectedCollection: Collection | null = null
     editable = false
 
+    constructor(private _authService: AuthService) {}
+
     ngAfterViewInit(): void {
-        if (this.selectedCollection?.authorId == MOCK_USER_ID) {
+        if (
+            this.selectedCollection?.authorId == this._authService.getUserId()
+        ) {
             this.editable = true
         }
     }
