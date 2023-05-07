@@ -1,22 +1,22 @@
 <div>
     <ul style="width: 100%">
-        <li *ngFor="let collection of collections" style="padding: 5px">
+        <li *ngFor="let collection of collection$ | async" style="padding: 5px">
             <div>
-                <a routerLink="{{collection.id}}">
-                    <div>{{collection.title}}</div>
+                <a routerLink="{{collection?.['id']}}">
+                    <div>{{collection?.['title']}}</div>
                 </a>
                 <div *ngIf="editable">
-                    <a routerLink="{{collection.id + '/edit'}}">
+                    <a routerLink="{{collection?.['id'] + '/edit'}}">
                         edit
                     </a>
                     |
-                    <a href="javascript:void(0)" (click)="promptDeleteCollection(collection.id)">
+                    <a href="javascript:void(0)" (click)="promptDeleteCollection(collection?.['id'])">
                         delete
                     </a>
                 </div>
 
             </div>
-            <div style="color: gray; ">{{collection.description}}</div>
+            <div style="color: gray; ">{{collection?.['description']}}</div>
         </li>
     </ul>
 </div>

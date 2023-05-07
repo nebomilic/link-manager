@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core'
 import { AngularFireAuth } from '@angular/fire/compat/auth'
 import { GoogleAuthProvider } from '@angular/fire/auth'
+import { getAuth } from 'firebase/auth'
 import { Router } from '@angular/router'
 import { NavigationLink } from 'src/app/const'
 import { BehaviorSubject } from 'rxjs'
@@ -22,8 +23,8 @@ export class AuthService {
         })
     }
 
-    async getUser() {
-        return await this.fireauth.currentUser
+    getUser() {
+        return getAuth().currentUser
     }
 
     async logInWithGoogle() {

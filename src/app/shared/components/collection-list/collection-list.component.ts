@@ -17,6 +17,9 @@ export class CollectionListComponent {
             ? this.collectionService.myCollections
             : this.collectionService.discoveredCollections
     }
+    get collection$() {
+        return this.collectionService.collection$
+    }
 
     promptDeleteCollection(id: string) {
         if (

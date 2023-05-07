@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core'
+import { User } from 'firebase/auth'
 import { NavigationLink } from 'src/app/const'
 import { AuthService } from '../../services/auth.service'
 
@@ -9,7 +10,7 @@ import { AuthService } from '../../services/auth.service'
 })
 export class PageFrameComponent implements OnInit {
     constructor(private _auth: AuthService) {}
-    user: null | firebase.default.User = null
+    user: null | User = null
     navigationLinks = NavigationLink
 
     logOut() {
@@ -17,6 +18,7 @@ export class PageFrameComponent implements OnInit {
     }
 
     async ngOnInit() {
-        this.user = await this._auth.getUser()
+        this.user = this._auth.getUser()
+        console.log(this.user)
     }
 }
