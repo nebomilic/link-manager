@@ -10,7 +10,7 @@ import { Subscription } from 'rxjs'
 import { Collection } from 'src/app/types'
 import { CollectionService } from '../services/collection/collection.service'
 /**
- * Directive for selecting a collection from the route params
+ * Directive for selecting a collection from the _route params
  */
 @Directive({
     selector: '[appFetchCollectionByRoute]',
@@ -20,21 +20,21 @@ export class FetchCollectionByRouteDirective implements OnInit, OnDestroy {
     private routeSub!: Subscription
 
     constructor(
-        private route: ActivatedRoute,
-        private router: Router,
-        private collectionService: CollectionService
+        private _route: ActivatedRoute,
+        private _router: Router,
+        private _collectionService: CollectionService
     ) {}
 
     ngOnInit() {
-        this.routeSub = this.route.params.subscribe((params) => {
+        this.routeSub = this._route.params.subscribe((params) => {
             const selectedCollectionId = params['id']
             if (selectedCollectionId) {
                 const selectedCollection =
-                    this.collectionService.collections.find(
+                    this._collectionService.collections.find(
                         (collection) => collection.id === selectedCollectionId
                     )
                 if (!selectedCollection) {
-                    this.router.navigate(['/'])
+                    this._router.navigate(['/'])
                 } else {
                     this.collectionFetched.emit(selectedCollection)
                 }

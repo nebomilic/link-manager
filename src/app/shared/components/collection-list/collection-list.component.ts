@@ -7,15 +7,15 @@ import { CollectionService } from '../../services/collection/collection.service'
     styleUrls: ['./collection-list.component.scss'],
 })
 export class CollectionListComponent {
-    constructor(public collectionService: CollectionService) {}
+    constructor(private _collectionService: CollectionService) {}
 
     @Input() type: 'my' | 'discovered' = 'my'
     @Input() editable = false
 
     get collection$() {
         return this.type == 'my'
-            ? this.collectionService.myCollection$
-            : this.collectionService.myCollection$
+            ? this._collectionService.myCollection$
+            : this._collectionService.myCollection$
     }
 
     promptDeleteCollection(id: string | undefined) {
@@ -32,6 +32,6 @@ export class CollectionListComponent {
     }
 
     private deleteCollection(id: string) {
-        this.collectionService.deleteCollection(id)
+        this._collectionService.deleteCollection(id)
     }
 }

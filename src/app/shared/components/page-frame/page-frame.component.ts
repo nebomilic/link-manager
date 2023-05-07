@@ -9,16 +9,15 @@ import { AuthService } from '../../services/auth.service'
     styleUrls: ['./page-frame.component.scss'],
 })
 export class PageFrameComponent implements OnInit {
-    constructor(private _auth: AuthService) {}
+    constructor(private _authService: AuthService) {}
     user: null | User = null
     navigationLinks = NavigationLink
 
     logOut() {
-        this._auth.logOut()
+        this._authService.logOut()
     }
 
     async ngOnInit() {
-        this.user = this._auth.getUser()
-        console.log(this.user)
+        this.user = this._authService.getUser()
     }
 }

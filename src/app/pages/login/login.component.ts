@@ -7,9 +7,9 @@ import { AuthService } from 'src/app/shared/services/auth.service'
     styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent {
-    constructor(private _auth: AuthService) {}
+    constructor(private _authService: AuthService) {}
 
     logInWithGoogle() {
-        this._auth.logInWithGoogle()
+        this._authService.logInWithGoogle()
     }
 }
