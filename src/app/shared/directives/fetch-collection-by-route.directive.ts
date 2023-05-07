@@ -10,7 +10,7 @@ import { Subscription } from 'rxjs'
 import { Collection } from 'src/app/types'
 import { CollectionService } from '../services/collection/collection.service'
 /**
- * Directive for selecting a collection from the _route params
+ * Directive for selecting a collection from the route params
  */
 @Directive({
     selector: '[appFetchCollectionByRoute]',
