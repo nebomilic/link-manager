@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms'
 import { Router } from '@angular/router'
 import { NavigationLink } from 'src/app/const'
 import { CollectionService } from 'src/app/shared/services/collection/collection.service'
+import { isValidUrl } from 'src/app/shared/utils'
 import { Collection } from 'src/app/types'
 
 @Component({
@@ -22,6 +23,7 @@ export class EditCollectionComponent implements AfterViewInit {
         title: new FormControl('', Validators.required),
         description: new FormControl(''),
         public: new FormControl(false),
+        links: new FormControl(),
     })
 
     saveAttempt = false
@@ -44,9 +46,45 @@ export class EditCollectionComponent implements AfterViewInit {
                 ...(this.editCollectionForm.value.public && {
                     public: this.editCollectionForm.value.public,
                 }),
+                ...(this.editCollectionForm.value.links && {
+                    links: this.editCollectionForm.value.links,
+                }),
             })
             this._router.navigate([NavigationLink.MyCollections])
             // TODO: show success message
+        }
+    }
+
+    promptAddLink() {
+        const newLink = prompt('Enter new link:', 'https://')
+        if (newLink && isValidUrl(newLink)) {
+            this.addLink(newLink)
+        } else {
+            alert('Please enter a valid link')
+        }
+    }
+
+    private addLink(newLink: string) {
+        if (this.selectedCollection) {
+            this.editCollectionForm.setValue({
+                title: this.selectedCollection.title,
+                description: this.selectedCollection.description,
+                public: this.selectedCollection.public,
+                links: [...this.selectedCollection.links, newLink],
+            })
+        }
+    }
+
+    deleteLink(linkToRemove: string) {
+        if (this.selectedCollection) {
+            this.editCollectionForm.setValue({
+                title: this.selectedCollection.title,
+                description: this.selectedCollection.description,
+                public: this.selectedCollection.public,
+                links: this.selectedCollection.links.filter(
+                    (link) => link !== linkToRemove
+                ),
+            })
         }
     }
 
@@ -56,6 +94,7 @@ export class EditCollectionComponent implements AfterViewInit {
                 title: this.selectedCollection.title,
                 description: this.selectedCollection.description,
                 public: this.selectedCollection.public,
+                links: this.selectedCollection.links,
             })
         }
     }

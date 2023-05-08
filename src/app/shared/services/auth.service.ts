@@ -24,7 +24,6 @@ export class AuthService {
     }
 
     getUser() {
-        console.log('=> getUser() ', getAuth().currentUser)
         return getAuth().currentUser
     }
 

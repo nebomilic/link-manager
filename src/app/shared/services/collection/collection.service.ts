@@ -62,6 +62,9 @@ export class CollectionService {
         this.myCollection$ = collectionData(myCollectionsQuery) as Observable<
             Collection[]
         >
+        this.myCollection$.subscribe((item) => {
+            console.log('my collections: ', item)
+        })
 
         const discoveredCollectionIdsQuery = query(
             this.discoveredCollectionReference,
@@ -100,6 +103,7 @@ export class CollectionService {
             )
             allCollection$.subscribe((allCollection) => {
                 this.allCollections = allCollection
+                console.log('all collections: ', allCollection)
             })
         })
     }
