@@ -44,6 +44,14 @@ export class CollectionService {
     allCollections: Collection[] = []
 
     constructor(private _auth: AuthService, private _firestore: Firestore) {
+        _auth.loggedIn$.subscribe((loggedIn) => {
+            if (loggedIn) {
+                this._initialize()
+            }
+        })
+    }
+
+    private _initialize() {
         console.log('user id: ', this._auth.getUserId())
         const myCollectionsQuery = query(
             this.collectionReference,
