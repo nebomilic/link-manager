@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms'
 import { Router } from '@angular/router'
 import { NavigationLink } from 'src/app/const'
 import { CollectionService } from 'src/app/shared/services/collection/collection.service'
+import { isValidUrl } from 'src/app/shared/utils'
 
 @Component({
     selector: 'app-new-collection',
@@ -19,12 +20,41 @@ export class NewCollectionComponent {
         title: new FormControl('', Validators.required),
         description: new FormControl(''),
         public: new FormControl(false),
+        links: new FormControl(),
     })
 
     saveAttempt = false
 
     get title() {
         return this.newCollectionForm.get('title')
+    }
+
+    promptAddLink() {
+        const newLink = prompt('Enter new link:', 'https://')
+        if (newLink && isValidUrl(newLink)) {
+            this.addLink(newLink)
+        } else {
+            alert('Please enter a valid link')
+        }
+    }
+
+    private addLink(newLink: string) {
+        this.newCollectionForm.patchValue({
+            links: [
+                ...(this.newCollectionForm.value.links
+                    ? this.newCollectionForm.value.links
+                    : []),
+                newLink,
+            ],
+        })
+    }
+
+    deleteLink(linkToRemove: string) {
+        this.newCollectionForm.patchValue({
+            links: this.newCollectionForm.value.links.filter(
+                (link: string) => link !== linkToRemove
+            ),
+        })
     }
 
     save() {
