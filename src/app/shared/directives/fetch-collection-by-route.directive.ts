@@ -30,7 +30,7 @@ export class FetchCollectionByRouteDirective implements OnInit, OnDestroy {
             const selectedCollectionId = params['id']
             if (selectedCollectionId) {
                 const selectedCollection =
-                    this._collectionService.collections.find(
+                    this._collectionService.allCollections.find(
                         (collection) => collection.id === selectedCollectionId
                     )
                 if (!selectedCollection) {

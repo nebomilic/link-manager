@@ -1,4 +1,4 @@
-import { Injectable, inject } from '@angular/core'
+import { Injectable } from '@angular/core'
 import { v4 as uuidv4 } from 'uuid'
 import {
     Firestore,
@@ -13,7 +13,7 @@ import {
     setDoc,
     doc,
 } from '@angular/fire/firestore'
-import { Observable } from 'rxjs'
+import { combineLatest, map, Observable } from 'rxjs'
 import { Collection, NewCollectionData } from 'src/app/types'
 import { AuthService } from '../auth.service'
 import { serverTimestamp } from '@firebase/firestore'
@@ -31,39 +31,33 @@ type DiscoveredCollectionIds = {
     providedIn: 'root',
 })
 export class CollectionService {
-    firestore: Firestore = inject(Firestore)
-    auth: AuthService = inject(AuthService)
     myCollection$: Observable<Collection[]> = new Observable()
     discoveredCollection$: Observable<Collection[]> = new Observable()
     collectionReference = collection(
-        this.firestore,
+        this._firestore,
         DBCollectionName.Collections
     )
     discoveredCollectionReference = collection(
-        this.firestore,
+        this._firestore,
         DBCollectionName.DiscoveredCollections
     )
-    collections: Collection[] = []
+    allCollections: Collection[] = []
 
-    constructor() {
-        console.log('user id: ', this.auth.getUserId())
+    constructor(private _auth: AuthService, private _firestore: Firestore) {
+        console.log('user id: ', this._auth.getUserId())
         const myCollectionsQuery = query(
             this.collectionReference,
-            where('authorId', '==', this.auth.getUserId()),
+            where('authorId', '==', this._auth.getUserId()),
             orderBy('timestamp', 'desc'),
             limit(COLLECTIONS_PER_PAGE)
         )
         this.myCollection$ = collectionData(myCollectionsQuery) as Observable<
             Collection[]
         >
-        this.myCollection$.subscribe((collections) => {
-            this.collections = collections
-            console.log('my collections updated: ', collections)
-        })
 
         const discoveredCollectionIdsQuery = query(
             this.discoveredCollectionReference,
-            where('authorId', '==', this.auth.getUserId()),
+            where('authorId', '==', this._auth.getUserId()),
             limit(COLLECTIONS_PER_PAGE)
         )
 
@@ -85,9 +79,19 @@ export class CollectionService {
                 discoveredCollectionsQuery
             ) as Observable<Collection[]>
 
-            this.discoveredCollection$.subscribe((collections) => {
-                this.collections = collections
-                console.log('discovered collections updated: ', collections)
+            // We need allCollections's latest value only for collection detail view
+            // We get the selectedCollection from the allCollections array instad of hitting the database again
+            const allCollection$ = combineLatest([
+                this.myCollection$,
+                this.discoveredCollection$,
+            ]).pipe(
+                map(([myCollections, discoveredCollections]) => [
+                    ...myCollections,
+                    ...discoveredCollections,
+                ])
+            )
+            allCollection$.subscribe((allCollection) => {
+                this.allCollections = allCollection
             })
         })
     }
@@ -95,7 +99,7 @@ export class CollectionService {
     async deleteCollection(id: string) {
         try {
             await deleteDoc(
-                doc(this.firestore, DBCollectionName.Collections, id)
+                doc(this._firestore, DBCollectionName.Collections, id)
             )
         } catch (e) {
             console.log(e)
@@ -108,7 +112,7 @@ export class CollectionService {
             title: newCollectionData.title || '',
             description: newCollectionData.description || '',
             public: newCollectionData.public || false,
-            authorId: this.auth.getUserId() || '',
+            authorId: this._auth.getUserId() || '',
             views: 0,
             likes: 0,
             links: [],
@@ -117,7 +121,7 @@ export class CollectionService {
         try {
             await setDoc(
                 doc(
-                    this.firestore,
+                    this._firestore,
                     DBCollectionName.Collections,
                     newCollection.id
                 ),
@@ -131,7 +135,7 @@ export class CollectionService {
     async updateCollection(updatedCollection: Collection) {
         try {
             const docRef = doc(
-                this.firestore,
+                this._firestore,
                 DBCollectionName.Collections,
                 updatedCollection.id
             )
