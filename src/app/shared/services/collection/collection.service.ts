@@ -14,7 +14,11 @@ import {
     doc,
 } from '@angular/fire/firestore'
 import { combineLatest, map, Observable } from 'rxjs'
-import { Collection, NewCollectionData } from 'src/app/types'
+import {
+    Collection,
+    FirestoreTimestamp,
+    NewCollectionData,
+} from 'src/app/types'
 import { AuthService } from '../auth.service'
 import { serverTimestamp } from '@firebase/firestore'
 import { DBCollectionName } from 'src/app/const'
@@ -121,8 +125,8 @@ export class CollectionService {
             authorId: this._auth.getUserId() || '',
             views: 0,
             likes: 0,
-            links: [],
-            timestamp: serverTimestamp(),
+            links: newCollectionData.links || [],
+            timestamp: serverTimestamp() as FirestoreTimestamp,
         }
         try {
             await setDoc(
@@ -146,7 +150,6 @@ export class CollectionService {
                 updatedCollection.id
             )
             await updateDoc(docRef, <Collection>updatedCollection)
-            console.log('doc updated with id: ', docRef.id)
         } catch (e) {
             console.log(e)
         }
