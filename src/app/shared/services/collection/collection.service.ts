@@ -13,7 +13,7 @@ import {
     setDoc,
     doc,
 } from '@angular/fire/firestore'
-import { Observable, of } from 'rxjs'
+import { Observable } from 'rxjs'
 import { Collection, NewCollectionData } from 'src/app/types'
 import { AuthService } from '../auth.service'
 import { serverTimestamp } from '@firebase/firestore'
