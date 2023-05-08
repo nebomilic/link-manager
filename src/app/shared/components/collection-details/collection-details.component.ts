@@ -1,6 +1,6 @@
 import { AfterViewInit, Component } from '@angular/core'
 import { Collection } from 'src/app/types'
-import { AuthService } from '../../services/auth.service'
+import { AuthService } from '../../services/auth/auth.service'
 
 @Component({
     selector: 'app-collection-details',

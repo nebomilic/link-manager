@@ -1,5 +1,5 @@
 import { Component } from '@angular/core'
-import { AuthService } from './shared/services/auth.service'
+import { AuthService } from './shared/services/auth/auth.service'
 
 @Component({
     selector: 'app-root',
@@ -7,6 +7,6 @@ import { AuthService } from './shared/services/auth.service'
     styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-    constructor(public auth: AuthService) {}
+    constructor(public authService: AuthService) {}
     title = 'link-manager'
 }

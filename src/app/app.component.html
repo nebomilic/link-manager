@@ -1,5 +1,5 @@
 <div style="margin: auto; width: 50%">
-  <app-page-frame *ngIf="(auth.loggedIn$| async); else loggedOut"></app-page-frame>
+  <app-page-frame *ngIf="(authService.loggedIn$| async); else loggedOut"></app-page-frame>
   <ng-template #loggedOut>
     <router-outlet></router-outlet>
   </ng-template>

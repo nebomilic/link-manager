@@ -19,7 +19,7 @@ import {
     FirestoreTimestamp,
     NewCollectionData,
 } from 'src/app/types'
-import { AuthService } from '../auth.service'
+import { AuthService } from '../auth/auth.service'
 import { serverTimestamp } from '@firebase/firestore'
 import { DBCollectionName } from 'src/app/const'
 
