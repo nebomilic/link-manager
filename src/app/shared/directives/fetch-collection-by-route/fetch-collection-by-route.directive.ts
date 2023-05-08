@@ -8,7 +8,7 @@ import {
 import { ActivatedRoute, Router } from '@angular/router'
 import { Subscription } from 'rxjs'
 import { Collection } from 'src/app/types'
-import { CollectionService } from '../services/collection/collection.service'
+import { CollectionService } from '../../services/collection/collection.service'
 /**
  * Directive for selecting a collection from the route params
  */
