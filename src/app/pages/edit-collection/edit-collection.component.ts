@@ -65,27 +65,17 @@ export class EditCollectionComponent implements AfterViewInit {
     }
 
     private addLink(newLink: string) {
-        if (this.selectedCollection) {
-            this.editCollectionForm.setValue({
-                title: this.selectedCollection.title,
-                description: this.selectedCollection.description,
-                public: this.selectedCollection.public,
-                links: [...this.selectedCollection.links, newLink],
-            })
-        }
+        this.editCollectionForm.patchValue({
+            links: [...this.editCollectionForm.value.links, newLink],
+        })
     }
 
     deleteLink(linkToRemove: string) {
-        if (this.selectedCollection) {
-            this.editCollectionForm.setValue({
-                title: this.selectedCollection.title,
-                description: this.selectedCollection.description,
-                public: this.selectedCollection.public,
-                links: this.selectedCollection.links.filter(
-                    (link) => link !== linkToRemove
-                ),
-            })
-        }
+        this.editCollectionForm.patchValue({
+            links: this.editCollectionForm.value.links.filter(
+                (link: string) => link !== linkToRemove
+            ),
+        })
     }
 
     ngAfterViewInit(): void {
