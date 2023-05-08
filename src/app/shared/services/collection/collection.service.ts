@@ -31,8 +31,8 @@ type DiscoveredCollectionIds = {
     providedIn: 'root',
 })
 export class CollectionService {
-    myCollection$: Observable<Collection[]> = new Observable()
-    discoveredCollection$: Observable<Collection[]> = new Observable()
+    myCollections$: Observable<Collection[]> = new Observable()
+    discoveredCollections$: Observable<Collection[]> = new Observable()
     collectionReference = collection(
         this._firestore,
         DBCollectionName.Collections
@@ -58,7 +58,7 @@ export class CollectionService {
             orderBy('timestamp', 'desc'),
             limit(COLLECTIONS_PER_PAGE)
         )
-        this.myCollection$ = collectionData(myCollectionsQuery) as Observable<
+        this.myCollections$ = collectionData(myCollectionsQuery) as Observable<
             Collection[]
         >
 
@@ -81,15 +81,15 @@ export class CollectionService {
                 limit(COLLECTIONS_PER_PAGE)
             )
 
-            this.discoveredCollection$ = collectionData(
+            this.discoveredCollections$ = collectionData(
                 discoveredCollectionsQuery
             ) as Observable<Collection[]>
 
             // We need allCollections's latest value only for collection detail view
             // We get the selectedCollection from the allCollections array instad of hitting the database again
             const allCollection$ = combineLatest([
-                this.myCollection$,
-                this.discoveredCollection$,
+                this.myCollections$,
+                this.discoveredCollections$,
             ]).pipe(
                 map(([myCollections, discoveredCollections]) => [
                     ...myCollections,
