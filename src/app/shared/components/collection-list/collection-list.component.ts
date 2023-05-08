@@ -15,7 +15,7 @@ export class CollectionListComponent {
     get collection$() {
         return this.type == 'my'
             ? this._collectionService.myCollection$
-            : this._collectionService.myCollection$
+            : this._collectionService.discoveredCollection$
     }
 
     promptDeleteCollection(id: string | undefined) {

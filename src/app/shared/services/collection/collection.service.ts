@@ -13,7 +13,7 @@ import {
     setDoc,
     doc,
 } from '@angular/fire/firestore'
-import { Observable } from 'rxjs'
+import { Observable, of } from 'rxjs'
 import { Collection, NewCollectionData } from 'src/app/types'
 import { AuthService } from '../auth.service'
 import { serverTimestamp } from '@firebase/firestore'
@@ -22,27 +22,31 @@ import { DBCollectionName } from 'src/app/const'
 // TODO: implement pagination
 const COLLECTIONS_PER_PAGE = 10
 
+type DiscoveredCollectionIds = {
+    authorId: string
+    collectionIds: string[]
+}
+
 @Injectable({
     providedIn: 'root',
 })
 export class CollectionService {
-    collections: Collection[] = []
-    myCollection$: Observable<Collection[]>
-    // discoveredCollection$: Observable<DocumentData[]>
-    // TODO: get ids from discovered_collections
     firestore: Firestore = inject(Firestore)
     auth: AuthService = inject(AuthService)
+    myCollection$: Observable<Collection[]> = new Observable()
+    discoveredCollection$: Observable<Collection[]> = new Observable()
     collectionReference = collection(
         this.firestore,
         DBCollectionName.Collections
     )
+    discoveredCollectionReference = collection(
+        this.firestore,
+        DBCollectionName.DiscoveredCollections
+    )
+    collections: Collection[] = []
 
     constructor() {
         console.log('user id: ', this.auth.getUserId())
-        this.collectionReference = collection(
-            this.firestore,
-            DBCollectionName.Collections
-        )
         const myCollectionsQuery = query(
             this.collectionReference,
             where('authorId', '==', this.auth.getUserId()),
@@ -54,10 +58,38 @@ export class CollectionService {
         >
         this.myCollection$.subscribe((collections) => {
             this.collections = collections
-            console.log('Collections updated: ', collections)
+            console.log('my collections updated: ', collections)
         })
 
-        // const discoveredCollectionsQuery = query()
+        const discoveredCollectionIdsQuery = query(
+            this.discoveredCollectionReference,
+            where('authorId', '==', this.auth.getUserId()),
+            limit(COLLECTIONS_PER_PAGE)
+        )
+
+        const discoveredCollectionId$ = collectionData(
+            discoveredCollectionIdsQuery
+        ) as Observable<DiscoveredCollectionIds[]>
+
+        discoveredCollectionId$.subscribe((item) => {
+            console.log('discovered collections: ', item)
+            const collectionIds = item ? item[0].collectionIds : []
+            const discoveredCollectionsQuery = query(
+                this.collectionReference,
+                where('id', 'in', collectionIds),
+                orderBy('timestamp', 'desc'),
+                limit(COLLECTIONS_PER_PAGE)
+            )
+
+            this.discoveredCollection$ = collectionData(
+                discoveredCollectionsQuery
+            ) as Observable<Collection[]>
+
+            this.discoveredCollection$.subscribe((collections) => {
+                this.collections = collections
+                console.log('discovered collections updated: ', collections)
+            })
+        })
     }
 
     async deleteCollection(id: string) {
