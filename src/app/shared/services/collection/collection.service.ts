@@ -52,7 +52,6 @@ export class CollectionService {
     }
 
     private _initialize() {
-        console.log('user id: ', this._auth.getUserId())
         const myCollectionsQuery = query(
             this.collectionReference,
             where('authorId', '==', this._auth.getUserId()),
@@ -62,9 +61,6 @@ export class CollectionService {
         this.myCollection$ = collectionData(myCollectionsQuery) as Observable<
             Collection[]
         >
-        this.myCollection$.subscribe((item) => {
-            console.log('my collections: ', item)
-        })
 
         const discoveredCollectionIdsQuery = query(
             this.discoveredCollectionReference,
@@ -77,7 +73,6 @@ export class CollectionService {
         ) as Observable<DiscoveredCollectionIds[]>
 
         discoveredCollectionId$.subscribe((item) => {
-            console.log('discovered collections: ', item)
             const collectionIds = item ? item[0].collectionIds : []
             const discoveredCollectionsQuery = query(
                 this.collectionReference,
@@ -103,7 +98,6 @@ export class CollectionService {
             )
             allCollection$.subscribe((allCollection) => {
                 this.allCollections = allCollection
-                console.log('all collections: ', allCollection)
             })
         })
     }
