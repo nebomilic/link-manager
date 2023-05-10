@@ -1,19 +1,34 @@
-<div style="background-color:#efefef; border-radius: 10px; display:flex; padding: 5px; overflow:hidden">
-  <div>
-    <div *ngIf="user">
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #drawer class="sidenav" fixedInViewport
+      [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+      [mode]="(isHandset$ | async) ? 'over' : 'side'"
+      [opened]="(isHandset$ | async) === false">
+    <div *ngIf="user" class="user-area">
       <p>You are logged in as</p>
       <p *ngIf="user"><b>{{user.displayName}}</b></p>
+      <a href="javascript:void(0)" (click)="logOut()" >Log out</a>
     </div>
-
-    <a href="javascript:void(0)" (click)="logOut()" >Log out</a>
-    <ul>
-      <li><a routerLink={{navigationLinks.MyCollections}}>My collections</a></li>
-      <li><a routerLink={{navigationLinks.DiscoveredCollections}}>Discovered collections</a></li>
-      <li><a routerLink={{navigationLinks.Activity}}>Activity</a></li>
-      <li><a routerLink={{navigationLinks.Settings}}>Settings</a></li>
-    </ul>
-  </div>
-  <div style="width: 100%">
-    <router-outlet></router-outlet>
-  </div>
-</div>
+    <mat-nav-list>
+      <a mat-list-item routerLink={{navigationLinks.MyCollections}} [routerLinkActive]="['is-active']">My collections</a>
+      <a mat-list-item routerLink={{navigationLinks.DiscoveredCollections}} [routerLinkActive]="['is-active']">Discovered collections</a>
+      <a mat-list-item routerLink={{navigationLinks.Activity}} [routerLinkActive]="['is-active']">Activity</a>
+      <a mat-list-item routerLink={{navigationLinks.Settings}} [routerLinkActive]="['is-active']">Settings</a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <button
+        type="button"
+        aria-label="Toggle sidenav"
+        mat-icon-button
+        (click)="drawer.toggle()"
+        *ngIf="isHandset$ | async">
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+      <span>link-manager</span>
+    </mat-toolbar>
+    <div style="padding: 16px">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
