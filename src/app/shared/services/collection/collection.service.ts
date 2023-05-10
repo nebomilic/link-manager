@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core'
+import { Injectable, OnDestroy } from '@angular/core'
 import { v4 as uuidv4 } from 'uuid'
 import {
     Firestore,
@@ -13,7 +13,7 @@ import {
     setDoc,
     doc,
 } from '@angular/fire/firestore'
-import { combineLatest, map, Observable } from 'rxjs'
+import { combineLatest, map, Observable, Subscription } from 'rxjs'
 import {
     Collection,
     FirestoreTimestamp,
@@ -34,7 +34,7 @@ type DiscoveredCollectionIds = {
 @Injectable({
     providedIn: 'root',
 })
-export class CollectionService {
+export class CollectionService implements OnDestroy {
     myCollections$: Observable<Collection[]> = new Observable()
     discoveredCollections$: Observable<Collection[]> = new Observable()
     collectionReference = collection(
@@ -47,18 +47,28 @@ export class CollectionService {
     )
     allCollections: Collection[] = []
 
-    constructor(private _auth: AuthService, private _firestore: Firestore) {
-        _auth.loggedIn$.subscribe((loggedIn) => {
-            if (loggedIn) {
-                this._initialize()
+    private _authServiceSubscription: Subscription = new Subscription()
+    private _discoveredCollectionsSubscription: Subscription =
+        new Subscription()
+    private _allCollectionsSubscription: Subscription = new Subscription()
+
+    constructor(
+        private _authService: AuthService,
+        private _firestore: Firestore
+    ) {
+        this._authServiceSubscription = _authService.loggedIn$.subscribe(
+            (loggedIn) => {
+                if (loggedIn) {
+                    this._initialize()
+                }
             }
-        })
+        )
     }
 
     private _initialize() {
         const myCollectionsQuery = query(
             this.collectionReference,
-            where('authorId', '==', this._auth.getUserId()),
+            where('authorId', '==', this._authService.getUserId()),
             orderBy('timestamp', 'desc'),
             limit(COLLECTIONS_PER_PAGE)
         )
@@ -68,7 +78,7 @@ export class CollectionService {
 
         const discoveredCollectionIdsQuery = query(
             this.discoveredCollectionReference,
-            where('authorId', '==', this._auth.getUserId()),
+            where('authorId', '==', this._authService.getUserId()),
             limit(COLLECTIONS_PER_PAGE)
         )
 
@@ -76,34 +86,37 @@ export class CollectionService {
             discoveredCollectionIdsQuery
         ) as Observable<DiscoveredCollectionIds[]>
 
-        discoveredCollectionId$.subscribe((item) => {
-            const collectionIds = item ? item[0].collectionIds : []
-            const discoveredCollectionsQuery = query(
-                this.collectionReference,
-                where('id', 'in', collectionIds),
-                orderBy('timestamp', 'desc'),
-                limit(COLLECTIONS_PER_PAGE)
-            )
+        this._discoveredCollectionsSubscription =
+            discoveredCollectionId$.subscribe((item) => {
+                const collectionIds = item ? item[0].collectionIds : []
+                const discoveredCollectionsQuery = query(
+                    this.collectionReference,
+                    where('id', 'in', collectionIds),
+                    orderBy('timestamp', 'desc'),
+                    limit(COLLECTIONS_PER_PAGE)
+                )
 
-            this.discoveredCollections$ = collectionData(
-                discoveredCollectionsQuery
-            ) as Observable<Collection[]>
+                this.discoveredCollections$ = collectionData(
+                    discoveredCollectionsQuery
+                ) as Observable<Collection[]>
 
-            // We need allCollections's latest value only for collection detail view
-            // We get the selectedCollection from the allCollections array instad of hitting the database again
-            const allCollection$ = combineLatest([
-                this.myCollections$,
-                this.discoveredCollections$,
-            ]).pipe(
-                map(([myCollections, discoveredCollections]) => [
-                    ...myCollections,
-                    ...discoveredCollections,
-                ])
-            )
-            allCollection$.subscribe((allCollection) => {
-                this.allCollections = allCollection
+                // We need allCollections's latest value only for collection detail view
+                // We get the selectedCollection from the allCollections array instad of hitting the database again
+                const allCollection$ = combineLatest([
+                    this.myCollections$,
+                    this.discoveredCollections$,
+                ]).pipe(
+                    map(([myCollections, discoveredCollections]) => [
+                        ...myCollections,
+                        ...discoveredCollections,
+                    ])
+                )
+                this._allCollectionsSubscription = allCollection$.subscribe(
+                    (allCollection) => {
+                        this.allCollections = allCollection
+                    }
+                )
             })
-        })
     }
 
     async deleteCollection(id: string) {
@@ -122,7 +135,7 @@ export class CollectionService {
             title: newCollectionData.title || '',
             description: newCollectionData.description || '',
             public: newCollectionData.public || false,
-            authorId: this._auth.getUserId() || '',
+            authorId: this._authService.getUserId() || '',
             views: 0,
             likes: 0,
             links: newCollectionData.links || [],
@@ -153,5 +166,11 @@ export class CollectionService {
         } catch (e) {
             console.log(e)
         }
+    }
+
+    ngOnDestroy() {
+        this._discoveredCollectionsSubscription.unsubscribe()
+        this._allCollectionsSubscription.unsubscribe()
+        this._authServiceSubscription.unsubscribe()
     }
 }
