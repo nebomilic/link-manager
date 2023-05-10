@@ -20,7 +20,8 @@ import { environment } from '../environments/environment'
 import { provideAuth, getAuth } from '@angular/fire/auth'
 import { provideFirestore, getFirestore } from '@angular/fire/firestore'
 import { AngularFireModule } from '@angular/fire/compat'
-import { FetchCollectionByRouteDirective } from './shared/directives/fetch-collection-by-route/fetch-collection-by-route.directive'
+import { FetchCollectionByRouteDirective } from './shared/directives/fetch-collection-by-route/fetch-collection-by-route.directive';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 
 @NgModule({
     declarations: [
@@ -46,6 +47,7 @@ import { FetchCollectionByRouteDirective } from './shared/directives/fetch-colle
         provideFirebaseApp(() => initializeApp(environment.firebase)),
         provideAuth(() => getAuth()),
         provideFirestore(() => getFirestore()),
+        BrowserAnimationsModule,
     ],
     providers: [],
     bootstrap: [AppComponent],
