@@ -1,22 +1,25 @@
-<div>
-    <ul style="width: 100%">
-        <li *ngFor="let collection of collection$ | async" style="padding: 5px">
-            <div>
-                <a routerLink="{{collection?.['id']}}">
-                    <div>{{collection?.['title']}}</div>
-                </a>
-                <div *ngIf="editable">
-                    <a routerLink="{{collection?.['id'] + '/edit'}}">
-                        edit
-                    </a>
-                    |
-                    <a href="javascript:void(0)" (click)="promptDeleteCollection(collection?.['id'])">
-                        delete
-                    </a>
-                </div>
-
+<mat-card>
+    <mat-list>
+        <ng-container *ngFor="let collection of collection$ | async;let last = last;">
+        <div class="collection-item-container">
+            <mat-list-item >
+                <span matListItemTitle>
+                    <button mat-button color="primary" routerLink="{{collection?.['id']}}">{{collection?.['title']}}</button>
+                </span>
+                <span class="collection-description-container">{{collection?.['description']}}</span>
+            </mat-list-item>
+            <div  *ngIf="editable" class="collection-action-container">
+                <button mat-icon-button color="primary" aria-label="Edit collection"
+                    routerLink="{{collection?.['id'] + '/edit'}}">
+                    <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-icon-button color="primary" aria-label="Delete collection"
+                    (click)="promptDeleteCollection(collection?.['id'])">
+                    <mat-icon>delete</mat-icon>
+                </button>
             </div>
-            <div style="color: gray; ">{{collection?.['description']}}</div>
-        </li>
-    </ul>
-</div>
+        </div>
+        <mat-divider *ngIf="!last"></mat-divider>
+        </ng-container>
+    </mat-list>
+</mat-card>
