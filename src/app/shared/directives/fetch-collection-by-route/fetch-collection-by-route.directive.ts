@@ -6,7 +6,7 @@ import {
     EventEmitter,
 } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
-import { Subscription } from 'rxjs'
+import { Subject, Subscription, takeUntil } from 'rxjs'
 import { Collection } from 'src/app/types'
 import { CollectionService } from '../../services/collection/collection.service'
 /**
@@ -17,7 +17,7 @@ import { CollectionService } from '../../services/collection/collection.service'
 })
 export class FetchCollectionByRouteDirective implements OnInit, OnDestroy {
     @Output() collectionFetched: EventEmitter<Collection> = new EventEmitter()
-    private routeSub!: Subscription
+    private _destroy$ = new Subject<void>()
 
     constructor(
         private _route: ActivatedRoute,
@@ -26,25 +26,27 @@ export class FetchCollectionByRouteDirective implements OnInit, OnDestroy {
     ) {}
 
     ngOnInit() {
-        this.routeSub = this._route.params.subscribe((params) => {
-            const selectedCollectionId = params['id']
-            if (selectedCollectionId) {
-                const selectedCollection =
-                    this._collectionService.allCollections.find(
-                        (collection) => collection.id === selectedCollectionId
-                    )
-                if (!selectedCollection) {
-                    this._router.navigate(['/'])
-                } else {
-                    this.collectionFetched.emit(selectedCollection)
+        this._route.params
+            .pipe(takeUntil(this._destroy$))
+            .subscribe((params) => {
+                const selectedCollectionId = params['id']
+                if (selectedCollectionId) {
+                    const selectedCollection =
+                        this._collectionService.allCollections.find(
+                            (collection) =>
+                                collection.id === selectedCollectionId
+                        )
+                    if (!selectedCollection) {
+                        this._router.navigate(['/'])
+                    } else {
+                        this.collectionFetched.emit(selectedCollection)
+                    }
                 }
-            }
-        })
+            })
     }
 
     ngOnDestroy() {
-        if (this.routeSub) {
-            this.routeSub.unsubscribe()
-        }
+        this._destroy$.next()
+        this._destroy$.complete()
     }
 }

@@ -13,7 +13,14 @@ import {
     setDoc,
     doc,
 } from '@angular/fire/firestore'
-import { combineLatest, map, Observable, Subscription } from 'rxjs'
+import {
+    combineLatest,
+    map,
+    Observable,
+    Subject,
+    Subscription,
+    takeUntil,
+} from 'rxjs'
 import {
     Collection,
     FirestoreTimestamp,
@@ -35,6 +42,7 @@ type DiscoveredCollectionIds = {
     providedIn: 'root',
 })
 export class CollectionService implements OnDestroy {
+    private _destroy$ = new Subject<void>()
     myCollections$: Observable<Collection[]> = new Observable()
     discoveredCollections$: Observable<Collection[]> = new Observable()
     collectionReference = collection(
@@ -47,22 +55,17 @@ export class CollectionService implements OnDestroy {
     )
     allCollections: Collection[] = []
 
-    private _authServiceSubscription: Subscription = new Subscription()
-    private _discoveredCollectionsSubscription: Subscription =
-        new Subscription()
-    private _allCollectionsSubscription: Subscription = new Subscription()
-
     constructor(
         private _authService: AuthService,
         private _firestore: Firestore
     ) {
-        this._authServiceSubscription = _authService.loggedIn$.subscribe(
-            (loggedIn) => {
+        _authService.loggedIn$
+            .pipe(takeUntil(this._destroy$))
+            .subscribe((loggedIn) => {
                 if (loggedIn) {
                     this._initialize()
                 }
-            }
-        )
+            })
     }
 
     private _initialize() {
@@ -86,8 +89,9 @@ export class CollectionService implements OnDestroy {
             discoveredCollectionIdsQuery
         ) as Observable<DiscoveredCollectionIds[]>
 
-        this._discoveredCollectionsSubscription =
-            discoveredCollectionId$.subscribe((item) => {
+        discoveredCollectionId$
+            .pipe(takeUntil(this._destroy$))
+            .subscribe((item) => {
                 const collectionIds = item ? item[0].collectionIds : []
                 const discoveredCollectionsQuery = query(
                     this.collectionReference,
@@ -111,11 +115,11 @@ export class CollectionService implements OnDestroy {
                         ...discoveredCollections,
                     ])
                 )
-                this._allCollectionsSubscription = allCollection$.subscribe(
-                    (allCollection) => {
+                allCollection$
+                    .pipe(takeUntil(this._destroy$))
+                    .subscribe((allCollection) => {
                         this.allCollections = allCollection
-                    }
-                )
+                    })
             })
     }
 
@@ -169,8 +173,7 @@ export class CollectionService implements OnDestroy {
     }
 
     ngOnDestroy() {
-        this._discoveredCollectionsSubscription.unsubscribe()
-        this._allCollectionsSubscription.unsubscribe()
-        this._authServiceSubscription.unsubscribe()
+        this._destroy$.next()
+        this._destroy$.complete()
     }
 }
