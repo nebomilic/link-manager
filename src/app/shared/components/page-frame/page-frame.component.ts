@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core'
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout'
 import { User } from 'firebase/auth'
 import { Observable } from 'rxjs'
-import { map, shareReplay } from 'rxjs/operators'
 import { NavigationLink } from 'src/app/const'
 import { AuthService } from '../../services/auth/auth.service'
+import { BreakpointService } from '../../services/ui/breakpoint.service'
 
 @Component({
     selector: 'app-page-frame',
@@ -14,16 +13,14 @@ import { AuthService } from '../../services/auth/auth.service'
 export class PageFrameComponent implements OnInit {
     constructor(
         private _authService: AuthService,
-        private _breakpointObserver: BreakpointObserver
+        private _breakpointService: BreakpointService
     ) {}
     user: null | User = null
     navigationLinks = NavigationLink
-    isHandset$: Observable<boolean> = this._breakpointObserver
-        .observe(Breakpoints.Handset)
-        .pipe(
-            map((result) => result.matches),
-            shareReplay()
-        )
+
+    get isHandset$(): Observable<boolean> {
+        return this._breakpointService.isHandset$
+    }
 
     logOut() {
         this._authService.logOut()
