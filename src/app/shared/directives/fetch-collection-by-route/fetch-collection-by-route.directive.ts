@@ -6,11 +6,12 @@ import {
     EventEmitter,
 } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
-import { Subject, Subscription, takeUntil } from 'rxjs'
+import { Subject, takeUntil } from 'rxjs'
 import { Collection } from 'src/app/types'
 import { CollectionService } from '../../services/collection/collection.service'
 /**
  * Directive for selecting a collection from the route params
+ * TODO: moving this functionality to a service could be a better solution
  */
 @Directive({
     selector: '[appFetchCollectionByRoute]',
