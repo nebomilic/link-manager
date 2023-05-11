@@ -1,4 +1,4 @@
-<div style="display:flex; justify-content: space-between;">
+<div class="header">
     <h2>My collections</h2>
     <div *ngIf="(isHandset$ | async); then smallButton else bigButton"></div>
         <ng-template #smallButton>
