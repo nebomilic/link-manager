@@ -8,8 +8,8 @@
       <p *ngIf="user"><b>{{user.displayName}}</b></p>
       <a href="javascript:void(0)" (click)="logOut()" >Log out</a>
     </div>
-    <mat-nav-list>
-      <a mat-list-item routerLink={{navigationLinks.MyCollections}} [routerLinkActive]="['is-active']">My collections</a>
+    <mat-nav-list (click)="isHandset && drawer.toggle()">
+      <a mat-list-item routerLink={{navigationLinks.MyCollections}} [routerLinkActive]="['is-active']" >My collections</a>
       <a mat-list-item routerLink={{navigationLinks.DiscoveredCollections}} [routerLinkActive]="['is-active']">Discovered collections</a>
       <a mat-list-item routerLink={{navigationLinks.Activity}} [routerLinkActive]="['is-active']">Activity</a>
       <a mat-list-item routerLink={{navigationLinks.Settings}} [routerLinkActive]="['is-active']">Settings</a>

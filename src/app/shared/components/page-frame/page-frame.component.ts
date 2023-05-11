@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnDestroy, OnInit } from '@angular/core'
 import { User } from 'firebase/auth'
-import { Observable } from 'rxjs'
+import { Observable, Subject, takeUntil } from 'rxjs'
 import { NavigationLink } from 'src/app/const'
 import { AuthService } from '../../services/auth/auth.service'
 import { BreakpointService } from '../../services/ui/breakpoint.service'
@@ -10,13 +10,16 @@ import { BreakpointService } from '../../services/ui/breakpoint.service'
     templateUrl: './page-frame.component.html',
     styleUrls: ['./page-frame.component.scss'],
 })
-export class PageFrameComponent implements OnInit {
+export class PageFrameComponent implements OnInit, OnDestroy {
+    user: null | User = null
+    navigationLinks = NavigationLink
+    isHandset = false
+    private _destroy$ = new Subject<void>()
+
     constructor(
         private _authService: AuthService,
         private _breakpointService: BreakpointService
     ) {}
-    user: null | User = null
-    navigationLinks = NavigationLink
 
     get isHandset$(): Observable<boolean> {
         return this._breakpointService.isHandset$
@@ -28,5 +31,15 @@ export class PageFrameComponent implements OnInit {
 
     async ngOnInit() {
         this.user = this._authService.getUser()
+        this._breakpointService.isHandset$
+            .pipe(takeUntil(this._destroy$))
+            .subscribe((isHandset) => {
+                this.isHandset = isHandset
+            })
+    }
+
+    ngOnDestroy() {
+        this._destroy$.next()
+        this._destroy$.complete()
     }
 }
