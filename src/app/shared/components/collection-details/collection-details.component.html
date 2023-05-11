@@ -1,5 +1,5 @@
 <ng-container appFetchCollectionByRoute (collectionFetched)="selectedCollection = $event">
-    <div *ngIf="selectedCollection">
+    <div *ngIf="selectedCollection;">
         <div style="display:flex;justify-content: space-between;">
             <a routerLink="..">back</a>
             <a *ngIf="editable" routerLink="edit">
@@ -7,13 +7,17 @@
             </a>
         </div>
         <h2>{{selectedCollection.title}}</h2>
-        <p>{{selectedCollection.description}}</p>
-        <ul>
-            <li *ngFor="let url of selectedCollection.links">
-                <a href="{{url}}" target="_blank">{{url}}</a>
-            </li>
-        </ul>
-
+        <mat-card>
+            <p style="margin: 20px; font-size: large; font-style: italic;">{{selectedCollection.description}}</p>
+            <mat-list role="link">
+                <ng-container *ngFor="let link of selectedCollection.links;let last = last;">
+                    <mat-list-item role="listitem">
+                        <span matListItemTitle><button mat-button color="primary" (click)="goToLink(link)">{{link}}</button></span>
+                    </mat-list-item>
+                    <mat-divider *ngIf="!last"></mat-divider>
+                </ng-container>
+            </mat-list >
+        </mat-card>
     </div>
     <p *ngIf="!selectedCollection">Nothing to see here 🤷</p>
 </ng-container>
