@@ -12,6 +12,7 @@ import { CollectionService } from '../../services/collection/collection.service'
 /**
  * Directive for selecting a collection from the route params
  * TODO: moving this functionality to a service could be a better solution
+ * TODO: checkout directive compositon https://angular.io/guide/directive-composition-api
  */
 @Directive({
     selector: '[appFetchCollectionByRoute]',
