@@ -10,3 +10,7 @@ export const isValidUrl = (urlString: string) => {
     ) // validate fragment locator
     return !!urlPattern.test(urlString)
 }
+
+export const goToLink = (url: string) => {
+    window.open(url)
+}
