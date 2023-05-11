@@ -1,5 +1,16 @@
-<div style="width: 100%; text-align: right; padding: 5px">
-    <a routerLink="{{'/' + newCollectionLink}}" style="margin-right: 10px">Create new collection</a>
+<div style="display:flex; justify-content: space-between;">
+    <h2>My collections</h2>
+    <div *ngIf="(isHandset$ | async); then smallButton else bigButton"></div>
+        <ng-template #smallButton>
+            <button mat-mini-fab color="primary" routerLink="{{'/' + newCollectionLink}}">
+                <mat-icon>add</mat-icon>
+            </button>
+        </ng-template>
+        <ng-template #bigButton>
+            <button #bigButton mat-button color="primary" routerLink="{{'/' + newCollectionLink}}">
+                <mat-icon>add</mat-icon>
+                New collection
+            </button>
+        </ng-template>
 </div>
-<h2>This is a list of my collections</h2>
 <app-collection-list type="my" [editable]="true"/>

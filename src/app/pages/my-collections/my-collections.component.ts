@@ -1,5 +1,7 @@
 import { Component } from '@angular/core'
+import { Observable } from 'rxjs'
 import { NavigationLink } from 'src/app/const'
+import { BreakpointService } from 'src/app/shared/services/ui/breakpoint.service'
 
 @Component({
     selector: 'app-my-collections',
@@ -8,4 +10,10 @@ import { NavigationLink } from 'src/app/const'
 })
 export class MyCollectionsComponent {
     newCollectionLink = NavigationLink.NewCollection
+
+    constructor(private _breakpointService: BreakpointService) {}
+
+    get isHandset$(): Observable<boolean> {
+        return this._breakpointService.isHandset$
+    }
 }
