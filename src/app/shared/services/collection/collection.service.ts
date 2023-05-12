@@ -84,12 +84,14 @@ export class CollectionService implements OnDestroy {
 
     public getDiscoveredCollections(): Observable<Collection[]> {
         if (!this._discoveredCollections$) {
+            const discoveredCollectionIdsQuery = query(
+                this.discoveredCollectionReference,
+                where('authorId', '==', this._authService.getUserId()),
+                limit(COLLECTIONS_PER_PAGE)
+            )
+
             this._discoveredCollections$ = collectionData(
-                query(
-                    this.discoveredCollectionReference,
-                    where('authorId', '==', this._authService.getUserId()),
-                    limit(COLLECTIONS_PER_PAGE)
-                )
+                discoveredCollectionIdsQuery
             ).pipe(
                 takeUntil(this._destroy$),
                 shareReplay({ bufferSize: 1, refCount: true }) as never,
@@ -97,16 +99,16 @@ export class CollectionService implements OnDestroy {
                     (item: DiscoveredCollectionIds[]) =>
                         !!(item[0] && item[0].collectionIds)
                 ),
-                mergeMap((item: DiscoveredCollectionIds[]) =>
-                    collectionData(
-                        query(
-                            this.collectionReference,
-                            where('id', 'in', item[0].collectionIds),
-                            orderBy('timestamp', 'desc'),
-                            limit(COLLECTIONS_PER_PAGE)
-                        )
+                mergeMap((item: DiscoveredCollectionIds[]) => {
+                    const discoveredCollectionsQuery = query(
+                        this.collectionReference,
+                        where('id', 'in', item[0].collectionIds),
+                        orderBy('timestamp', 'desc'),
+                        limit(COLLECTIONS_PER_PAGE)
                     )
-                )
+
+                    return collectionData(discoveredCollectionsQuery)
+                })
             ) as never
         }
 
@@ -181,10 +183,6 @@ export class CollectionService implements OnDestroy {
     }
 
     ngOnDestroy() {
-        this._unsubscribe()
-    }
-
-    private _unsubscribe() {
         this._destroy$.next()
         this._destroy$.complete()
     }
