@@ -15,11 +15,12 @@ import {
 } from '@angular/fire/firestore'
 import {
     combineLatest,
+    filter,
     map,
+    mergeMap,
     Observable,
     shareReplay,
     Subject,
-    switchMap,
     takeUntil,
 } from 'rxjs'
 import {
@@ -92,7 +93,11 @@ export class CollectionService implements OnDestroy {
             ).pipe(
                 takeUntil(this._destroy$),
                 shareReplay({ bufferSize: 1, refCount: true }) as never,
-                switchMap((item: DiscoveredCollectionIds[]) =>
+                filter(
+                    (item: DiscoveredCollectionIds[]) =>
+                        !!(item[0] && item[0].collectionIds)
+                ),
+                mergeMap((item: DiscoveredCollectionIds[]) =>
                     collectionData(
                         query(
                             this.collectionReference,
