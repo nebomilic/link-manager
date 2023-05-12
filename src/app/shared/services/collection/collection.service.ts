@@ -50,15 +50,14 @@ export class CollectionService implements OnDestroy {
     private _myCollections$!: Observable<Collection[]>
     private _allCollections$!: Observable<Collection[]>
     private _discoveredCollections$!: Observable<Collection[]>
-    collectionReference = collection(
+    private _collectionReference = collection(
         this._firestore,
         DBCollectionName.Collections
     )
-    discoveredCollectionReference = collection(
+    private _discoveredCollectionReference = collection(
         this._firestore,
         DBCollectionName.DiscoveredCollections
     )
-    allCollections: Collection[] = []
 
     constructor(
         private _authService: AuthService,
@@ -68,14 +67,17 @@ export class CollectionService implements OnDestroy {
     public getMyCollections(): Observable<Collection[]> {
         if (!this._myCollections$) {
             const myCollectionsQuery = query(
-                this.collectionReference,
+                this._collectionReference,
                 where('authorId', '==', this._authService.getUserId()),
                 orderBy('timestamp', 'desc'),
                 limit(COLLECTIONS_PER_PAGE)
             )
             this._myCollections$ = collectionData(myCollectionsQuery).pipe(
-                takeUntil(this._destroy$),
-                shareReplay({ bufferSize: 1, refCount: true }) as never
+                takeUntil(this._destroy$) as never,
+                shareReplay<Collection[]>({
+                    bufferSize: 1,
+                    refCount: true,
+                })
             ) as Observable<Collection[]>
         }
 
@@ -85,7 +87,7 @@ export class CollectionService implements OnDestroy {
     public getDiscoveredCollections(): Observable<Collection[]> {
         if (!this._discoveredCollections$) {
             const discoveredCollectionIdsQuery = query(
-                this.discoveredCollectionReference,
+                this._discoveredCollectionReference,
                 where('authorId', '==', this._authService.getUserId()),
                 limit(COLLECTIONS_PER_PAGE)
             )
@@ -94,14 +96,17 @@ export class CollectionService implements OnDestroy {
                 discoveredCollectionIdsQuery
             ).pipe(
                 takeUntil(this._destroy$),
-                shareReplay({ bufferSize: 1, refCount: true }) as never,
+                shareReplay({
+                    bufferSize: 1,
+                    refCount: true,
+                }) as never,
                 filter(
                     (item: DiscoveredCollectionIds[]) =>
                         !!(item[0] && item[0].collectionIds)
                 ),
                 mergeMap((item: DiscoveredCollectionIds[]) => {
                     const discoveredCollectionsQuery = query(
-                        this.collectionReference,
+                        this._collectionReference,
                         where('id', 'in', item[0].collectionIds),
                         orderBy('timestamp', 'desc'),
                         limit(COLLECTIONS_PER_PAGE)
@@ -109,7 +114,7 @@ export class CollectionService implements OnDestroy {
 
                     return collectionData(discoveredCollectionsQuery)
                 })
-            ) as never
+            ) as Observable<Collection[]>
         }
 
         return this._discoveredCollections$
