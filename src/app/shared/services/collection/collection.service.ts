@@ -17,8 +17,9 @@ import {
     combineLatest,
     map,
     Observable,
+    shareReplay,
     Subject,
-    Subscription,
+    switchMap,
     takeUntil,
 } from 'rxjs'
 import {
@@ -41,10 +42,13 @@ type DiscoveredCollectionIds = {
 @Injectable({
     providedIn: 'root',
 })
+
+// TODO: make sure the service gets cleaned up on log out
 export class CollectionService implements OnDestroy {
     private _destroy$ = new Subject<void>()
-    myCollections$: Observable<Collection[]> = new Observable()
-    discoveredCollections$: Observable<Collection[]> = new Observable()
+    private _myCollections$!: Observable<Collection[]>
+    private _allCollections$!: Observable<Collection[]>
+    private _discoveredCollections$!: Observable<Collection[]>
     collectionReference = collection(
         this._firestore,
         DBCollectionName.Collections
@@ -58,69 +62,68 @@ export class CollectionService implements OnDestroy {
     constructor(
         private _authService: AuthService,
         private _firestore: Firestore
-    ) {
-        _authService.loggedIn$
-            .pipe(takeUntil(this._destroy$))
-            .subscribe((loggedIn) => {
-                if (loggedIn) {
-                    this._initialize()
-                }
-            })
+    ) {}
+
+    public getMyCollections(): Observable<Collection[]> {
+        if (!this._myCollections$) {
+            const myCollectionsQuery = query(
+                this.collectionReference,
+                where('authorId', '==', this._authService.getUserId()),
+                orderBy('timestamp', 'desc'),
+                limit(COLLECTIONS_PER_PAGE)
+            )
+            this._myCollections$ = collectionData(myCollectionsQuery).pipe(
+                takeUntil(this._destroy$),
+                shareReplay({ bufferSize: 1, refCount: true }) as never
+            ) as Observable<Collection[]>
+        }
+
+        return this._myCollections$
     }
 
-    private _initialize() {
-        const myCollectionsQuery = query(
-            this.collectionReference,
-            where('authorId', '==', this._authService.getUserId()),
-            orderBy('timestamp', 'desc'),
-            limit(COLLECTIONS_PER_PAGE)
-        )
-        this.myCollections$ = collectionData(myCollectionsQuery) as Observable<
-            Collection[]
-        >
-
-        const discoveredCollectionIdsQuery = query(
-            this.discoveredCollectionReference,
-            where('authorId', '==', this._authService.getUserId()),
-            limit(COLLECTIONS_PER_PAGE)
-        )
-
-        const discoveredCollectionId$ = collectionData(
-            discoveredCollectionIdsQuery
-        ) as Observable<DiscoveredCollectionIds[]>
-
-        discoveredCollectionId$
-            .pipe(takeUntil(this._destroy$))
-            .subscribe((item) => {
-                const collectionIds = item ? item[0].collectionIds : []
-                const discoveredCollectionsQuery = query(
-                    this.collectionReference,
-                    where('id', 'in', collectionIds),
-                    orderBy('timestamp', 'desc'),
+    public getDiscoveredCollections(): Observable<Collection[]> {
+        if (!this._discoveredCollections$) {
+            this._discoveredCollections$ = collectionData(
+                query(
+                    this.discoveredCollectionReference,
+                    where('authorId', '==', this._authService.getUserId()),
                     limit(COLLECTIONS_PER_PAGE)
                 )
-
-                this.discoveredCollections$ = collectionData(
-                    discoveredCollectionsQuery
-                ) as Observable<Collection[]>
-
-                // We need allCollections's latest value only for collection detail view
-                // We get the selectedCollection from the allCollections array instad of hitting the database again
-                const allCollection$ = combineLatest([
-                    this.myCollections$,
-                    this.discoveredCollections$,
-                ]).pipe(
-                    map(([myCollections, discoveredCollections]) => [
-                        ...myCollections,
-                        ...discoveredCollections,
-                    ])
+            ).pipe(
+                takeUntil(this._destroy$),
+                shareReplay({ bufferSize: 1, refCount: true }) as never,
+                switchMap((item: DiscoveredCollectionIds[]) =>
+                    collectionData(
+                        query(
+                            this.collectionReference,
+                            where('id', 'in', item[0].collectionIds),
+                            orderBy('timestamp', 'desc'),
+                            limit(COLLECTIONS_PER_PAGE)
+                        )
+                    )
                 )
-                allCollection$
-                    .pipe(takeUntil(this._destroy$))
-                    .subscribe((allCollection) => {
-                        this.allCollections = allCollection
-                    })
-            })
+            ) as never
+        }
+
+        return this._discoveredCollections$
+    }
+
+    public getAllCollections(): Observable<Collection[]> {
+        if (!this._allCollections$) {
+            this._allCollections$ = combineLatest([
+                this.getMyCollections(),
+                this.getDiscoveredCollections(),
+            ]).pipe(
+                takeUntil(this._destroy$),
+                shareReplay({ bufferSize: 1, refCount: true }),
+                map(([myCollections, discoveredCollections]) => [
+                    ...myCollections,
+                    ...discoveredCollections,
+                ])
+            )
+        }
+
+        return this._allCollections$
     }
 
     async deleteCollection(id: string) {
@@ -173,6 +176,10 @@ export class CollectionService implements OnDestroy {
     }
 
     ngOnDestroy() {
+        this._unsubscribe()
+    }
+
+    private _unsubscribe() {
         this._destroy$.next()
         this._destroy$.complete()
     }

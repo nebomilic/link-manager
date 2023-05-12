@@ -6,7 +6,7 @@ import {
     EventEmitter,
 } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
-import { Subject, takeUntil } from 'rxjs'
+import { combineLatest, Subject, takeUntil } from 'rxjs'
 import { Collection } from 'src/app/types'
 import { CollectionService } from '../../services/collection/collection.service'
 /**
@@ -28,16 +28,17 @@ export class FetchCollectionByRouteDirective implements OnInit, OnDestroy {
     ) {}
 
     ngOnInit() {
-        this._route.params
+        // TODO use switchMap here instead of combineLatest
+        combineLatest([
+            this._route.params,
+            this._collectionService.getAllCollections(),
+        ])
             .pipe(takeUntil(this._destroy$))
-            .subscribe((params) => {
-                const selectedCollectionId = params['id']
-                if (selectedCollectionId) {
-                    const selectedCollection =
-                        this._collectionService.allCollections.find(
-                            (collection) =>
-                                collection.id === selectedCollectionId
-                        )
+            .subscribe(([params, allCollections]) => {
+                {
+                    const selectedCollection = allCollections.find(
+                        (collection) => collection.id === params['id']
+                    )
                     if (!selectedCollection) {
                         this._router.navigate(['/'])
                     } else {
