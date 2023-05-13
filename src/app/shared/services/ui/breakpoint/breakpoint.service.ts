@@ -14,7 +14,7 @@ export class BreakpointService implements OnDestroy {
             .pipe(
                 takeUntil(this._destroy$),
                 map((result) => result.matches),
-                shareReplay()
+                shareReplay({ bufferSize: 1, refCount: true })
             )
     }
 
