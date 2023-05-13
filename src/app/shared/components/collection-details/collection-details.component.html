@@ -1,36 +1,34 @@
-<ng-container appFetchCollectionByRoute (collectionFetched)="selectedCollection = $event">
-    <div *ngIf="selectedCollection;">
-        <div style="display:flex;justify-content: space-between;">
-            <a routerLink="..">back</a>
-        </div>
-        <div class="header">
-            <h2>{{selectedCollection.title}}</h2>
-            <ng-container *ngIf="editable">
-                <div *ngIf="(isHandset$ | async); then smallButton else bigButton"></div>
-                <ng-template #smallButton>
-                    <button mat-mini-fab color="primary" routerLink="edit">
-                        <mat-icon>edit</mat-icon>
-                    </button>
-                </ng-template>
-                <ng-template #bigButton>
-                    <button mat-raised-button color="primary" routerLink="edit">
-                        <mat-icon>edit</mat-icon>
-                        Edit collection
-                    </button>
-                </ng-template>
-            </ng-container>
-        </div>
-        <mat-card>
-            <p style="margin: 20px; font-size: large; font-style: italic;">{{selectedCollection.description}}</p>
-            <mat-list role="link">
-                <ng-container *ngFor="let link of selectedCollection.links;let last = last;">
-                    <mat-list-item role="listitem">
-                        <span matListItemTitle><button mat-button color="primary" (click)="goToLink(link)">{{link}}</button></span>
-                    </mat-list-item>
-                    <mat-divider *ngIf="!last"></mat-divider>
-                </ng-container>
-            </mat-list >
-        </mat-card>
+<div *ngIf="selectedCollection;">
+    <div style="display:flex;justify-content: space-between;">
+        <a routerLink="..">back</a>
     </div>
-    <p *ngIf="!selectedCollection">Nothing to see here 🤷</p>
-</ng-container>
+    <div class="header">
+        <h2>{{selectedCollection.title}}</h2>
+        <ng-container *ngIf="editable">
+            <div *ngIf="(isHandset$ | async); then smallButton else bigButton"></div>
+            <ng-template #smallButton>
+                <button mat-mini-fab color="primary" routerLink="edit">
+                    <mat-icon>edit</mat-icon>
+                </button>
+            </ng-template>
+            <ng-template #bigButton>
+                <button mat-raised-button color="primary" routerLink="edit">
+                    <mat-icon>edit</mat-icon>
+                    Edit collection
+                </button>
+            </ng-template>
+        </ng-container>
+    </div>
+    <mat-card>
+        <p style="margin: 20px; font-size: large; font-style: italic;">{{selectedCollection.description}}</p>
+        <mat-list role="link">
+            <ng-container *ngFor="let link of selectedCollection.links;let last = last;">
+                <mat-list-item role="listitem">
+                    <span matListItemTitle><button mat-button color="primary" (click)="goToLink(link)">{{link}}</button></span>
+                </mat-list-item>
+                <mat-divider *ngIf="!last"></mat-divider>
+            </ng-container>
+        </mat-list >
+    </mat-card>
+</div>
+<p *ngIf="!selectedCollection">Nothing to see here 🤷</p>

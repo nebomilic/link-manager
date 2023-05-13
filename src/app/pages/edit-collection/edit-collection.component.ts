@@ -1,8 +1,9 @@
-import { AfterViewInit, Component } from '@angular/core'
+import { Component, OnInit } from '@angular/core'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
 import { Router } from '@angular/router'
 import { NavigationLink } from 'src/app/const'
 import { CollectionService } from 'src/app/shared/services/collection/collection.service'
+import { CurrentCollectionService } from 'src/app/shared/services/collection/utils/current-collection/current-collection.service'
 import { isValidUrl } from 'src/app/shared/utils'
 import { Collection } from 'src/app/types'
 
@@ -10,11 +11,13 @@ import { Collection } from 'src/app/types'
     selector: 'app-edit-collection',
     templateUrl: './edit-collection.component.html',
     styleUrls: ['./edit-collection.component.scss'],
+    providers: [CurrentCollectionService],
 })
-export class EditCollectionComponent implements AfterViewInit {
+export class EditCollectionComponent implements OnInit {
     constructor(
+        private _router: Router,
         private _collectionService: CollectionService,
-        private _router: Router
+        private _currentCollectionService: CurrentCollectionService
     ) {}
 
     selectedCollection: Collection | null = null
@@ -78,14 +81,19 @@ export class EditCollectionComponent implements AfterViewInit {
         })
     }
 
-    ngAfterViewInit(): void {
-        if (this.selectedCollection) {
-            this.editCollectionForm.setValue({
-                title: this.selectedCollection.title,
-                description: this.selectedCollection.description,
-                public: this.selectedCollection.public,
-                links: this.selectedCollection.links,
+    ngOnInit(): void {
+        this._currentCollectionService
+            .getCurrentCollection()
+            .subscribe((collection) => {
+                this.selectedCollection = collection
+                if (this.selectedCollection) {
+                    this.editCollectionForm.setValue({
+                        title: this.selectedCollection.title,
+                        description: this.selectedCollection.description,
+                        public: this.selectedCollection.public,
+                        links: this.selectedCollection.links,
+                    })
+                }
             })
-        }
     }
 }
