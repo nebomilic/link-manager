@@ -2,7 +2,7 @@ import { AfterViewInit, Component } from '@angular/core'
 import { Observable } from 'rxjs'
 import { Collection } from 'src/app/types'
 import { AuthService } from '../../services/auth/auth.service'
-import { BreakpointService } from '../../services/ui/breakpoint.service'
+import { BreakpointService } from '../../services/ui/breakpoint/breakpoint.service'
 import { goToLink } from '../../utils'
 
 @Component({

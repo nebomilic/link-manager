@@ -1,7 +1,7 @@
 import { Component } from '@angular/core'
 import { Observable } from 'rxjs'
 import { NavigationLink } from 'src/app/const'
-import { BreakpointService } from 'src/app/shared/services/ui/breakpoint.service'
+import { BreakpointService } from 'src/app/shared/services/ui/breakpoint/breakpoint.service'
 
 @Component({
     selector: 'app-my-collections',
