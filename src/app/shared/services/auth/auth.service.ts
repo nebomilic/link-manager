@@ -10,15 +10,15 @@ import { BehaviorSubject } from 'rxjs'
     providedIn: 'root',
 })
 export class AuthService {
-    loggedIn = new BehaviorSubject<boolean>(false)
-    loggedIn$ = this.loggedIn.asObservable()
+    private _loggedIn = new BehaviorSubject<boolean>(false)
+    loggedIn$ = this._loggedIn.asObservable()
 
-    constructor(private fireauth: AngularFireAuth, private router: Router) {
-        this.fireauth.onAuthStateChanged((user) => {
+    constructor(private _fireauth: AngularFireAuth, private router: Router) {
+        this._fireauth.onAuthStateChanged((user) => {
             if (user) {
-                this.loggedIn.next(true)
+                this._loggedIn.next(true)
             } else {
-                this.loggedIn.next(false)
+                this._loggedIn.next(false)
             }
         })
     }
@@ -33,7 +33,7 @@ export class AuthService {
 
     async logInWithGoogle() {
         try {
-            const result = await this.fireauth.signInWithPopup(
+            const result = await this._fireauth.signInWithPopup(
                 new GoogleAuthProvider()
             )
             this.router.navigate([`/${NavigationLink.MyCollections}`])
@@ -45,7 +45,7 @@ export class AuthService {
 
     async logOut() {
         try {
-            await this.fireauth.signOut()
+            await this._fireauth.signOut()
             localStorage.removeItem('token')
             this.router.navigate([`/${NavigationLink.Login}`])
         } catch (e) {
