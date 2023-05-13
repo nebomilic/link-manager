@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
-import { concatMap, filter, from, map, mergeMap, shareReplay, tap } from 'rxjs'
+import { concatMap, filter, from, mergeMap, shareReplay } from 'rxjs'
 import { CollectionService } from '../../collection.service'
 
 /**
