@@ -4,7 +4,7 @@
         <span>Title (mandatory):</span>
         <input formControlName="title" type="text" size="10" required/>
         <span *ngIf="saveAttempt && title && title.errors?.['required']"
-               style="color: red">Collection must contain title ☝️ </span>
+        style="color: red">Collection must contain title ☝️ </span>
     </div>
     <div style="display:flex; flex-direction: column; margin-bottom: 10px">
         <span>Description:</span>
@@ -14,12 +14,12 @@
         <span>Visible to others:</span>
         <input formControlName="public" type="checkbox" />
     </div>
-     <a href="javascript:void(0)" style="display:block; margin-top:10px" (click)="promptAddLink()">+ Add new link</a>
-            <ul>
-                <li *ngFor="let link of newCollectionForm.value.links">
-                    <a href="{{link}}" target="_blank">{{link}}</a> [<a href="javascript:void(0)" (click)="deleteLink(link)">- Remove link</a>]
-                </li>
-            </ul>
+    <a href="javascript:void(0)" style="display:block; margin-top:10px" (click)="promptAddLink()">+ Add new link</a>
+    <ul>
+        <li *ngFor="let link of newCollectionForm.value.links">
+            <a href="{{link}}" target="_blank">{{link}}</a> [<a href="javascript:void(0)" (click)="deleteLink(link)">- Remove link</a>]
+        </li>
+    </ul>
     <div style="display:flex; flex-direction:row-reverse ;width: 100%; margin-top: 10px; margin-bottom: 10px">
         <button>Save</button>
     </div>
