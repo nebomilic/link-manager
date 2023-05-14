@@ -1,0 +1,38 @@
+.form-field {
+    width:100%
+}
+
+.links-header {
+   margin-top: 16px;
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+
+   h3 {
+    font-weight: 500;
+    margin: 16px 0 0 16px;
+   }
+}
+
+.right-aligned-button-container {
+   display:flex;
+   flex-direction:row-reverse ;
+}
+
+.list-item-container {
+    display:flex;
+    justify-content: space-between;
+    margin-top: -14px
+}
+
+.save-button {
+    margin: 26px 16px 16px 0
+}
+
+.checkbox {
+    margin-left: 8px
+}
+
+.add-link-button {
+    margin: 26px 16px 16px 0
+}

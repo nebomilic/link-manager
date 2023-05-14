@@ -1,35 +1,45 @@
 <ng-container *ngIf="selectedCollection">
     <h2>Edit collection</h2>
-    <form [formGroup]="editCollectionForm" (ngSubmit)="save()">
-        <mat-form-field style="width:100%">
-            <mat-label>Title (mandatory)</mat-label>
-            <input matInput formControlName="title">
-            <mat-error *ngIf="saveAttempt && title && title.errors?.['required']">Collection must contain title ☝️ </mat-error>
-        </mat-form-field>
-        <!-- <div style="display:flex; flex-direction: column; margin-bottom: 10px">
-            <span>Description:</span>
-            <textarea formControlName="description" name="" id="" cols="30" rows="10"></textarea>
-        </div> -->
-        <mat-form-field style="width:100%">
-            <mat-label>Description</mat-label>
-            <textarea matInput formControlName="description" ></textarea>
-        </mat-form-field>
-        <div>
-            <span>Visible to others:</span>
-            <input formControlName="public" type="checkbox" />
-        </div>
-        <a href="javascript:void(0)" style="display:block; margin-top:10px" (click)="promptAddLink()">+ Add new link</a>
-        <ul>
-            <li *ngFor="let link of editCollectionForm.value.links">
-                <a href="{{link}}" target="_blank">{{link}}</a> [<a href="javascript:void(0)" (click)="deleteLink(link)">- Remove link</a>]
-            </li>
-        </ul>
-        <div style="display:flex; flex-direction:row-reverse ;width: 100%; margin-top: 10px; margin-bottom: 10px">
-            <button mat-raised-button color="primary">
-                <mat-icon>save</mat-icon>
-                Save
-            </button>
-        </div>
-    </form>
+    <mat-card>
+        <form [formGroup]="editCollectionForm" (ngSubmit)="save()">
+            <mat-form-field class="form-field">
+                <mat-label>Title (mandatory)</mat-label>
+                <input matInput formControlName="title">
+                <mat-error *ngIf="saveAttempt && title && title.errors?.['required']">Collection must contain title ☝️ </mat-error>
+            </mat-form-field>
+            <mat-form-field class="form-field">
+                <mat-label>Description</mat-label>
+                <textarea matInput formControlName="description" ></textarea>
+            </mat-form-field>
+            <mat-checkbox class="checkbox" formControlName="public" color="primary">Visible to others</mat-checkbox>
+            <div class="links-header">
+                <h3>Links</h3>
+                <button mat-raised-button color="primary" class="add-link-button" (click)="promptAddLink()">
+                    <mat-icon>add</mat-icon>
+                    Add link
+                </button>
+            </div>
+            <mat-list role="link">
+                <ng-container *ngFor="let link of editCollectionForm.value.links;let first = first;">
+                    <mat-divider *ngIf="first"></mat-divider>
+                    <mat-list-item role="listitem" >
+                        <div class="list-item-container">
+                            <div matListItemTitle><a href="{{link}}" target="_blank">{{link}}</a></div>
+                            <button mat-icon-button color="accent" (click)="deleteLink(link)">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </div>
+                    </mat-list-item>
+                    <mat-divider></mat-divider>
+                </ng-container>
+            </mat-list >
+            <div class="right-aligned-button-container">
+                <button mat-raised-button color="primary" class="save-button">
+                    <mat-icon>save</mat-icon>
+                    Save
+                </button>
+            </div>
+        </form>
+    </mat-card>
 </ng-container>
 <p *ngIf="!selectedCollection">Nothing to see here 🤷</p>
