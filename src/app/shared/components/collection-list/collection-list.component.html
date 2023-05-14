@@ -1,25 +1,43 @@
-<mat-card>
-    <mat-list>
-        <ng-container *ngFor="let collection of collection$ | async;let last = last;">
-        <div class="collection-item-container">
-            <mat-list-item >
-                <span matListItemTitle>
-                    <button mat-button color="primary" routerLink="{{collection?.['id']}}">{{collection?.['title']}}</button>
+<ng-container *ngIf="collections$ | async as collections">
+    <div *ngIf="collections && collections.length > 0; else emptyState">
+        <mat-card>
+            <mat-list>
+                <ng-container *ngFor="let collection of collections$ | async ;let last = last">
+                    <div class="collection-item-container">
+                        <mat-list-item >
+                            <span matListItemTitle>
+                                <button mat-button color="primary" routerLink="{{collection?.['id']}}">{{collection?.['title']}}</button>
+                            </span>
+                            <span class="collection-description-container">{{collection?.['description']}}</span>
+                        </mat-list-item>
+                        <div  *ngIf="editable" class="collection-action-container">
+                            <button mat-icon-button color="primary" aria-label="Edit collection"
+                                routerLink="{{collection?.['id'] + '/edit'}}">
+                                <mat-icon>edit</mat-icon>
+                            </button>
+                            <button mat-icon-button color="accent" aria-label="Delete collection"
+                                (click)="promptDeleteCollection(collection?.['id'])">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+                    <mat-divider *ngIf="!last"></mat-divider>
+                </ng-container>
+            </mat-list>
+        </mat-card>
+    </div>
+    <ng-template #emptyState>
+        <div class="empty-state-container">
+            <h3 class="info-text">All is good, you just haven't created any collections yet 😉 </h3>
+            <img src="/assets/images/monkey-1.png" alt="Empty state image" class="empty-state-image">
+            <div class="info-banner">
+                <div class="info-banner-icon">
+                    <mat-icon aria-hidden="false" aria-label="Info icon" fontIcon="info"></mat-icon>
+                </div>
+                <span class="info-banner-text">
+                    To create your first collection click the button in the top right corner with a little plus sign on it
                 </span>
-                <span class="collection-description-container">{{collection?.['description']}}</span>
-            </mat-list-item>
-            <div  *ngIf="editable" class="collection-action-container">
-                <button mat-icon-button color="primary" aria-label="Edit collection"
-                    routerLink="{{collection?.['id'] + '/edit'}}">
-                    <mat-icon>edit</mat-icon>
-                </button>
-                <button mat-icon-button color="accent" aria-label="Delete collection"
-                    (click)="promptDeleteCollection(collection?.['id'])">
-                    <mat-icon>delete</mat-icon>
-                </button>
             </div>
         </div>
-        <mat-divider *ngIf="!last"></mat-divider>
-        </ng-container>
-    </mat-list>
-</mat-card>
+    </ng-template>
+</ng-container>

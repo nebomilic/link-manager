@@ -12,7 +12,7 @@ export class CollectionListComponent {
     @Input() type: 'my' | 'discovered' = 'my'
     @Input() editable = false
 
-    get collection$() {
+    get collections$() {
         return this.type == 'my'
             ? this._collectionService.getMyCollections()
             : this._collectionService.getDiscoveredCollections()
