@@ -1,6 +1,5 @@
 .sidenav-container {
-  height: 100vh;
-  max-height: 800px;
+  height: 100%;
   max-width: 1200px;
   margin: auto;
   border: 1px rgba(0,0,0,.12);
@@ -11,21 +10,21 @@
   overflow: hidden;
   border-bottom-right-radius: 0.5rem; /* 8px */
   border-bottom-left-radius: 0.5rem; /* 8px */
-  @media (pointer: coarse)  {
-    /* mobile device */
-    max-height: 1180px;
+  // detecting mobile and desktop devices https://habr.com/en/sandbox/163605/
+  @media (pointer: fine), (pointer: none) {
+    /* desktop */
+    max-height: 800px;
   }
 }
 
 .sidenav {
   width: 260px;
-  height: 100vh;
-  max-height: 800px;
+  height: 100%;
   border-bottom: 1px rgba(0,0,0,.12);
   border-bottom-left-radius: 0.5rem;
-  @media (pointer: coarse)  {
-    /* mobile device */
-    max-height: 1180px;
+  @media (pointer: fine), (pointer: none) {
+    /* desktop */
+    max-height: 800px;
   }
 }
 
