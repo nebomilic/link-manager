@@ -1,5 +1,6 @@
 .sidenav-container {
-  height: 80%;
+  height: 100vh;
+  max-height: 800px;
   max-width: 1200px;
   margin: auto;
   border: 1px rgba(0,0,0,.12);
@@ -10,13 +11,22 @@
   overflow: hidden;
   border-bottom-right-radius: 0.5rem; /* 8px */
   border-bottom-left-radius: 0.5rem; /* 8px */
+  @media (pointer: coarse)  {
+    /* mobile device */
+    max-height: 1180px;
+  }
 }
 
 .sidenav {
   width: 260px;
-  height: 80%;
+  height: 100vh;
+  max-height: 800px;
   border-bottom: 1px rgba(0,0,0,.12);
   border-bottom-left-radius: 0.5rem;
+  @media (pointer: coarse)  {
+    /* mobile device */
+    max-height: 1180px;
+  }
 }
 
 .sidenav .mat-toolbar {

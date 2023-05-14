@@ -24,7 +24,7 @@
                     <mat-divider *ngIf="first"></mat-divider>
                     <mat-list-item role="listitem" >
                         <div class="list-item-container">
-                            <div matListItemTitle><a href="{{link}}" target="_blank">{{link}}</a></div>
+                            <span matListItemTitle><button mat-button color="primary" (click)="goToLink(link)">{{link}}</button></span>
                             <button mat-icon-button color="accent" (click)="deleteLink(link)">
                                 <mat-icon>delete</mat-icon>
                             </button>

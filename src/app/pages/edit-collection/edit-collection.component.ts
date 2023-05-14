@@ -4,7 +4,7 @@ import { Router } from '@angular/router'
 import { NavigationLink } from 'src/app/const'
 import { CollectionService } from 'src/app/shared/services/collection/collection.service'
 import { CurrentCollectionService } from 'src/app/shared/services/collection/utils/current-collection/current-collection.service'
-import { isValidUrl } from 'src/app/shared/utils'
+import { goToLink, isValidUrl } from 'src/app/shared/utils'
 import { Collection } from 'src/app/types'
 
 @Component({
@@ -14,6 +14,7 @@ import { Collection } from 'src/app/types'
     providers: [CurrentCollectionService],
 })
 export class EditCollectionComponent implements OnInit {
+    goToLink = goToLink
     constructor(
         private _router: Router,
         private _collectionService: CollectionService,
