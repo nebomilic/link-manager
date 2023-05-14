@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms'
 import { Router } from '@angular/router'
 import { NavigationLink } from 'src/app/const'
 import { CollectionService } from 'src/app/shared/services/collection/collection.service'
-import { isValidUrl } from 'src/app/shared/utils'
+import { goToLink, isValidUrl } from 'src/app/shared/utils'
 
 @Component({
     selector: 'app-new-collection',
@@ -11,6 +11,7 @@ import { isValidUrl } from 'src/app/shared/utils'
     styleUrls: ['./new-collection.component.scss'],
 })
 export class NewCollectionComponent {
+    goToLink = goToLink
     constructor(
         private _collectionService: CollectionService,
         private _router: Router
