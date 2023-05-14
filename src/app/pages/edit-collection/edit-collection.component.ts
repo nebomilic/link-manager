@@ -62,13 +62,13 @@ export class EditCollectionComponent implements OnInit {
     promptAddLink() {
         const newLink = prompt('Enter new link:', 'https://')
         if (newLink && isValidUrl(newLink)) {
-            this.addLink(newLink)
+            this._addLink(newLink)
         } else {
             alert('Please enter a valid link')
         }
     }
 
-    private addLink(newLink: string) {
+    private _addLink(newLink: string) {
         this.editCollectionForm.patchValue({
             links: [...this.editCollectionForm.value.links, newLink],
         })
