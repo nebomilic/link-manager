@@ -10,20 +10,3 @@
     display: flex;
     align-items: center;
 }
-
-.empty-state-container {
-    display:flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin-top: 5rem
-}
-
-.empty-state-image {
-    width: 40%;
-    opacity: 0.75;
-}
-
-.info-text {
-    text-align: center;
-}

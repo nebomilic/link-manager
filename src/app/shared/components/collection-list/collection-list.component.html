@@ -27,10 +27,7 @@
         </mat-card>
     </div>
     <ng-template #emptyState>
-        <div class="empty-state-container">
-            <h3 class="info-text">All is good, you just haven't created any collections yet 😉 </h3>
-            <img src="/assets/images/monkey-1.png" alt="Empty state image" class="empty-state-image">
-            <app-info-banner>To create your first collection click the button in the top right corner with a little plus sign on it</app-info-banner>
-        </div>
+        <app-no-collections-state [description]="type==='my' ? 'All is good, you just haven\'t created any collections yet 😉' : 'All is good, you just haven\'t bookmarked any collections yet 😊'"
+            [hint]="type==='my' ? 'To create your first collection click the button in the top right corner with a little plus sign on it' : 'To find collections to bookmark, click on \'Browse\' in the menu on the left'" />
     </ng-template>
 </ng-container>
