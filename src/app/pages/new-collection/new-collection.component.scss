@@ -36,3 +36,11 @@
 .add-link-button {
     margin: 26px 16px 16px 0
 }
+
+.info-banner-container {
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 5rem 1.5rem;
+}

@@ -1,4 +1,4 @@
-    <h2>Create new collection</h2>
+    <h2>Create collection</h2>
     <mat-card>
         <form [formGroup]="newCollectionForm" (ngSubmit)="save()">
             <mat-form-field class="form-field">
@@ -18,7 +18,7 @@
                     Add link
                 </button>
             </div>
-            <mat-list role="link">
+            <mat-list role="link" *ngIf="newCollectionForm.value.links && newCollectionForm.value.links.length > 0; else emptyState">
                 <ng-container *ngFor="let link of newCollectionForm.value.links;let first = first;">
                     <mat-divider *ngIf="first"></mat-divider>
                     <mat-list-item role="listitem" >
@@ -32,10 +32,15 @@
                     <mat-divider></mat-divider>
                 </ng-container>
             </mat-list >
+             <ng-template #emptyState>
+                <div class="info-banner-container">
+                    <app-info-banner>To add link click the button above on the right hand side with a little plus sign on it</app-info-banner>
+                </div>
+             </ng-template>
             <div class="right-aligned-button-container">
                 <button mat-raised-button color="primary" class="save-button">
                     <mat-icon>save</mat-icon>
-                    Save new collection
+                    Save collection
                 </button>
             </div>
         </form>
