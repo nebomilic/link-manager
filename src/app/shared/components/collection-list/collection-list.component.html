@@ -1,8 +1,8 @@
-<ng-container *ngIf="collections$ | async as collections">
-    <div *ngIf="collections && collections.length > 0; else emptyState">
+<ng-container *ngIf="collections | async as collectionsArray">
+    <div *ngIf="collectionsArray && collectionsArray.length > 0; else emptyState">
         <mat-card>
             <mat-list>
-                <ng-container *ngFor="let collection of collections$ | async ;let last = last">
+                <ng-container *ngFor="let collection of collections | async ;let last = last">
                     <div class="collection-item-container">
                         <mat-list-item >
                             <span matListItemTitle>
@@ -27,7 +27,7 @@
         </mat-card>
     </div>
     <ng-template #emptyState>
-        <app-no-collections-state [description]="type==='my' ? 'All is good, you just haven\'t created any collections yet 😉' : 'All is good, you just haven\'t bookmarked any collections yet 😊'"
-            [hint]="type==='my' ? 'To create your first collection click the button in the top right corner with a little plus sign on it' : 'To find collections to bookmark, click on \'Browse\' in the menu on the left'" />
+        <app-no-collections-state [description]="emptyDescription"
+            [hint]="emptyHint" />
     </ng-template>
 </ng-container>

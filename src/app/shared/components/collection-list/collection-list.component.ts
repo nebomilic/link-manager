@@ -1,22 +1,20 @@
 import { Component, Input } from '@angular/core'
+import { Observable, of } from 'rxjs'
+import { Collection } from 'src/app/types'
 import { CollectionService } from '../../services/collection/collection.service'
 
 @Component({
-    selector: 'app-collection-list[type]', // makes "type" mandatory
+    selector: 'app-collection-list[collections]', // makes "collections" mandatory
     templateUrl: './collection-list.component.html',
     styleUrls: ['./collection-list.component.scss'],
 })
 export class CollectionListComponent {
     constructor(private _collectionService: CollectionService) {}
 
-    @Input() type: 'my' | 'discovered' = 'my'
+    @Input() collections: Observable<Collection[]> = of([])
     @Input() editable = false
-
-    get collections$() {
-        return this.type == 'my'
-            ? this._collectionService.getMyCollections()
-            : this._collectionService.getDiscoveredCollections()
-    }
+    @Input() emptyDescription = ''
+    @Input() emptyHint = ''
 
     promptDeleteCollection(id: string | undefined) {
         if (!id) {

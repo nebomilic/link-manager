@@ -1,2 +1,6 @@
 <h2>My discovered collections</h2>
-<app-collection-list type="discovered"/>
+<app-collection-list
+    [collections]="collections$"
+    emptyDescription="All is good, you just haven't bookmarked any collections yet 😊"
+    emptyHint="To find collections to bookmark, click on 'Browse' in the menu on the left"
+/>
