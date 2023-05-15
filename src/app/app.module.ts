@@ -29,7 +29,9 @@ import { MatListModule } from '@angular/material/list'
 import { MatCardModule } from '@angular/material/card'
 import { MatFormFieldModule } from '@angular/material/form-field'
 import { MatInputModule } from '@angular/material/input'
-import { MatCheckboxModule } from '@angular/material/checkbox'
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { InfoBannerComponent } from './shared/components/info-banner/info-banner/info-banner.component';
+import { NoCollectionsStateComponent } from './shared/components/no-collections-state/no-collections-state/no-collections-state.component'
 
 @NgModule({
     declarations: [
@@ -45,6 +47,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox'
         CollectionListComponent,
         NewCollectionComponent,
         EditCollectionComponent,
+        InfoBannerComponent,
+        NoCollectionsStateComponent,
     ],
     imports: [
         BrowserModule,
