@@ -15,7 +15,7 @@
           <img src={{user.photoURL}}/>
           <div>
             <span>{{user.displayName}}</span>
-            <button mat-button color="accent" >
+            <button mat-button color="accent" (click)="logOut()">
               <mat-icon>logout</mat-icon>
               Log out
             </button>
