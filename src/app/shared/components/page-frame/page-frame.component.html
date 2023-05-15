@@ -3,8 +3,8 @@
       [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
       [mode]="(isHandset$ | async) ? 'over' : 'side'"
       [opened]="(isHandset$ | async) === false">
-    <div class="logo-text fancy">Link Thing</div>
-    <div style="height: 90%; display: flex; flex-direction: column; justify-content: space-between;">
+    <div class="logo-text">Link Thing</div>
+    <div class="action-area-container">
       <mat-nav-list (click)="isHandset && drawer.toggle()">
         <a mat-list-item routerLink={{navigationLinks.MyCollections}} [routerLinkActive]="['is-active']" >My collections</a>
         <a mat-list-item routerLink={{navigationLinks.DiscoveredCollections}} [routerLinkActive]="['is-active']">Discovered collections</a>
@@ -36,7 +36,7 @@
       </button>
       <span>link-manager</span>
     </mat-toolbar> -->
-    <div style="padding: 16px">
+    <div class="content-area-container">
       <router-outlet></router-outlet>
     </div>
   </mat-sidenav-content>

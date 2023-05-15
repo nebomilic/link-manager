@@ -17,6 +17,13 @@
   }
 }
 
+.action-area-container {
+  height: 90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
 .sidenav {
   width: 260px;
   height: 100%;
@@ -78,4 +85,8 @@
   display: flex;
   // justify-content: center;
   margin-top: 16px;
+}
+
+.content-area-container {
+  padding: 16px
 }

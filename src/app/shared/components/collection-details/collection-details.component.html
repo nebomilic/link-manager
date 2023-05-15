@@ -1,5 +1,5 @@
 <div *ngIf="selectedCollection;">
-    <div style="display:flex;justify-content: space-between;">
+    <div class="back-button-container">
         <a routerLink="..">back</a>
     </div>
     <div class="header">
@@ -13,7 +13,7 @@
         </ng-container>
     </div>
     <mat-card>
-        <p style="margin: 20px; font-size: large; font-style: italic;">{{selectedCollection.description}}</p>
+        <p class="collection-description">{{selectedCollection.description}}</p>
         <mat-list role="link">
             <ng-container *ngFor="let link of selectedCollection.links;let last = last;">
                 <mat-list-item role="listitem">
