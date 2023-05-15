@@ -32,7 +32,8 @@ import { MatInputModule } from '@angular/material/input'
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { InfoBannerComponent } from './shared/components/info-banner/info-banner/info-banner.component';
 import { NoCollectionsStateComponent } from './shared/components/no-collections-state/no-collections-state/no-collections-state.component';
-import { BrowseCollectionsComponent } from './pages/browse-collections/browse-collections/browse-collections.component'
+import { BrowseCollectionsComponent } from './pages/browse-collections/browse-collections/browse-collections.component';
+import { ResponsiveButtonComponent } from './shared/components/responsive-button/responsive-button/responsive-button.component'
 
 @NgModule({
     declarations: [
@@ -51,6 +52,7 @@ import { BrowseCollectionsComponent } from './pages/browse-collections/browse-co
         InfoBannerComponent,
         NoCollectionsStateComponent,
         BrowseCollectionsComponent,
+        ResponsiveButtonComponent,
     ],
     imports: [
         BrowserModule,

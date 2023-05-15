@@ -5,18 +5,11 @@
     <div class="header">
         <h2>{{selectedCollection.title}}</h2>
         <ng-container *ngIf="editable">
-            <div *ngIf="(isHandset$ | async); then smallButton else bigButton"></div>
-            <ng-template #smallButton>
-                <button mat-mini-fab color="primary" routerLink="edit">
-                    <mat-icon>edit</mat-icon>
-                </button>
-            </ng-template>
-            <ng-template #bigButton>
-                <button mat-raised-button color="primary" routerLink="edit">
-                    <mat-icon>edit</mat-icon>
-                    Edit collection
-                </button>
-            </ng-template>
+             <app-responsive-button
+                label="Edit collection"
+                icon="edit"
+                link="edit"
+            />
         </ng-container>
     </div>
     <mat-card>

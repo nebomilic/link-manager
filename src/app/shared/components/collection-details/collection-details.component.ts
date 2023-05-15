@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core'
-import { Observable } from 'rxjs'
 import { Collection } from 'src/app/types'
 import { AuthService } from '../../services/auth/auth.service'
 import { CurrentCollectionService } from '../../services/collection/utils/current-collection/current-collection.service'
-import { BreakpointService } from '../../services/ui/breakpoint/breakpoint.service'
 import { goToLink } from '../../utils'
 
 @Component({
@@ -19,13 +17,8 @@ export class CollectionDetailsComponent implements OnInit {
 
     constructor(
         private _authService: AuthService,
-        private _breakpointService: BreakpointService,
         private _currentCollectionService: CurrentCollectionService
     ) {}
-
-    get isHandset$(): Observable<boolean> {
-        return this._breakpointService.isHandset$
-    }
 
     ngOnInit(): void {
         this._currentCollectionService
