@@ -20,28 +20,10 @@
 }
 
 .empty-state-image {
-    width: 40%
+    width: 40%;
+    opacity: 0.75;
 }
 
 .info-text {
     text-align: center;
-}
-
-.info-banner {
-    background-color: #f6f6f6;
-    border-radius: 1rem;
-    padding: 1rem;
-    display:flex;
-    justify-content: center;
-
-
-}
-
-.info-banner-icon {
-     color:rgb(239 206 159)
-}
-.info-banner-text {
-    color: #5a5a5a;
-    line-height: 1.6;
-    margin-left: 0.5rem;
 }
