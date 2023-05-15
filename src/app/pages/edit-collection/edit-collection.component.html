@@ -1,7 +1,9 @@
 <ng-container *ngIf="selectedCollection">
-    <h2>Edit collection</h2>
+    <app-page-header>
+        <h2>Edit collection</h2>
+    </app-page-header>
+    <form [formGroup]="editCollectionForm" (ngSubmit)="save()">
     <mat-card>
-        <form [formGroup]="editCollectionForm" (ngSubmit)="save()">
             <mat-form-field class="form-field">
                 <mat-label>Title (mandatory)</mat-label>
                 <input matInput formControlName="title">
@@ -12,16 +14,17 @@
                 <textarea matInput formControlName="description" ></textarea>
             </mat-form-field>
             <mat-checkbox class="checkbox" formControlName="public" color="primary">Visible to others</mat-checkbox>
+        </mat-card>
             <div class="links-header">
                 <h3>Links</h3>
-                <button mat-raised-button color="primary" class="add-link-button" type="button" (click)="promptAddLink()">
+                <button mat-button color="primary" class="add-link-button" type="button" (click)="promptAddLink()">
                     <mat-icon>add</mat-icon>
                     Add link
                 </button>
             </div>
+        <mat-card>
             <mat-list role="link">
                 <ng-container *ngFor="let link of editCollectionForm.value.links;let first = first;">
-                    <mat-divider *ngIf="first"></mat-divider>
                     <mat-list-item role="listitem" >
                         <div class="list-item-container">
                             <span matListItemTitle><button mat-button color="primary" (click)="goToLink(link)">{{link}}</button></span>
@@ -39,7 +42,7 @@
                     Save changes
                 </button>
             </div>
-        </form>
-    </mat-card>
+        </mat-card>
+    </form>
 </ng-container>
 <p *ngIf="!selectedCollection">Nothing to see here 🤷</p>
