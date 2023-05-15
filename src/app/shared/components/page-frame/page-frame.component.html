@@ -3,16 +3,26 @@
       [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
       [mode]="(isHandset$ | async) ? 'over' : 'side'"
       [opened]="(isHandset$ | async) === false">
-    <div *ngIf="user" class="user-area">
-      <p>You are logged in as</p>
-      <p *ngIf="user"><b>{{user.displayName}}</b></p>
-      <a href="javascript:void(0)" (click)="logOut()" >Log out</a>
+    <div class="logo-text fancy">Link Thing</div>
+    <div style="height: 90%; display: flex; flex-direction: column; justify-content: space-between;">
+      <mat-nav-list (click)="isHandset && drawer.toggle()">
+        <a mat-list-item routerLink={{navigationLinks.MyCollections}} [routerLinkActive]="['is-active']" >My collections</a>
+        <a mat-list-item routerLink={{navigationLinks.DiscoveredCollections}} [routerLinkActive]="['is-active']">Discovered collections</a>
+        <a mat-list-item routerLink={{navigationLinks.Browse}} [routerLinkActive]="['is-active']">Browse</a>
+      </mat-nav-list>
+       <div *ngIf="user" class="user-area">
+        <div class="user-info">
+          <img src={{user.photoURL}}/>
+          <div>
+            <span>{{user.displayName}}</span>
+            <button mat-button color="accent" >
+              <mat-icon>logout</mat-icon>
+              Log out
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
-    <mat-nav-list (click)="isHandset && drawer.toggle()">
-      <a mat-list-item routerLink={{navigationLinks.MyCollections}} [routerLinkActive]="['is-active']" >My collections</a>
-      <a mat-list-item routerLink={{navigationLinks.DiscoveredCollections}} [routerLinkActive]="['is-active']">Discovered collections</a>
-      <a mat-list-item routerLink={{navigationLinks.Browse}} [routerLinkActive]="['is-active']">Browse</a>
-    </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
     <!-- <mat-toolbar color="primary">
