@@ -3,7 +3,7 @@
       [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
       [mode]="(isHandset$ | async) ? 'over' : 'side'"
       [opened]="(isHandset$ | async) === false">
-    <div class="logo-text">Link Thing</div>
+    <div class="logo-text"><span class="blue">Link</span> <span class="pink"> Thing</span></div>
     <div class="action-area-container">
       <mat-nav-list (click)="isHandset && drawer.toggle()">
         <a mat-list-item routerLink={{navigationLinks.MyCollections}} [routerLinkActive]="['is-active']" >My collections</a>
