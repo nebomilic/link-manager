@@ -14,11 +14,12 @@ import {
     doc,
 } from '@angular/fire/firestore'
 import {
+    catchError,
     combineLatest,
-    filter,
     map,
     mergeMap,
     Observable,
+    of,
     shareReplay,
     Subject,
     takeUntil,
@@ -100,10 +101,6 @@ export class CollectionService implements OnDestroy {
                     bufferSize: 1,
                     refCount: true,
                 }) as never,
-                filter(
-                    (item: DiscoveredCollectionIds[]) =>
-                        !!(item[0] && item[0].collectionIds)
-                ),
                 mergeMap((item: DiscoveredCollectionIds[]) => {
                     const discoveredCollectionsQuery = query(
                         this._collectionReference,
@@ -112,7 +109,14 @@ export class CollectionService implements OnDestroy {
                         limit(COLLECTIONS_PER_PAGE)
                     )
 
-                    return collectionData(discoveredCollectionsQuery)
+                    return collectionData(
+                        discoveredCollectionsQuery
+                    ) as Observable<Collection[]>
+                }),
+                catchError(() => {
+                    // this happens when the user has no discovered collections in firestore
+                    // therefore item[0].collectionIds is null in mergeMap above
+                    return of([])
                 })
             ) as Observable<Collection[]>
         }
