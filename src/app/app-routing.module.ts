@@ -15,7 +15,7 @@ import { NewCollectionComponent } from './pages/new-collection/new-collection.co
 import { SettingsComponent } from './pages/settings/settings.component'
 import { CollectionDetailsComponent } from './shared/components/collection-details/collection-details.component'
 import { NavigationLink } from './const'
-import { BrowseCollectionsComponent } from './pages/browse-collections/browse-collections/browse-collections.component'
+import { BrowseCollectionsComponent } from './pages/browse-collections/browse-collections.component'
 
 const redirectUnauthorizedToLogin = () =>
     redirectUnauthorizedTo([NavigationLink.Login])

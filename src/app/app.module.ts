@@ -29,12 +29,13 @@ import { MatListModule } from '@angular/material/list'
 import { MatCardModule } from '@angular/material/card'
 import { MatFormFieldModule } from '@angular/material/form-field'
 import { MatInputModule } from '@angular/material/input'
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { InfoBannerComponent } from './shared/components/info-banner/info-banner/info-banner.component';
-import { NoCollectionsStateComponent } from './shared/components/no-collections-state/no-collections-state/no-collections-state.component';
-import { BrowseCollectionsComponent } from './pages/browse-collections/browse-collections/browse-collections.component';
-import { ResponsiveButtonComponent } from './shared/components/responsive-button/responsive-button/responsive-button.component';
-import { LogoComponent } from './shared/components/logo/logo/logo.component'
+import { MatCheckboxModule } from '@angular/material/checkbox'
+import { InfoBannerComponent } from './shared/components/info-banner/info-banner/info-banner.component'
+import { NoCollectionsStateComponent } from './shared/components/no-collections-state/no-collections-state.component'
+import { BrowseCollectionsComponent } from './pages/browse-collections/browse-collections.component'
+import { ResponsiveButtonComponent } from './shared/components/responsive-button/responsive-button.component'
+import { LogoComponent } from './shared/components/logo/logo.component'
+import { PageHeaderComponent } from './shared/components/page-header/page-header.component'
 
 @NgModule({
     declarations: [
@@ -55,6 +56,7 @@ import { LogoComponent } from './shared/components/logo/logo/logo.component'
         BrowseCollectionsComponent,
         ResponsiveButtonComponent,
         LogoComponent,
+        PageHeaderComponent,
     ],
     imports: [
         BrowserModule,
