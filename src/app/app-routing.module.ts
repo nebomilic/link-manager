@@ -55,7 +55,7 @@ const routes: Routes = [
         ...canActivate(redirectUnauthorizedToLogin),
     },
     {
-        path: `${NavigationLink.DiscoveredCollections}/:id`,
+        path: `${NavigationLink.MyCollections}/:id`,
         component: CollectionDetailsComponent,
         ...canActivate(redirectUnauthorizedToLogin),
     },
