@@ -1,11 +1,11 @@
-<div class="header">
+<app-page-header>
     <h2>My collections</h2>
     <app-responsive-button
         label="New collection"
         icon="add"
         link="{{'/' + newCollectionLink}}"
     />
-</div>
+</app-page-header>
 <app-collection-list
     [collections]="collections$"
     [editable]="true"
