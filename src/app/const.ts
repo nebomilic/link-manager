@@ -6,6 +6,7 @@ export enum NavigationLink {
     Activity = 'activity',
     Settings = 'settings',
     NewCollection = 'new-collection',
+    Browse = 'browse',
 }
 
 export enum DBCollectionName {
