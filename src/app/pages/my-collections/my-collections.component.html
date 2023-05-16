@@ -7,7 +7,7 @@
     />
 </app-page-header>
 <app-collection-list
-    [collections]="collections$"
+    [collections]="collections$ | async"
     [editable]="true"
     emptyDescription="All is good, you just haven't created any collections yet 😉"
     emptyHint="To create your first collection click the button in the top right corner with a little plus sign on it"

@@ -1,8 +1,7 @@
-<ng-container *ngIf="collections | async as collectionsArray">
-    <div *ngIf="collectionsArray && collectionsArray.length > 0; else emptyState">
+    <div *ngIf="collections && collections.length > 0; else emptyState">
         <mat-card>
             <mat-list>
-                <ng-container *ngFor="let collection of collections | async ;let last = last">
+                <ng-container *ngFor="let collection of collections;let last = last">
                     <div class="collection-item-container">
                         <mat-list-item >
                             <span matListItemTitle>
@@ -30,4 +29,3 @@
         <app-no-collections-state [description]="emptyDescription"
             [hint]="emptyHint" />
     </ng-template>
-</ng-container>

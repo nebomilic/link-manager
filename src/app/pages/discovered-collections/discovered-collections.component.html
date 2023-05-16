@@ -2,7 +2,7 @@
     <h2>My discovered collections</h2>
 </app-page-header>
 <app-collection-list
-    [collections]="collections$"
+    [collections]="collections$ | async"
     emptyDescription="All is good, you just haven't bookmarked any collections yet 😊"
     emptyHint="To find collections to bookmark, click on 'Browse' in the menu on the left"
 />

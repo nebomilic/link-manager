@@ -1,5 +1,4 @@
 import { Component, Input } from '@angular/core'
-import { Observable, of } from 'rxjs'
 import { Collection } from 'src/app/types'
 import { CollectionService } from '../../services/collection/collection.service'
 
@@ -11,7 +10,7 @@ import { CollectionService } from '../../services/collection/collection.service'
 export class CollectionListComponent {
     constructor(private _collectionService: CollectionService) {}
 
-    @Input() collections: Observable<Collection[]> = of([])
+    @Input() collections: Collection[] | null = []
     @Input() editable = false
     @Input() emptyDescription = ''
     @Input() emptyHint = ''
