@@ -7,7 +7,7 @@
     <div class="action-area-container">
       <mat-nav-list (click)="isHandset && drawer.toggle()">
         <a mat-list-item routerLink={{navigationLinks.MyCollections}} [routerLinkActive]="['is-active']" >My collections</a>
-        <a mat-list-item routerLink={{navigationLinks.DiscoveredCollections}} [routerLinkActive]="['is-active']">Discovered collections</a>
+        <a mat-list-item routerLink={{navigationLinks.FavoriteCollections}} [routerLinkActive]="['is-active']">Favorite collections</a>
         <a mat-list-item routerLink={{navigationLinks.Browse}} [routerLinkActive]="['is-active']">Browse</a>
       </mat-nav-list>
        <div *ngIf="user" class="user-area">

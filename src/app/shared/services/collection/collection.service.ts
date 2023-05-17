@@ -36,7 +36,7 @@ import { DBCollectionName } from 'src/app/const'
 // TODO: implement pagination
 const COLLECTIONS_PER_PAGE = 10
 
-type DiscoveredCollectionIds = {
+type FavoriteCollectionIds = {
     authorId: string
     collectionIds: string[]
 }
@@ -51,14 +51,14 @@ export class CollectionService implements OnDestroy {
     private _myPublicCollections$!: Observable<Collection[]>
     private _myCollections$!: Observable<Collection[]>
     private _allCollections$!: Observable<Collection[]>
-    private _discoveredCollections$!: Observable<Collection[]>
+    private _favoriteCollections$!: Observable<Collection[]>
     private _collectionReference = collection(
         this._firestore,
         DBCollectionName.Collections
     )
-    private _discoveredCollectionReference = collection(
+    private _favoriteCollectionReference = collection(
         this._firestore,
-        DBCollectionName.DiscoveredCollections
+        DBCollectionName.FavoriteCollections
     )
 
     constructor(
@@ -86,43 +86,44 @@ export class CollectionService implements OnDestroy {
         return this._myCollections$
     }
 
-    public getDiscoveredCollections(): Observable<Collection[]> {
-        if (!this._discoveredCollections$) {
-            const discoveredCollectionIdsQuery = query(
-                this._discoveredCollectionReference,
+    public getFavoriteCollections(): Observable<Collection[]> {
+        if (!this._favoriteCollections$) {
+            const favoriteCollectionIdsQuery = query(
+                this._favoriteCollectionReference,
                 where('authorId', '==', this._authService.getUserId()),
                 limit(COLLECTIONS_PER_PAGE)
             )
 
-            this._discoveredCollections$ = collectionData(
-                discoveredCollectionIdsQuery
+            this._favoriteCollections$ = collectionData(
+                favoriteCollectionIdsQuery
             ).pipe(
                 takeUntil(this._destroy$),
                 shareReplay({
                     bufferSize: 1,
                     refCount: true,
                 }) as never,
-                mergeMap((item: DiscoveredCollectionIds[]) => {
-                    const discoveredCollectionsQuery = query(
+                mergeMap((item: FavoriteCollectionIds[]) => {
+                    const favoriteCollectionsQuery = query(
                         this._collectionReference,
                         where('id', 'in', item[0].collectionIds),
+                        where('public', '==', true),
                         orderBy('timestamp', 'desc'),
                         limit(COLLECTIONS_PER_PAGE)
                     )
 
                     return collectionData(
-                        discoveredCollectionsQuery
+                        favoriteCollectionsQuery
                     ) as Observable<Collection[]>
                 }),
                 catchError(() => {
-                    // this happens when the user has no discovered collections in firestore
+                    // this happens when the user has no favorite collections in firestore
                     // therefore item[0].collectionIds is null in mergeMap above
                     return of([])
                 })
             ) as Observable<Collection[]>
         }
 
-        return this._discoveredCollections$
+        return this._favoriteCollections$
     }
 
     public getPublicCollections(): Observable<Collection[]> {
@@ -153,7 +154,7 @@ export class CollectionService implements OnDestroy {
         if (!this._allCollections$) {
             this._allCollections$ = combineLatest([
                 this.getMyCollections(),
-                this.getDiscoveredCollections(),
+                this.getFavoriteCollections(),
                 this.getPublicCollections(),
             ]).pipe(
                 takeUntil(this._destroy$),
@@ -161,11 +162,11 @@ export class CollectionService implements OnDestroy {
                 map(
                     ([
                         myCollections,
-                        discoveredCollections,
+                        favoriteCollections,
                         publicCollections,
                     ]) => [
                         ...myCollections,
-                        ...discoveredCollections,
+                        ...favoriteCollections,
                         ...publicCollections,
                     ]
                 )

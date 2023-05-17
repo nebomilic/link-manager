@@ -5,7 +5,7 @@ import { AppComponent } from './app.component'
 import { DiscoverComponent } from './pages/discover/discover.component'
 import { LoginComponent } from './pages/login/login.component'
 import { MyCollectionsComponent } from './pages/my-collections/my-collections.component'
-import { DiscoveredCollectionsComponent } from './pages/discovered-collections/discovered-collections.component'
+import { FavoriteCollectionsComponent } from './pages/favorite-collections/favorite-collections.component'
 import { ActivityComponent } from './pages/activity/activity.component'
 import { SettingsComponent } from './pages/settings/settings.component'
 import { PageFrameComponent } from './shared/components/page-frame/page-frame.component'
@@ -43,7 +43,7 @@ import { PageHeaderComponent } from './shared/components/page-header/page-header
         DiscoverComponent,
         LoginComponent,
         MyCollectionsComponent,
-        DiscoveredCollectionsComponent,
+        FavoriteCollectionsComponent,
         ActivityComponent,
         SettingsComponent,
         PageFrameComponent,

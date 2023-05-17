@@ -7,7 +7,7 @@ import {
 } from '@angular/fire/auth-guard'
 import { ActivityComponent } from './pages/activity/activity.component'
 import { DiscoverComponent } from './pages/discover/discover.component'
-import { DiscoveredCollectionsComponent } from './pages/discovered-collections/discovered-collections.component'
+import { FavoriteCollectionsComponent } from './pages/favorite-collections/favorite-collections.component'
 import { EditCollectionComponent } from './pages/edit-collection/edit-collection.component'
 import { LoginComponent } from './pages/login/login.component'
 import { MyCollectionsComponent } from './pages/my-collections/my-collections.component'
@@ -50,12 +50,12 @@ const routes: Routes = [
         ...canActivate(redirectUnauthorizedToLogin),
     },
     {
-        path: NavigationLink.DiscoveredCollections,
-        component: DiscoveredCollectionsComponent,
+        path: NavigationLink.FavoriteCollections,
+        component: FavoriteCollectionsComponent,
         ...canActivate(redirectUnauthorizedToLogin),
     },
     {
-        path: `${NavigationLink.DiscoveredCollections}/:id`,
+        path: `${NavigationLink.FavoriteCollections}/:id`,
         component: CollectionDetailsComponent,
         ...canActivate(redirectUnauthorizedToLogin),
     },
