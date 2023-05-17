@@ -158,10 +158,17 @@ export class CollectionService implements OnDestroy {
             ]).pipe(
                 takeUntil(this._destroy$),
                 shareReplay({ bufferSize: 1, refCount: true }),
-                map(([myCollections, discoveredCollections]) => [
-                    ...myCollections,
-                    ...discoveredCollections,
-                ])
+                map(
+                    ([
+                        myCollections,
+                        discoveredCollections,
+                        publicCollections,
+                    ]) => [
+                        ...myCollections,
+                        ...discoveredCollections,
+                        ...publicCollections,
+                    ]
+                )
             )
         }
 
