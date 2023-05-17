@@ -40,6 +40,11 @@ const routes: Routes = [
         ...canActivate(redirectUnauthorizedToLogin),
     },
     {
+        path: `${NavigationLink.Browse}/:id`,
+        component: CollectionDetailsComponent,
+        ...canActivate(redirectUnauthorizedToLogin),
+    },
+    {
         path: `${NavigationLink.MyCollections}/:id/edit`,
         component: EditCollectionComponent,
         ...canActivate(redirectUnauthorizedToLogin),

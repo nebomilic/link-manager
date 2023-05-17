@@ -1,1 +1,8 @@
-<p>browse-collections works!</p>
+<app-page-header>
+    <h2>My collections</h2>
+</app-page-header>
+<app-collection-list
+    [collections]="collections$ | async"
+    emptyDescription="Whoops, it seems that others havent shared any of their collections yet 🤷"
+    emptyHint="Nothing you can do about this one, but wait until someone makes their collections public"
+/>

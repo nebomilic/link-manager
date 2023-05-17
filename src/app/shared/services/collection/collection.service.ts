@@ -48,6 +48,7 @@ type DiscoveredCollectionIds = {
 // TODO: make sure the service gets cleaned up on log out
 export class CollectionService implements OnDestroy {
     private _destroy$ = new Subject<void>()
+    private _myPublicCollections$!: Observable<Collection[]>
     private _myCollections$!: Observable<Collection[]>
     private _allCollections$!: Observable<Collection[]>
     private _discoveredCollections$!: Observable<Collection[]>
@@ -124,11 +125,36 @@ export class CollectionService implements OnDestroy {
         return this._discoveredCollections$
     }
 
+    public getPublicCollections(): Observable<Collection[]> {
+        if (!this._myPublicCollections$) {
+            const publicCollectionsQuery = query(
+                this._collectionReference,
+                where('authorId', '!=', this._authService.getUserId()),
+                where('public', '==', true),
+                orderBy('authorId', 'desc'),
+                orderBy('timestamp', 'desc'),
+                limit(COLLECTIONS_PER_PAGE)
+            )
+            this._myPublicCollections$ = collectionData(
+                publicCollectionsQuery
+            ).pipe(
+                takeUntil(this._destroy$) as never,
+                shareReplay<Collection[]>({
+                    bufferSize: 1,
+                    refCount: true,
+                })
+            ) as Observable<Collection[]>
+        }
+
+        return this._myPublicCollections$
+    }
+
     public getAllCollections(): Observable<Collection[]> {
         if (!this._allCollections$) {
             this._allCollections$ = combineLatest([
                 this.getMyCollections(),
                 this.getDiscoveredCollections(),
+                this.getPublicCollections(),
             ]).pipe(
                 takeUntil(this._destroy$),
                 shareReplay({ bufferSize: 1, refCount: true }),
