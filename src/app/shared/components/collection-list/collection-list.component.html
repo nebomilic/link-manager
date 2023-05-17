@@ -9,16 +9,7 @@
                             </span>
                             <span class="collection-description-container">{{collection?.['description']}}</span>
                         </mat-list-item>
-                        <div  *ngIf="editable" class="collection-action-container">
-                            <button mat-icon-button color="primary" aria-label="Edit collection"
-                                routerLink="{{collection?.['id'] + '/edit'}}">
-                                <mat-icon>edit</mat-icon>
-                            </button>
-                            <button mat-icon-button color="accent" aria-label="Delete collection"
-                                (click)="promptDeleteCollection(collection?.['id'])">
-                                <mat-icon>delete</mat-icon>
-                            </button>
-                        </div>
+                        <ng-container *ngTemplateOutlet="actions || null; context: {$implicit: collection}"></ng-container>
                     </div>
                     <mat-divider *ngIf="!last"></mat-divider>
                 </ng-container>

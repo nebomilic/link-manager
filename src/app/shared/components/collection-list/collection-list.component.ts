@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core'
+import { Component, ContentChild, Input, TemplateRef } from '@angular/core'
 import { Collection } from 'src/app/types'
 import { CollectionService } from '../../services/collection/collection.service'
 
@@ -14,21 +14,5 @@ export class CollectionListComponent {
     @Input() editable = false
     @Input() emptyDescription = ''
     @Input() emptyHint = ''
-
-    promptDeleteCollection(id: string | undefined) {
-        if (!id) {
-            alert('Whoops, something went wrong. Please try again.')
-        } else {
-            if (
-                confirm('Are you sure you want to delete this collection?') ==
-                true
-            ) {
-                this.deleteCollection(id)
-            }
-        }
-    }
-
-    private deleteCollection(id: string) {
-        this._collectionService.deleteCollection(id)
-    }
+    @ContentChild('actions') actions: TemplateRef<any> | undefined
 }

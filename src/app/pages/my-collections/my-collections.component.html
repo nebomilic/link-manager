@@ -11,4 +11,16 @@
     [editable]="true"
     emptyDescription="All is good, you just haven't created any collections yet 😉"
     emptyHint="To create your first collection click the button in the top right corner with a little plus sign on it"
-/>
+>
+      <ng-template #actions let-collection>
+        <button mat-icon-button color="primary" aria-label="Edit collection"
+            routerLink="{{collection?.['id'] + '/edit'}}">
+            <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button color="accent" aria-label="Delete collection"
+            (click)="promptDeleteCollection(collection?.['id'])">
+            <mat-icon>delete</mat-icon>
+        </button>
+    </ng-template>
+</app-collection-list>
+
