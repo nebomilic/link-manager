@@ -1,6 +1,5 @@
 export enum NavigationLink {
     Login = 'login',
-    Discover = 'discover',
     MyCollections = 'my-collections',
     FavoriteCollections = 'favorite-collections',
     Activity = 'activity',

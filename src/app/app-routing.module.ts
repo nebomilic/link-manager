@@ -6,7 +6,6 @@ import {
     redirectUnauthorizedTo,
 } from '@angular/fire/auth-guard'
 import { ActivityComponent } from './pages/activity/activity.component'
-import { DiscoverComponent } from './pages/discover/discover.component'
 import { FavoriteCollectionsComponent } from './pages/favorite-collections/favorite-collections.component'
 import { EditCollectionComponent } from './pages/edit-collection/edit-collection.component'
 import { LoginComponent } from './pages/login/login.component'
@@ -29,7 +28,6 @@ const routes: Routes = [
         component: LoginComponent,
         ...canActivate(redirectLoggedInToHome),
     },
-    { path: 'discover', component: DiscoverComponent },
     {
         path: NavigationLink.MyCollections,
         component: MyCollectionsComponent,

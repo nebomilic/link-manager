@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser'
 import { AppRoutingModule } from './app-routing.module'
 import { AppComponent } from './app.component'
-import { DiscoverComponent } from './pages/discover/discover.component'
 import { LoginComponent } from './pages/login/login.component'
 import { MyCollectionsComponent } from './pages/my-collections/my-collections.component'
 import { FavoriteCollectionsComponent } from './pages/favorite-collections/favorite-collections.component'
@@ -44,7 +43,6 @@ import { CollectionFormComponent } from './shared/components/collection-form/col
 @NgModule({
     declarations: [
         AppComponent,
-        DiscoverComponent,
         LoginComponent,
         MyCollectionsComponent,
         FavoriteCollectionsComponent,
