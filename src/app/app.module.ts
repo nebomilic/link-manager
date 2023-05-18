@@ -35,7 +35,8 @@ import { NoCollectionsStateComponent } from './shared/components/no-collections-
 import { BrowseCollectionsComponent } from './pages/browse-collections/browse-collections.component'
 import { ResponsiveButtonComponent } from './shared/components/responsive-button/responsive-button.component'
 import { LogoComponent } from './shared/components/logo/logo.component'
-import { PageHeaderComponent } from './shared/components/page-header/page-header.component'
+import { PageHeaderComponent } from './shared/components/page-header/page-header.component';
+import { MyCollectionDetailsComponent } from './pages/my-collection-details/my-collection-details.component'
 
 @NgModule({
     declarations: [
@@ -57,6 +58,7 @@ import { PageHeaderComponent } from './shared/components/page-header/page-header
         ResponsiveButtonComponent,
         LogoComponent,
         PageHeaderComponent,
+        MyCollectionDetailsComponent,
     ],
     imports: [
         BrowserModule,

@@ -16,6 +16,7 @@ import { SettingsComponent } from './pages/settings/settings.component'
 import { CollectionDetailsComponent } from './shared/components/collection-details/collection-details.component'
 import { NavigationLink } from './const'
 import { BrowseCollectionsComponent } from './pages/browse-collections/browse-collections.component'
+import { MyCollectionDetailsComponent } from './pages/my-collection-details/my-collection-details.component'
 
 const redirectUnauthorizedToLogin = () =>
     redirectUnauthorizedTo([NavigationLink.Login])
@@ -61,7 +62,7 @@ const routes: Routes = [
     },
     {
         path: `${NavigationLink.MyCollections}/:id`,
-        component: CollectionDetailsComponent,
+        component: MyCollectionDetailsComponent,
         ...canActivate(redirectUnauthorizedToLogin),
     },
     { path: NavigationLink.Activity, component: ActivityComponent },

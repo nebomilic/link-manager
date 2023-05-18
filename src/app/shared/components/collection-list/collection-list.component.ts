@@ -11,7 +11,6 @@ export class CollectionListComponent {
     constructor(private _collectionService: CollectionService) {}
 
     @Input() collections: Collection[] | null = []
-    @Input() editable = false
     @Input() emptyDescription = ''
     @Input() emptyHint = ''
     @ContentChild('actions') actions: TemplateRef<any> | undefined

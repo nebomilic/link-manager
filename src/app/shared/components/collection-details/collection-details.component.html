@@ -4,13 +4,7 @@
     </div>
     <app-page-header>
         <h2>{{selectedCollection.title}}</h2>
-        <ng-container *ngIf="editable">
-             <app-responsive-button
-                label="Edit collection"
-                icon="edit"
-                link="edit"
-            />
-        </ng-container>
+        <ng-container *ngTemplateOutlet="action || null;"></ng-container>
     </app-page-header>
     <mat-card>
         <p class="collection-description">{{selectedCollection.description}}</p>

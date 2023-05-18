@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, ContentChild, OnInit, TemplateRef } from '@angular/core'
 import { Collection } from 'src/app/types'
 import { AuthService } from '../../services/auth/auth.service'
 import { CurrentCollectionService } from '../../services/collection/utils/current-collection/current-collection.service'
@@ -12,8 +12,8 @@ import { goToLink } from '../../utils'
 })
 export class CollectionDetailsComponent implements OnInit {
     selectedCollection: Collection | null = null
-    editable = false
     goToLink = goToLink
+    @ContentChild('action') action: TemplateRef<any> | undefined
 
     constructor(
         private _authService: AuthService,
@@ -25,9 +25,6 @@ export class CollectionDetailsComponent implements OnInit {
             .getCurrentCollection()
             .subscribe((collection) => {
                 this.selectedCollection = collection
-                this.editable =
-                    this.selectedCollection?.authorId ==
-                    this._authService.getUserId()
             })
     }
 }
