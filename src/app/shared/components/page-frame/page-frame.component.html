@@ -19,16 +19,14 @@
         <a mat-list-item routerLink={{navigationLinks.FavoriteCollections}} [routerLinkActive]="['is-active']">Faved collections</a>
         <a mat-list-item routerLink={{navigationLinks.Browse}} [routerLinkActive]="['is-active']">Browse</a>
       </mat-nav-list>
-       <div *ngIf="user" class="user-area">
-        <div class="user-info">
-          <img src={{user.photoURL}}/>
-          <div>
-            <span>{{user.displayName}}</span>
-            <button mat-button color="accent" (click)="logOut()">
-              <mat-icon>logout</mat-icon>
-              Log out
-            </button>
-          </div>
+      <div *ngIf="user" class="user-info">
+        <img src={{user.photoURL}}/>
+        <div class="user-info-text-container">
+          <div class="user-name">{{user.displayName}}</div>
+          <button mat-button color="accent" (click)="logOut()">
+            <mat-icon>logout</mat-icon>
+            Log out
+          </button>
         </div>
       </div>
     </div>
