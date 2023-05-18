@@ -1,6 +1,9 @@
 <div *ngIf="selectedCollection;">
     <div class="back-button-container">
-        <a routerLink="..">back</a>
+         <button mat-button color="primary" class="add-link-button" type="button" routerLink="..">
+            <mat-icon>arrow_back</mat-icon>
+            back
+        </button>
     </div>
     <app-page-header>
         <h2>{{selectedCollection.title}}</h2>
