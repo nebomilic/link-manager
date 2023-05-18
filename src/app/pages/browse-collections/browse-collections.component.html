@@ -5,4 +5,11 @@
     [collections]="collections$ | async"
     emptyDescription="Whoops, it seems that others havent shared any of their collections yet 🤷"
     emptyHint="Nothing you can do about this one, but wait until someone makes their collections public"
-/>
+>
+    <ng-template #actions let-collection>
+        <button mat-icon-button color="primary" aria-label="Fave collection"
+            (click)="faveCollection(collection?.['id'])">
+            <mat-icon>favorite_border</mat-icon>
+        </button>
+    </ng-template>
+</app-collection-list>

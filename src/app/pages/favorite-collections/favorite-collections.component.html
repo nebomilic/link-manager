@@ -5,4 +5,11 @@
     [collections]="collections$ | async"
     emptyDescription="All is good, you just haven't faved any collections yet 😊"
     emptyHint="To find collections to fave, click on 'Browse' in the menu on the left"
-/>
+>
+     <ng-template #actions let-collection>
+        <button mat-icon-button color="primary" aria-label="Unfave collection"
+             (click)="unfaveCollection(collection?.['id'])">
+            <mat-icon>favorite</mat-icon>
+        </button>
+    </ng-template>
+</app-collection-list>

@@ -2,6 +2,7 @@ import { Injectable, OnDestroy } from '@angular/core'
 import { v4 as uuidv4 } from 'uuid'
 import {
     Firestore,
+    FieldValue,
     collectionData,
     collection,
     where,
@@ -12,6 +13,8 @@ import {
     orderBy,
     setDoc,
     doc,
+    arrayUnion,
+    arrayRemove,
 } from '@angular/fire/firestore'
 import {
     catchError,
@@ -53,6 +56,7 @@ export class CollectionService implements OnDestroy {
     private _myCollections$!: Observable<Collection[]>
     private _allCollections$!: Observable<Collection[]>
     private _favoriteCollections$!: Observable<Collection[]>
+    private _favoriteCollectionIds: string[] = []
     private _collectionReference = collection(
         this._firestore,
         DBCollectionName.Collections
@@ -105,9 +109,10 @@ export class CollectionService implements OnDestroy {
                     refCount: true,
                 }) as never,
                 mergeMap((item: FavoriteCollectionIds[]) => {
+                    this._favoriteCollectionIds = item[0].collectionIds
                     const favoriteCollectionsQuery = query(
                         this._collectionReference,
-                        where('id', 'in', item[0].collectionIds),
+                        where('id', 'in', this._favoriteCollectionIds),
                         where('public', '==', true),
                         orderBy('timestamp', 'desc'),
                         limit(COLLECTIONS_PER_PAGE)
@@ -239,6 +244,47 @@ export class CollectionService implements OnDestroy {
                 'Collection could not be updated 😕'
             )
             console.log(e)
+        }
+    }
+
+    async faveCollection(collectionId: string) {
+        this._updateFavoriteCollectionIds(
+            arrayUnion(collectionId),
+            'Collection faved 🥰',
+            'Collection could not be faved 😵‍💫'
+        )
+    }
+
+    async unfaveCollection(collectionId: string) {
+        this._updateFavoriteCollectionIds(
+            arrayRemove(collectionId),
+            'Collection unfaved 🥲',
+            'Collection could not be unfaved 😵‍💫'
+        )
+    }
+
+    private async _updateFavoriteCollectionIds(
+        collectionIdsFieldValue: FieldValue,
+        successMessage: string,
+        failMessage: string
+    ) {
+        const ref = doc(
+            this._firestore,
+            DBCollectionName.FavoriteCollections,
+            this._authService.getUserId() || ''
+        )
+        try {
+            await setDoc(
+                ref,
+                {
+                    authorId: this._authService.getUserId(),
+                    collectionIds: collectionIdsFieldValue,
+                },
+                { merge: true }
+            )
+            this._snackBarService.showMessage(successMessage)
+        } catch (error) {
+            this._snackBarService.showMessage(failMessage)
         }
     }
 
