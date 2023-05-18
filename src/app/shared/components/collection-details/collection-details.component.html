@@ -1,10 +1,10 @@
 <div *ngIf="selectedCollection;">
-    <div class="back-button-container">
+    <!-- <div class="back-button-container">
          <button mat-button color="primary" class="add-link-button" type="button" routerLink="..">
             <mat-icon>arrow_back</mat-icon>
             back
         </button>
-    </div>
+    </div> -->
     <app-page-header>
         <h2>{{selectedCollection.title}}</h2>
         <ng-container *ngTemplateOutlet="action || null;"></ng-container>

@@ -1,11 +1,11 @@
+.mat-drawer-inner-container { display: flex; flex-direction: column; }
+
 .sidenav-container {
   height: 100%;
   max-width: 1200px;
   margin: auto;
   border: 1px rgba(0,0,0,.12);
   border-style: none solid solid solid;
-  // box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); // md
-  // box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1); // xl
   box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1); // lg
   overflow: hidden;
   border-bottom-right-radius: 0.5rem; /* 8px */
@@ -18,7 +18,7 @@
 }
 
 .action-area-container {
-  height: 90%;
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -29,6 +29,7 @@
   height: 100%;
   border-bottom: 1px rgba(0,0,0,.12);
   border-bottom-left-radius: 0.5rem;
+  display: flex;
   @media (pointer: fine), (pointer: none) {
     /* desktop */
     max-height: 800px;
@@ -37,12 +38,6 @@
 
 .sidenav .mat-toolbar {
   background: inherit;
-}
-
-.mat-toolbar.mat-primary {
-  position: sticky;
-  top: 0;
-  z-index: 1;
 }
 
 .is-active {
@@ -76,6 +71,10 @@
   margin: 20px 0;
 }
 
+.logo-margin-top {
+   margin-top: 50px;
+}
+
 .logout-button-container {
   display: flex;
   margin-top: 16px;
@@ -83,4 +82,15 @@
 
 .content-area-container {
   padding: 16px
+}
+
+.menu-button {
+  position: absolute;
+  top: 8px;
+}
+
+.close-menu-button {
+  position: absolute;
+  top: 0;
+  right: 0
 }

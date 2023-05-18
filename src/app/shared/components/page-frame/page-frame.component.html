@@ -3,7 +3,16 @@
       [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
       [mode]="(isHandset$ | async) ? 'over' : 'side'"
       [opened]="(isHandset$ | async) === false">
-    <div class="logo-text"><app-logo /></div>
+       <button
+        type="button"
+        aria-label="Close sidenav"
+        class="close-menu-button"
+        mat-icon-button
+        (click)="drawer.close()"
+        *ngIf="isHandset$ | async">
+        <mat-icon aria-label="Side nav toggle icon">close</mat-icon>
+    </button>
+    <div class="logo-text" [ngClass]="(isHandset$ | async) ? 'logo-margin-top' : ''"><app-logo /></div>
     <div class="action-area-container">
       <mat-nav-list (click)="isHandset && drawer.toggle()">
         <a mat-list-item routerLink={{navigationLinks.MyCollections}} [routerLinkActive]="['is-active']" >My collections</a>
@@ -25,17 +34,15 @@
     </div>
   </mat-sidenav>
   <mat-sidenav-content>
-    <!-- <mat-toolbar color="primary">
-      <button
-        type="button"
-        aria-label="Toggle sidenav"
-        mat-icon-button
-        (click)="drawer.toggle()"
-        *ngIf="isHandset$ | async">
-        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
-      </button>
-      <span>link-manager</span>
-    </mat-toolbar> -->
+    <button
+      type="button"
+      aria-label="Toggle sidenav"
+      class="menu-button"
+      mat-icon-button
+      (click)="drawer.toggle()"
+      *ngIf="isHandset$ | async">
+      <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+    </button>
     <div class="content-area-container">
       <router-outlet></router-outlet>
     </div>

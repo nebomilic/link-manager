@@ -26,3 +26,6 @@ html, body {
 
 }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+// helps align children of the side navigation as we want it
+.mat-drawer-inner-container { display: flex; flex-direction: column; }
