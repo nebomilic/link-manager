@@ -7,7 +7,7 @@
         <ng-container *ngTemplateOutlet="action || null;"></ng-container>
     </app-page-header>
     <mat-card>
-        <p class="collection-description">{{selectedCollection.description}}</p>
+        <p class="collection-description" *ngIf="selectedCollection.description">{{selectedCollection.description}}</p>
         <mat-list role="link">
             <ng-container *ngFor="let link of selectedCollection.links;let last = last;">
                 <mat-list-item role="listitem">
