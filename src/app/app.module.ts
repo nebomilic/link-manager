@@ -35,8 +35,9 @@ import { NoCollectionsStateComponent } from './shared/components/no-collections-
 import { BrowseCollectionsComponent } from './pages/browse-collections/browse-collections.component'
 import { ResponsiveButtonComponent } from './shared/components/responsive-button/responsive-button.component'
 import { LogoComponent } from './shared/components/logo/logo.component'
-import { PageHeaderComponent } from './shared/components/page-header/page-header.component';
+import { PageHeaderComponent } from './shared/components/page-header/page-header.component'
 import { MyCollectionDetailsComponent } from './pages/my-collection-details/my-collection-details.component'
+import { MatSnackBarModule } from '@angular/material/snack-bar'
 
 @NgModule({
     declarations: [
@@ -79,6 +80,7 @@ import { MyCollectionDetailsComponent } from './pages/my-collection-details/my-c
         MatFormFieldModule,
         MatInputModule,
         MatCheckboxModule,
+        MatSnackBarModule,
     ],
     providers: [],
     bootstrap: [AppComponent],
