@@ -10,7 +10,10 @@
         <ng-container *ngTemplateOutlet="action || null;"></ng-container>
     </app-page-header>
     <mat-card>
-        <p class="collection-description" *ngIf="selectedCollection.description">{{selectedCollection.description}}</p>
+        <div *ngIf="selectedCollection.description">
+            <p class="collection-description">{{selectedCollection.description}}</p>
+            <mat-divider *ngIf="selectedCollection.links.length > 0"></mat-divider>
+        </div>
         <mat-list role="link">
             <ng-container *ngFor="let link of selectedCollection.links;let last = last;">
                 <mat-list-item role="listitem">
