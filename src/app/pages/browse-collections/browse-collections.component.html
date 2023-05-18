@@ -7,9 +7,15 @@
     emptyHint="Nothing you can do about this one, but wait until someone makes their collections public"
 >
     <ng-template #actions let-collection>
-        <button mat-icon-button color="primary" aria-label="Fave collection"
+        <button *ngIf="isFavorite(collection?.['id'])|async; else unfav" mat-icon-button color="primary" aria-label="Unfave collection"
+            (click)="unfaveCollection(collection?.['id'])">
+            <mat-icon>favorite</mat-icon>
+        </button>
+        <ng-template #unfav>
+            <button  mat-icon-button color="primary" aria-label="Fave collection"
             (click)="faveCollection(collection?.['id'])">
             <mat-icon>favorite_border</mat-icon>
         </button>
+        </ng-template>
     </ng-template>
 </app-collection-list>

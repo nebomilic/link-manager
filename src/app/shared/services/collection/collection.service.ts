@@ -57,6 +57,8 @@ export class CollectionService implements OnDestroy {
     private _allCollections$!: Observable<Collection[]>
     private _favoriteCollections$!: Observable<Collection[]>
     private _favoriteCollectionIds: string[] = []
+    private _favoriteCollectionIds$!: Observable<FavoriteCollectionIds[]>
+
     private _collectionReference = collection(
         this._firestore,
         DBCollectionName.Collections
@@ -92,17 +94,31 @@ export class CollectionService implements OnDestroy {
         return this._myCollections$
     }
 
-    public getFavoriteCollections(): Observable<Collection[]> {
-        if (!this._favoriteCollections$) {
+    public getFavoriteCollectionIds(): Observable<FavoriteCollectionIds[]> {
+        if (!this._favoriteCollectionIds$) {
             const favoriteCollectionIdsQuery = query(
                 this._favoriteCollectionReference,
                 where('authorId', '==', this._authService.getUserId()),
                 limit(COLLECTIONS_PER_PAGE)
             )
 
-            this._favoriteCollections$ = collectionData(
+            this._favoriteCollectionIds$ = collectionData(
                 favoriteCollectionIdsQuery
             ).pipe(
+                takeUntil(this._destroy$),
+                shareReplay({
+                    bufferSize: 1,
+                    refCount: true,
+                }) as never
+            ) as Observable<FavoriteCollectionIds[]>
+        }
+
+        return this._favoriteCollectionIds$
+    }
+
+    public getFavoriteCollections(): Observable<Collection[]> {
+        if (!this._favoriteCollections$) {
+            this._favoriteCollections$ = this.getFavoriteCollectionIds().pipe(
                 takeUntil(this._destroy$),
                 shareReplay({
                     bufferSize: 1,
