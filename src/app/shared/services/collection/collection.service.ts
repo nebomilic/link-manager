@@ -19,6 +19,7 @@ import {
 import {
     catchError,
     combineLatest,
+    concatMap,
     map,
     mergeMap,
     Observable,
@@ -56,8 +57,7 @@ export class CollectionService implements OnDestroy {
     private _myCollections$!: Observable<Collection[]>
     private _allCollections$!: Observable<Collection[]>
     private _favoriteCollections$!: Observable<Collection[]>
-    private _favoriteCollectionIds: string[] = []
-    private _favoriteCollectionIds$!: Observable<FavoriteCollectionIds[]>
+    private _favoriteCollectionIds$!: Observable<FavoriteCollectionIds>
 
     private _collectionReference = collection(
         this._firestore,
@@ -94,7 +94,7 @@ export class CollectionService implements OnDestroy {
         return this._myCollections$
     }
 
-    public getFavoriteCollectionIds(): Observable<FavoriteCollectionIds[]> {
+    public getFavoriteCollectionIds(): Observable<FavoriteCollectionIds> {
         if (!this._favoriteCollectionIds$) {
             const favoriteCollectionIdsQuery = query(
                 this._favoriteCollectionReference,
@@ -109,8 +109,11 @@ export class CollectionService implements OnDestroy {
                 shareReplay({
                     bufferSize: 1,
                     refCount: true,
-                }) as never
-            ) as Observable<FavoriteCollectionIds[]>
+                }) as never,
+                concatMap((item: never) => {
+                    return item
+                })
+            ) as Observable<FavoriteCollectionIds>
         }
 
         return this._favoriteCollectionIds$
@@ -124,11 +127,10 @@ export class CollectionService implements OnDestroy {
                     bufferSize: 1,
                     refCount: true,
                 }) as never,
-                mergeMap((item: FavoriteCollectionIds[]) => {
-                    this._favoriteCollectionIds = item[0].collectionIds
+                mergeMap((item: FavoriteCollectionIds) => {
                     const favoriteCollectionsQuery = query(
                         this._collectionReference,
-                        where('id', 'in', this._favoriteCollectionIds),
+                        where('id', 'in', item.collectionIds),
                         where('public', '==', true),
                         orderBy('timestamp', 'desc'),
                         limit(COLLECTIONS_PER_PAGE)
