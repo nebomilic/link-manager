@@ -30,6 +30,7 @@ import { MatCardModule } from '@angular/material/card'
 import { MatFormFieldModule } from '@angular/material/form-field'
 import { MatInputModule } from '@angular/material/input'
 import { MatCheckboxModule } from '@angular/material/checkbox'
+import { A11yModule } from '@angular/cdk/a11y'
 import { InfoBannerComponent } from './shared/components/info-banner/info-banner/info-banner.component'
 import { NoCollectionsStateComponent } from './shared/components/no-collections-state/no-collections-state.component'
 import { BrowseCollectionsComponent } from './pages/browse-collections/browse-collections.component'
@@ -38,6 +39,7 @@ import { LogoComponent } from './shared/components/logo/logo.component'
 import { PageHeaderComponent } from './shared/components/page-header/page-header.component'
 import { MyCollectionDetailsComponent } from './pages/my-collection-details/my-collection-details.component'
 import { MatSnackBarModule } from '@angular/material/snack-bar'
+import { CollectionFormComponent } from './shared/components/collection-form/collection-form.component'
 
 @NgModule({
     declarations: [
@@ -60,6 +62,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar'
         LogoComponent,
         PageHeaderComponent,
         MyCollectionDetailsComponent,
+        CollectionFormComponent,
     ],
     imports: [
         BrowserModule,
@@ -81,6 +84,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar'
         MatInputModule,
         MatCheckboxModule,
         MatSnackBarModule,
+        A11yModule,
     ],
     providers: [],
     bootstrap: [AppComponent],

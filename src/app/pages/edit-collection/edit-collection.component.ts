@@ -15,6 +15,7 @@ import { Collection } from 'src/app/types'
 })
 export class EditCollectionComponent implements OnInit {
     goToLink = goToLink
+    show = false
     constructor(
         private _router: Router,
         private _collectionService: CollectionService,
@@ -83,6 +84,7 @@ export class EditCollectionComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.show = true
         this._currentCollectionService
             .getCurrentCollection()
             .subscribe((collection) => {
