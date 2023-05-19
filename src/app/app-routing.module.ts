@@ -10,7 +10,7 @@ import { EditCollectionComponent } from './pages/edit-collection/edit-collection
 import { LoginComponent } from './pages/login/login.component'
 import { MyCollectionsComponent } from './pages/my-collections/my-collections.component'
 import { NewCollectionComponent } from './pages/new-collection/new-collection.component'
-import { CollectionDetailsComponent } from './shared/components/collection-details/collection-details.component'
+import { CollectionDetailsComponent } from './shared/components/features/collection-details/collection-details.component'
 import { BrowseCollectionsComponent } from './pages/browse-collections/browse-collections.component'
 import { MyCollectionDetailsComponent } from './pages/my-collection-details/my-collection-details.component'
 import { NavigationLink } from './const'

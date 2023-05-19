@@ -1,8 +1,8 @@
 import { Component, ContentChild, OnInit, TemplateRef } from '@angular/core'
 import { Collection } from 'src/app/types'
-import { AuthService } from '../../services/auth/auth.service'
-import { CurrentCollectionService } from '../../services/collection/utils/current-collection/current-collection.service'
-import { goToLink } from '../../utils'
+import { AuthService } from '../../../services/auth/auth.service'
+import { CurrentCollectionService } from '../../../services/collection/utils/current-collection/current-collection.service'
+import { goToLink } from '../../../utils'
 
 @Component({
     selector: 'app-collection-details',

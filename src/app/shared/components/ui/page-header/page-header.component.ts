@@ -1,6 +1,6 @@
 import { Component } from '@angular/core'
 import { Observable } from 'rxjs'
-import { BreakpointService } from '../../services/ui/breakpoint/breakpoint.service'
+import { BreakpointService } from '../../../services/ui/breakpoint/breakpoint.service'
 
 @Component({
     selector: 'app-page-header',

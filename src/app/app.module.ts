@@ -5,9 +5,9 @@ import { AppComponent } from './app.component'
 import { LoginComponent } from './pages/login/login.component'
 import { MyCollectionsComponent } from './pages/my-collections/my-collections.component'
 import { FavoriteCollectionsComponent } from './pages/favorite-collections/favorite-collections.component'
-import { PageFrameComponent } from './shared/components/page-frame/page-frame.component'
-import { CollectionDetailsComponent } from './shared/components/collection-details/collection-details.component'
-import { CollectionListComponent } from './shared/components/collection-list/collection-list.component'
+import { PageFrameComponent } from './shared/components/ui/page-frame/page-frame.component'
+import { CollectionDetailsComponent } from './shared/components/features/collection-details/collection-details.component'
+import { CollectionListComponent } from './shared/components/features/collection-list/collection-list.component'
 import { NewCollectionComponent } from './pages/new-collection/new-collection.component'
 import { ReactiveFormsModule } from '@angular/forms'
 import { EditCollectionComponent } from './pages/edit-collection/edit-collection.component'
@@ -29,15 +29,15 @@ import { MatInputModule } from '@angular/material/input'
 import { MatCheckboxModule } from '@angular/material/checkbox'
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 import { A11yModule } from '@angular/cdk/a11y'
-import { InfoBannerComponent } from './shared/components/info-banner/info-banner.component'
-import { NoCollectionsStateComponent } from './shared/components/no-collections-state/no-collections-state.component'
+import { InfoBannerComponent } from './shared/components/ui/info-banner/info-banner.component'
+import { EmptyStateComponent } from './shared/components/empty-state/empty-state.component'
 import { BrowseCollectionsComponent } from './pages/browse-collections/browse-collections.component'
-import { ResponsiveButtonComponent } from './shared/components/responsive-button/responsive-button.component'
-import { LogoComponent } from './shared/components/logo/logo.component'
-import { PageHeaderComponent } from './shared/components/page-header/page-header.component'
+import { ResponsiveButtonComponent } from './shared/components/ui/responsive-button/responsive-button.component'
+import { LogoComponent } from './shared/components/ui/logo/logo.component'
+import { PageHeaderComponent } from './shared/components/ui/page-header/page-header.component'
 import { MyCollectionDetailsComponent } from './pages/my-collection-details/my-collection-details.component'
 import { MatSnackBarModule } from '@angular/material/snack-bar'
-import { CollectionFormComponent } from './shared/components/collection-form/collection-form.component'
+import { CollectionFormComponent } from './shared/components/features/collection-form/collection-form.component'
 
 @NgModule({
     declarations: [
@@ -51,7 +51,7 @@ import { CollectionFormComponent } from './shared/components/collection-form/col
         NewCollectionComponent,
         EditCollectionComponent,
         InfoBannerComponent,
-        NoCollectionsStateComponent,
+        EmptyStateComponent,
         BrowseCollectionsComponent,
         ResponsiveButtonComponent,
         LogoComponent,

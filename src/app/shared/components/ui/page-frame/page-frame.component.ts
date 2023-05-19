@@ -2,8 +2,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core'
 import { User } from 'firebase/auth'
 import { Observable, Subject, takeUntil } from 'rxjs'
 import { NavigationLink } from 'src/app/const'
-import { AuthService } from '../../services/auth/auth.service'
-import { BreakpointService } from '../../services/ui/breakpoint/breakpoint.service'
+import { AuthService } from '../../../services/auth/auth.service'
+import { BreakpointService } from '../../../services/ui/breakpoint/breakpoint.service'
 
 @Component({
     selector: 'app-page-frame',
