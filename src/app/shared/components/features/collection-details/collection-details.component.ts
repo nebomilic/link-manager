@@ -1,6 +1,7 @@
 import { Component, ContentChild, OnInit, TemplateRef } from '@angular/core'
+import { Observable } from 'rxjs'
+import { BreakpointService } from 'src/app/shared/services/ui/breakpoint/breakpoint.service'
 import { Collection } from 'src/app/types'
-import { AuthService } from '../../../services/auth/auth.service'
 import { CurrentCollectionService } from '../../../services/collection/utils/current-collection/current-collection.service'
 import { goToLink } from '../../../utils'
 
@@ -16,9 +17,13 @@ export class CollectionDetailsComponent implements OnInit {
     @ContentChild('action') action: TemplateRef<any> | undefined
 
     constructor(
-        private _authService: AuthService,
-        private _currentCollectionService: CurrentCollectionService
+        private _currentCollectionService: CurrentCollectionService,
+        private _breakpointService: BreakpointService
     ) {}
+
+    get isHandset$(): Observable<boolean> {
+        return this._breakpointService.isHandset$
+    }
 
     ngOnInit(): void {
         this._currentCollectionService
