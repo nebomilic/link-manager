@@ -5,7 +5,7 @@
     <mat-card class="card">
         <mat-form-field class="form-field">
             <mat-label>Title (mandatory)</mat-label>
-            <input matInput formControlName="title">
+            <input matInput formControlName="title" [cdkTrapFocusAutoCapture]="show" [cdkTrapFocus]="show">
             <mat-error *ngIf="saveAttempt && title && title.errors?.['required']">Collection must contain title ☝️ </mat-error>
         </mat-form-field>
         <mat-form-field class="form-field">

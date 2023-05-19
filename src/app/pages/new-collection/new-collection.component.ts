@@ -1,4 +1,4 @@
-import { Component } from '@angular/core'
+import { Component, OnInit } from '@angular/core'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
 import { Router } from '@angular/router'
 import { NavigationLink } from 'src/app/const'
@@ -10,8 +10,9 @@ import { goToLink, isValidUrl } from 'src/app/shared/utils'
     templateUrl: './new-collection.component.html',
     styleUrls: ['./new-collection.component.scss'],
 })
-export class NewCollectionComponent {
+export class NewCollectionComponent implements OnInit {
     goToLink = goToLink
+    show = false
     constructor(
         private _collectionService: CollectionService,
         private _router: Router
@@ -67,5 +68,9 @@ export class NewCollectionComponent {
             this._router.navigate([NavigationLink.MyCollections])
             // TODO: show success message
         }
+    }
+
+    ngOnInit(): void {
+        this.show = true
     }
 }
