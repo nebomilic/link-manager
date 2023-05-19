@@ -66,7 +66,6 @@ export class NewCollectionComponent implements OnInit {
                 this.newCollectionForm.value
             )
             this._router.navigate([NavigationLink.MyCollections])
-            // TODO: show success message
         }
     }
 

@@ -56,7 +56,6 @@ export class EditCollectionComponent implements OnInit {
                 }),
             })
             this._router.navigate([NavigationLink.MyCollections])
-            // TODO: show success message
         }
     }
 
