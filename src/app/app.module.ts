@@ -37,7 +37,8 @@ import { LogoComponent } from './shared/components/ui/logo/logo.component'
 import { PageHeaderComponent } from './shared/components/ui/page-header/page-header.component'
 import { MyCollectionDetailsComponent } from './pages/my-collection-details/my-collection-details.component'
 import { MatSnackBarModule } from '@angular/material/snack-bar'
-import { CollectionFormComponent } from './shared/components/features/collection-form/collection-form.component'
+import { CollectionFormComponent } from './shared/components/features/collection-form/collection-form.component';
+import { SpinnerComponent } from './shared/components/ui/spinner/spinner.component'
 
 @NgModule({
     declarations: [
@@ -58,6 +59,7 @@ import { CollectionFormComponent } from './shared/components/features/collection
         PageHeaderComponent,
         MyCollectionDetailsComponent,
         CollectionFormComponent,
+        SpinnerComponent,
     ],
     imports: [
         BrowserModule,
