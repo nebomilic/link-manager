@@ -41,9 +41,6 @@ import { SnackBarService } from '../snack-bar/snack-bar.service'
 
 // TODO: introduce a service for database operations (abstract firestore)
 
-// TODO: implement pagination
-const COLLECTIONS_PER_PAGE = 10
-
 type FavoriteCollectionIds = {
     authorId: string
     collectionIds: string[]
@@ -82,8 +79,7 @@ export class CollectionService implements OnDestroy {
             const myCollectionsQuery = query(
                 this._collectionReference,
                 where('authorId', '==', this._authService.getUserId()),
-                orderBy('timestamp', 'desc'),
-                limit(COLLECTIONS_PER_PAGE)
+                orderBy('timestamp', 'desc')
             )
             this._myCollections$ = collectionData(myCollectionsQuery).pipe(
                 takeUntil(this._destroy$) as never,
@@ -101,8 +97,7 @@ export class CollectionService implements OnDestroy {
         if (!this._favoriteCollectionIds$) {
             const favoriteCollectionIdsQuery = query(
                 this._favoriteCollectionReference,
-                where('authorId', '==', this._authService.getUserId()),
-                limit(COLLECTIONS_PER_PAGE)
+                where('authorId', '==', this._authService.getUserId())
             )
 
             this._favoriteCollectionIds$ = collectionData(
@@ -135,8 +130,7 @@ export class CollectionService implements OnDestroy {
                         this._collectionReference,
                         where('id', 'in', item.collectionIds),
                         where('public', '==', true),
-                        orderBy('timestamp', 'desc'),
-                        limit(COLLECTIONS_PER_PAGE)
+                        orderBy('timestamp', 'desc')
                     )
 
                     return collectionData(
@@ -162,8 +156,7 @@ export class CollectionService implements OnDestroy {
                 where('authorId', '!=', this._authService.getUserId()),
                 where('public', '==', true),
                 orderBy('authorId', 'desc'),
-                orderBy('timestamp', 'desc'),
-                limit(COLLECTIONS_PER_PAGE)
+                orderBy('timestamp', 'desc')
             )
             this._publicCollections$ = collectionData(
                 publicCollectionsQuery
