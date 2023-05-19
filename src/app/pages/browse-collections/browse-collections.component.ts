@@ -23,12 +23,11 @@ export class BrowseCollectionsComponent {
             return of(false)
         } else {
             return this._collectionService.getFavoriteCollectionIds().pipe(
-                mergeMap((item) => {
-                    if (item.collectionIds && item.collectionIds.length > 0) {
-                        return of(item.collectionIds.includes(id))
-                    }
-                    return of(false)
-                }),
+                mergeMap((item) =>
+                    item.collectionIds && item.collectionIds.length > 0
+                        ? of(item.collectionIds.includes(id))
+                        : of(false)
+                ),
                 catchError(() => of(false))
             )
         }
