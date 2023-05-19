@@ -242,7 +242,7 @@ export class CollectionService implements OnDestroy {
             this._snackBarService.showMessage('Collection added 👍')
         } catch (e) {
             this._snackBarService.showMessage(
-                'Collection could not be deleted 😕'
+                'Collection could not be added 😕'
             )
             console.log(e)
         }
@@ -265,7 +265,12 @@ export class CollectionService implements OnDestroy {
         }
     }
 
-    async faveCollection(collectionId: string) {
+    async faveCollection(collectionId: string | undefined) {
+        if (!collectionId) {
+            this._snackBarService.showMessage('Whoops, something went wrong 😕')
+            return
+        }
+
         this._updateFavoriteCollectionIds(
             arrayUnion(collectionId),
             'Collection faved 🥰',
@@ -273,7 +278,12 @@ export class CollectionService implements OnDestroy {
         )
     }
 
-    async unfaveCollection(collectionId: string) {
+    async unfaveCollection(collectionId: string | undefined) {
+        if (!collectionId) {
+            this._snackBarService.showMessage('Whoops, something went wrong 😕')
+            return
+        }
+
         this._updateFavoriteCollectionIds(
             arrayRemove(collectionId),
             'Collection unfaved 🥲',

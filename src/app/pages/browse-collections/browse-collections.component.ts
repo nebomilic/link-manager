@@ -34,18 +34,10 @@ export class BrowseCollectionsComponent {
     }
 
     faveCollection(id: string | undefined) {
-        if (!id) {
-            this._snackBarService.showMessage('Whoops, something went wrong 😕')
-        } else {
-            this._collectionService.faveCollection(id)
-        }
+        this._collectionService.faveCollection(id)
     }
 
     unfaveCollection(id: string | undefined) {
-        if (!id) {
-            this._snackBarService.showMessage('Whoops, something went wrong 😕')
-        } else {
-            this._collectionService.unfaveCollection(id)
-        }
+        this._collectionService.unfaveCollection(id)
     }
 }
