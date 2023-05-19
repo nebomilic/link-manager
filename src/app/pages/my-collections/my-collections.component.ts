@@ -1,7 +1,7 @@
 import { Component } from '@angular/core'
 import { NavigationLink } from 'src/app/const'
 import { CollectionService } from 'src/app/shared/services/collection/collection.service'
-import { SnackBarService } from 'src/app/shared/services/snack-bar-service/snack-bar.service'
+import { SnackBarService } from 'src/app/shared/services/snack-bar/snack-bar.service'
 
 @Component({
     selector: 'app-my-collections',

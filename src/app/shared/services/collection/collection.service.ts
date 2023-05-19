@@ -37,7 +37,7 @@ import {
 import { AuthService } from '../auth/auth.service'
 import { serverTimestamp } from '@firebase/firestore'
 import { DBCollectionName } from 'src/app/const'
-import { SnackBarService } from '../snack-bar-service/snack-bar.service'
+import { SnackBarService } from '../snack-bar/snack-bar.service'
 
 // TODO: introduce a service for database operations (abstract firestore)
 
