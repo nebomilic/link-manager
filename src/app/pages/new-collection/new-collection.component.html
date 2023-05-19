@@ -2,7 +2,7 @@
     <h2>New collection</h2>
 </app-page-header>
 <form [formGroup]="newCollectionForm" (ngSubmit)="save()">
-    <mat-card>
+    <mat-card class="card">
         <mat-form-field class="form-field">
             <mat-label>Title (mandatory)</mat-label>
             <input matInput formControlName="title">

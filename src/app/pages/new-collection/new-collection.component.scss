@@ -1,3 +1,7 @@
+.card {
+    padding: 16px;
+}
+
 .form-field {
     width:100%
 }
@@ -17,7 +21,6 @@
 .right-aligned-button-container {
    display:flex;
    flex-direction:row-reverse ;
-   align-items: center;
 }
 
 .list-item-container {
@@ -27,15 +30,15 @@
 }
 
 .save-button {
-    margin: 26px 16px 16px 0
+    margin: 10px 16px 16px 0
 }
 
 .checkbox {
-    margin-left: 8px
+    margin-left: -10px
 }
 
 .add-link-button {
-    margin: 26px 0px 16px 0
+    margin: 26px 0px 22px 0
 }
 
 .info-banner-container {
@@ -43,5 +46,5 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin: 5rem 1.5rem;
+    margin: 3rem 1.5rem;
 }
