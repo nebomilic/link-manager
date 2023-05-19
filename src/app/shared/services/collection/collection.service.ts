@@ -15,11 +15,13 @@ import {
     doc,
     arrayUnion,
     arrayRemove,
+    getDoc,
 } from '@angular/fire/firestore'
 import {
     catchError,
     combineLatest,
     concatMap,
+    from,
     map,
     mergeMap,
     Observable,
@@ -55,9 +57,9 @@ export class CollectionService implements OnDestroy {
     private _destroy$ = new Subject<void>()
     private _myPublicCollections$!: Observable<Collection[]>
     private _myCollections$!: Observable<Collection[]>
-    private _allCollections$!: Observable<Collection[]>
     private _favoriteCollections$!: Observable<Collection[]>
     private _favoriteCollectionIds$!: Observable<FavoriteCollectionIds>
+    private _currentCollection$!: Observable<Collection | null>
 
     private _collectionReference = collection(
         this._firestore,
@@ -176,30 +178,12 @@ export class CollectionService implements OnDestroy {
         return this._myPublicCollections$
     }
 
-    public getAllCollections(): Observable<Collection[]> {
-        if (!this._allCollections$) {
-            this._allCollections$ = combineLatest([
-                this.getMyCollections(),
-                this.getFavoriteCollections(),
-                this.getPublicCollections(),
-            ]).pipe(
-                takeUntil(this._destroy$),
-                shareReplay({ bufferSize: 1, refCount: true }),
-                map(
-                    ([
-                        myCollections,
-                        favoriteCollections,
-                        publicCollections,
-                    ]) => [
-                        ...myCollections,
-                        ...favoriteCollections,
-                        ...publicCollections,
-                    ]
-                )
-            )
-        }
+    getCollectionById(id: string): Observable<Collection | null> {
+        this._currentCollection$ = from(
+            getDoc(doc(this._firestore, DBCollectionName.Collections, id))
+        ).pipe(map((doc) => (doc.exists() ? (doc.data() as Collection) : null)))
 
-        return this._allCollections$
+        return this._currentCollection$
     }
 
     async deleteCollection(id: string) {

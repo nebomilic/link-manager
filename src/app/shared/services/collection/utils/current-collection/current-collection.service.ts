@@ -25,10 +25,9 @@ export class CurrentCollectionService {
                 refCount: true,
             }),
             mergeMap((params) =>
-                this._collectionService.getAllCollections().pipe(
-                    concatMap((collections) => from(collections)),
-                    filter((item) => item.id === params['id'])
-                )
+                this._collectionService
+                    .getCollectionById(params['id'])
+                    .pipe(concatMap(async (collection) => collection))
             )
         )
     }
