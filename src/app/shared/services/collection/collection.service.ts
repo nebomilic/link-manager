@@ -56,7 +56,7 @@ type FavoriteCollectionIds = {
 // TODO: make sure the service gets cleaned up on log out
 export class CollectionService implements OnDestroy {
     private _destroy$ = new Subject<void>()
-    private _myPublicCollections$!: Observable<Collection[]>
+    private _publicCollections$!: Observable<Collection[]>
     private _myCollections$!: Observable<Collection[]>
     private _favoriteCollections$!: Observable<Collection[]>
     private _favoriteCollectionIds$!: Observable<FavoriteCollectionIds>
@@ -156,7 +156,7 @@ export class CollectionService implements OnDestroy {
     }
 
     public getPublicCollections(): Observable<Collection[]> {
-        if (!this._myPublicCollections$) {
+        if (!this._publicCollections$) {
             const publicCollectionsQuery = query(
                 this._collectionReference,
                 where('authorId', '!=', this._authService.getUserId()),
@@ -165,7 +165,7 @@ export class CollectionService implements OnDestroy {
                 orderBy('timestamp', 'desc'),
                 limit(COLLECTIONS_PER_PAGE)
             )
-            this._myPublicCollections$ = collectionData(
+            this._publicCollections$ = collectionData(
                 publicCollectionsQuery
             ).pipe(
                 takeUntil(this._destroy$) as never,
@@ -176,7 +176,7 @@ export class CollectionService implements OnDestroy {
             ) as Observable<Collection[]>
         }
 
-        return this._myPublicCollections$
+        return this._publicCollections$
     }
 
     getCollectionById(id: string): Observable<Collection | null> {
