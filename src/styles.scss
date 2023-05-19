@@ -29,3 +29,12 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 // helps align children of the side navigation as we want it
 .mat-drawer-inner-container { display: flex; flex-direction: column; }
+
+.fade-in {
+    animation: fadeIn .2s ease-in-out;
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
