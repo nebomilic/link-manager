@@ -8,7 +8,7 @@
                                 <span matListItemTitle>
                                     <button mat-button color="primary" routerLink="{{collection?.['id']}}">{{collection?.['title']}}</button>
                                 </span>
-                                <span class="collection-description-container">{{collection?.['description']}}</span>
+                                <!-- <span class="collection-description-container">{{collection?.['description']}}</span> -->
                             </mat-list-item>
                             <ng-container *ngTemplateOutlet="actions || null; context: {$implicit: collection}"></ng-container>
                         </div>
