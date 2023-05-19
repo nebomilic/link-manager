@@ -22,7 +22,7 @@
                 Add link
             </button>
         </div>
-        <mat-card class="card" style="height: 100%;">
+        <mat-card style="height: 100%;">
             <mat-list role="link"  *ngIf="editCollectionForm.value.links && editCollectionForm.value.links.length > 0; else emptyState">
                 <ng-container *ngFor="let link of editCollectionForm.value.links;let first = first;">
                     <mat-list-item role="listitem" >

@@ -5,17 +5,15 @@ import {
     redirectLoggedInTo,
     redirectUnauthorizedTo,
 } from '@angular/fire/auth-guard'
-import { ActivityComponent } from './pages/activity/activity.component'
 import { FavoriteCollectionsComponent } from './pages/favorite-collections/favorite-collections.component'
 import { EditCollectionComponent } from './pages/edit-collection/edit-collection.component'
 import { LoginComponent } from './pages/login/login.component'
 import { MyCollectionsComponent } from './pages/my-collections/my-collections.component'
 import { NewCollectionComponent } from './pages/new-collection/new-collection.component'
-import { SettingsComponent } from './pages/settings/settings.component'
 import { CollectionDetailsComponent } from './shared/components/collection-details/collection-details.component'
-import { NavigationLink } from './const'
 import { BrowseCollectionsComponent } from './pages/browse-collections/browse-collections.component'
 import { MyCollectionDetailsComponent } from './pages/my-collection-details/my-collection-details.component'
+import { NavigationLink } from './const'
 
 const redirectUnauthorizedToLogin = () =>
     redirectUnauthorizedTo([NavigationLink.Login])
@@ -63,8 +61,6 @@ const routes: Routes = [
         component: MyCollectionDetailsComponent,
         ...canActivate(redirectUnauthorizedToLogin),
     },
-    { path: NavigationLink.Activity, component: ActivityComponent },
-    { path: NavigationLink.Settings, component: SettingsComponent },
     { path: NavigationLink.NewCollection, component: NewCollectionComponent },
     { path: '', redirectTo: `/${NavigationLink.Login}`, pathMatch: 'full' },
 ]
