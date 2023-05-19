@@ -27,6 +27,7 @@ import { MatCardModule } from '@angular/material/card'
 import { MatFormFieldModule } from '@angular/material/form-field'
 import { MatInputModule } from '@angular/material/input'
 import { MatCheckboxModule } from '@angular/material/checkbox'
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 import { A11yModule } from '@angular/cdk/a11y'
 import { InfoBannerComponent } from './shared/components/info-banner/info-banner.component'
 import { NoCollectionsStateComponent } from './shared/components/no-collections-state/no-collections-state.component'
@@ -78,6 +79,7 @@ import { CollectionFormComponent } from './shared/components/collection-form/col
         MatInputModule,
         MatCheckboxModule,
         MatSnackBarModule,
+        MatProgressSpinnerModule,
         A11yModule,
     ],
     providers: [],

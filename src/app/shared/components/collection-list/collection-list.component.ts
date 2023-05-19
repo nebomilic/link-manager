@@ -10,5 +10,5 @@ export class CollectionListComponent {
     @Input() collections: Collection[] | null = []
     @Input() emptyDescription = ''
     @Input() emptyHint = ''
-    @ContentChild('actions') actions: TemplateRef<any> | undefined
+    @ContentChild('actions') actions: TemplateRef<never> | undefined
 }
