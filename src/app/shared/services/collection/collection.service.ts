@@ -267,7 +267,7 @@ export class CollectionService implements OnDestroy {
 
     async faveCollection(collectionId: string | undefined) {
         if (!collectionId) {
-            this._snackBarService.showMessage('Whoops, something went wrong 😕')
+            this._snackBarService.showGenericErrorMessage()
             return
         }
 
@@ -280,7 +280,7 @@ export class CollectionService implements OnDestroy {
 
     async unfaveCollection(collectionId: string | undefined) {
         if (!collectionId) {
-            this._snackBarService.showMessage('Whoops, something went wrong 😕')
+            this._snackBarService.showGenericErrorMessage()
             return
         }
 

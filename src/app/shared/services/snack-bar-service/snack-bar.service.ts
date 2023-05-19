@@ -14,4 +14,8 @@ export class SnackBarService {
             duration: DISPLAY_DURATION,
         })
     }
+
+    showGenericErrorMessage() {
+        this.showMessage('Whoops, something went wrong  😕')
+    }
 }

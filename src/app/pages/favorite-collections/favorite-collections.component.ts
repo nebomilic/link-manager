@@ -19,7 +19,7 @@ export class FavoriteCollectionsComponent {
 
     unfaveCollection(id: string | undefined) {
         if (!id) {
-            this._snackBarService.showMessage('Whoops, something went wrong 😕')
+            this._snackBarService.showGenericErrorMessage()
         } else {
             this._collectionService.unfaveCollection(id)
         }
