@@ -5,7 +5,6 @@ import { BreakpointService } from 'src/app/shared/services/ui/breakpoint/breakpo
 @Component({
     selector: 'app-responsive-button',
     templateUrl: './responsive-button.component.html',
-    styleUrls: ['./responsive-button.component.scss'],
 })
 export class ResponsiveButtonComponent {
     @Input() link = ''

@@ -19,6 +19,7 @@ export class CollectionFormComponent implements OnInit {
     > = new EventEmitter()
     goToLink = goToLink
     show = false
+    saveAttempt = false
 
     collectionForm = new FormGroup({
         title: new FormControl('', Validators.required),
@@ -26,8 +27,6 @@ export class CollectionFormComponent implements OnInit {
         public: new FormControl(false),
         links: new FormControl(),
     })
-
-    saveAttempt = false
 
     get title() {
         return this.collectionForm.get('title')

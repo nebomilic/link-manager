@@ -5,7 +5,6 @@ import { SnackBarService } from 'src/app/shared/services/snack-bar/snack-bar.ser
 @Component({
     selector: 'app-favorite-collections',
     templateUrl: './favorite-collections.component.html',
-    styleUrls: ['./favorite-collections.component.scss'],
 })
 export class FavoriteCollectionsComponent {
     constructor(
