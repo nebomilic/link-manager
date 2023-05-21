@@ -1,6 +1,6 @@
 import { Component } from '@angular/core'
 import { catchError, mergeMap, Observable, of } from 'rxjs'
-import { CollectionService } from 'src/app/shared/services/collection/collection.service'
+import { CollectionService } from 'src/app/shared/services/feature/collection/collection.service'
 
 @Component({
     selector: 'app-browse-collections',

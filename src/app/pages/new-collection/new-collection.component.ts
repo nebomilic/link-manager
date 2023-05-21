@@ -2,7 +2,7 @@ import { Component, ViewChild } from '@angular/core'
 import { Router } from '@angular/router'
 import { NavigationLink } from 'src/app/const'
 import { CollectionFormComponent } from 'src/app/shared/components/features/collection-form/collection-form.component'
-import { CollectionService } from 'src/app/shared/services/collection/collection.service'
+import { CollectionService } from 'src/app/shared/services/feature/collection/collection.service'
 
 @Component({
     selector: 'app-new-collection',
