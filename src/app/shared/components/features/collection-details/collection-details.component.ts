@@ -2,7 +2,7 @@ import { Component, ContentChild, OnInit, TemplateRef } from '@angular/core'
 import { Observable } from 'rxjs'
 import { BreakpointService } from 'src/app/shared/services/ui/breakpoint/breakpoint.service'
 import { Collection } from 'src/app/types'
-import { CurrentCollectionService } from '../../../services/feature/collection/utils/current-collection/current-collection.service'
+import { CurrentCollectionService } from '../../../services/features/collection/utils/current-collection/current-collection.service'
 import { goToLink } from '../../../utils'
 
 @Component({

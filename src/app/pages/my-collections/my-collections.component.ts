@@ -1,6 +1,6 @@
 import { Component } from '@angular/core'
 import { NavigationLink } from 'src/app/const'
-import { CollectionService } from 'src/app/shared/services/feature/collection/collection.service'
+import { CollectionService } from 'src/app/shared/services/features/collection/collection.service'
 import { SnackBarService } from 'src/app/shared/services/ui/snack-bar/snack-bar.service'
 
 @Component({

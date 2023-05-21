@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core'
 import { User } from 'firebase/auth'
 import { Observable, Subject, takeUntil } from 'rxjs'
 import { NavigationLink } from 'src/app/const'
-import { AuthService } from '../../../services/feature/auth/auth.service'
+import { AuthService } from '../../../services/features/auth/auth.service'
 import { BreakpointService } from '../../../services/ui/breakpoint/breakpoint.service'
 
 @Component({

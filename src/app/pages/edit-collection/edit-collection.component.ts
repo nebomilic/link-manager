@@ -2,8 +2,8 @@ import { AfterViewInit, Component, ViewChild } from '@angular/core'
 import { Router } from '@angular/router'
 import { NavigationLink } from 'src/app/const'
 import { CollectionFormComponent } from 'src/app/shared/components/features/collection-form/collection-form.component'
-import { CollectionService } from 'src/app/shared/services/feature/collection/collection.service'
-import { CurrentCollectionService } from 'src/app/shared/services/feature/collection/utils/current-collection/current-collection.service'
+import { CollectionService } from 'src/app/shared/services/features/collection/collection.service'
+import { CurrentCollectionService } from 'src/app/shared/services/features/collection/utils/current-collection/current-collection.service'
 import { Collection } from 'src/app/types'
 
 @Component({
