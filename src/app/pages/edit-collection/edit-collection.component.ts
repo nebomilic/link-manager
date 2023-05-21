@@ -40,7 +40,7 @@ export class EditCollectionComponent implements AfterViewInit {
                             .description,
                 }),
                 ...(this._collectionFormComponent.collectionForm.value
-                    .public && {
+                    .public !== undefined && {
                     public: this._collectionFormComponent.collectionForm.value
                         .public,
                 }),
