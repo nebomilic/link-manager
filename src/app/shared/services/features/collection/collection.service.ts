@@ -1,12 +1,5 @@
 import { Injectable } from '@angular/core'
-import {
-    catchError,
-    mergeMap,
-    Observable,
-    of,
-    shareReplay,
-    Subject,
-} from 'rxjs'
+import { catchError, mergeMap, Observable, of, shareReplay } from 'rxjs'
 import { Collection, NewCollectionData } from 'src/app/types'
 import { AuthService } from '../auth/auth.service'
 import { SnackBarService } from '../../ui/snack-bar/snack-bar.service'
@@ -19,7 +12,6 @@ import { FavoriteCollectionIds } from '../../data/types'
 
 // TODO: make sure the service gets cleaned up on log out
 export class CollectionService {
-    private _destroy$ = new Subject<void>()
     private _publicCollections$!: Observable<Collection[]>
     private _myCollections$!: Observable<Collection[]>
     private _favoriteCollections$!: Observable<Collection[]>
