@@ -1,56 +1,24 @@
-import { Injectable, OnDestroy } from '@angular/core'
-import { v4 as uuidv4 } from 'uuid'
-import {
-    Firestore,
-    FieldValue,
-    collectionData,
-    collection,
-    where,
-    query,
-    deleteDoc,
-    updateDoc,
-    orderBy,
-    setDoc,
-    doc,
-    arrayUnion,
-    arrayRemove,
-    getDoc,
-} from '@angular/fire/firestore'
+import { Injectable } from '@angular/core'
 import {
     catchError,
-    concatMap,
-    from,
-    map,
     mergeMap,
     Observable,
     of,
     shareReplay,
     Subject,
-    takeUntil,
 } from 'rxjs'
-import {
-    Collection,
-    FirestoreTimestamp,
-    NewCollectionData,
-} from 'src/app/types'
+import { Collection, NewCollectionData } from 'src/app/types'
 import { AuthService } from '../auth/auth.service'
-import { serverTimestamp } from '@firebase/firestore'
-import { DBCollectionName } from 'src/app/const'
 import { SnackBarService } from '../../ui/snack-bar/snack-bar.service'
-
-// TODO: introduce a service for database operations (abstract firestore)
-
-type FavoriteCollectionIds = {
-    authorId: string
-    collectionIds: string[]
-}
+import { CollectionDataService } from '../../data/collection-data/collection-data.service'
+import { FavoriteCollectionIds } from '../../data/types'
 
 @Injectable({
     providedIn: 'root',
 })
 
 // TODO: make sure the service gets cleaned up on log out
-export class CollectionService implements OnDestroy {
+export class CollectionService {
     private _destroy$ = new Subject<void>()
     private _publicCollections$!: Observable<Collection[]>
     private _myCollections$!: Observable<Collection[]>
@@ -58,35 +26,18 @@ export class CollectionService implements OnDestroy {
     private _favoriteCollectionIds$!: Observable<FavoriteCollectionIds>
     private _currentCollection$!: Observable<Collection | null>
 
-    private _collectionReference = collection(
-        this._firestore,
-        DBCollectionName.Collections
-    )
-    private _favoriteCollectionReference = collection(
-        this._firestore,
-        DBCollectionName.FavoriteCollections
-    )
-
     constructor(
         private _authService: AuthService,
-        private _firestore: Firestore,
+        private _collectionDataService: CollectionDataService,
         private _snackBarService: SnackBarService
     ) {}
 
     public getMyCollections(): Observable<Collection[]> {
         if (!this._myCollections$) {
-            const myCollectionsQuery = query(
-                this._collectionReference,
-                where('authorId', '==', this._authService.getUserId()),
-                orderBy('timestamp', 'desc')
-            )
-            this._myCollections$ = collectionData(myCollectionsQuery).pipe(
-                takeUntil(this._destroy$) as never,
-                shareReplay<Collection[]>({
-                    bufferSize: 1,
-                    refCount: true,
-                })
-            ) as Observable<Collection[]>
+            this._myCollections$ =
+                this._collectionDataService.getCollectionsByAuthorId(
+                    this._authService.getUserId()
+                )
         }
 
         return this._myCollections$
@@ -94,23 +45,10 @@ export class CollectionService implements OnDestroy {
 
     public getFavoriteCollectionIds(): Observable<FavoriteCollectionIds> {
         if (!this._favoriteCollectionIds$) {
-            const favoriteCollectionIdsQuery = query(
-                this._favoriteCollectionReference,
-                where('authorId', '==', this._authService.getUserId())
-            )
-
-            this._favoriteCollectionIds$ = collectionData(
-                favoriteCollectionIdsQuery
-            ).pipe(
-                takeUntil(this._destroy$),
-                shareReplay({
-                    bufferSize: 1,
-                    refCount: true,
-                }) as never,
-                concatMap((item: never) => {
-                    return item
-                })
-            ) as Observable<FavoriteCollectionIds>
+            this._favoriteCollectionIds$ =
+                this._collectionDataService.getFavoriteCollectionIdsByAuthorId(
+                    this._authService.getUserId()
+                )
         }
 
         return this._favoriteCollectionIds$
@@ -119,22 +57,14 @@ export class CollectionService implements OnDestroy {
     public getFavoriteCollections(): Observable<Collection[]> {
         if (!this._favoriteCollections$) {
             this._favoriteCollections$ = this.getFavoriteCollectionIds().pipe(
-                takeUntil(this._destroy$),
                 shareReplay({
                     bufferSize: 1,
                     refCount: true,
                 }) as never,
                 mergeMap((item: FavoriteCollectionIds) => {
-                    const favoriteCollectionsQuery = query(
-                        this._collectionReference,
-                        where('id', 'in', item.collectionIds),
-                        where('public', '==', true),
-                        orderBy('timestamp', 'desc')
+                    return this._collectionDataService.getFavoriteCollectionsByFavoriteCollectionIds(
+                        item
                     )
-
-                    return collectionData(
-                        favoriteCollectionsQuery
-                    ) as Observable<Collection[]>
                 }),
                 catchError((e) => {
                     console.log('ERROR: can not get favorite collections ', e)
@@ -150,41 +80,24 @@ export class CollectionService implements OnDestroy {
 
     public getPublicCollections(): Observable<Collection[]> {
         if (!this._publicCollections$) {
-            const publicCollectionsQuery = query(
-                this._collectionReference,
-                where('authorId', '!=', this._authService.getUserId()),
-                where('public', '==', true),
-                orderBy('authorId', 'desc'),
-                orderBy('timestamp', 'desc')
-            )
-            this._publicCollections$ = collectionData(
-                publicCollectionsQuery
-            ).pipe(
-                takeUntil(this._destroy$) as never,
-                shareReplay<Collection[]>({
-                    bufferSize: 1,
-                    refCount: true,
-                })
-            ) as Observable<Collection[]>
+            this._publicCollections$ =
+                this._collectionDataService.getPublicCollectionsByAuthorId(
+                    this._authService.getUserId()
+                )
         }
 
         return this._publicCollections$
     }
 
     getCollectionById(id: string): Observable<Collection | null> {
-        this._currentCollection$ = from(
-            getDoc(doc(this._firestore, DBCollectionName.Collections, id))
-        ).pipe(map((doc) => (doc.exists() ? (doc.data() as Collection) : null)))
-
+        this._currentCollection$ =
+            this._collectionDataService.getCollectionById(id)
         return this._currentCollection$
     }
 
     async deleteCollection(id: string) {
         try {
-            await deleteDoc(
-                doc(this._firestore, DBCollectionName.Collections, id)
-            )
-
+            await this._collectionDataService.deleteCollectionById(id)
             this._snackBarService.showMessage('Collection deleted 👍')
         } catch (e) {
             this._snackBarService.showMessage(
@@ -195,27 +108,10 @@ export class CollectionService implements OnDestroy {
     }
 
     async addNewCollection(newCollectionData: NewCollectionData) {
-        const newCollection: Collection = {
-            id: uuidv4(),
-            title: newCollectionData.title || '',
-            description: newCollectionData.description || '',
-            public: newCollectionData.public || false,
-            authorId: this._authService.getUserId() || '',
-            views: 0,
-            likes: 0,
-            links: newCollectionData.links || [],
-            timestamp: serverTimestamp() as FirestoreTimestamp,
-        }
         try {
-            await setDoc(
-                doc(
-                    this._firestore,
-                    DBCollectionName.Collections,
-                    newCollection.id
-                ),
-                <Collection>newCollection
+            await this._collectionDataService.addNewCollection(
+                newCollectionData
             )
-
             this._snackBarService.showMessage('Collection added 👍')
         } catch (e) {
             this._snackBarService.showMessage(
@@ -227,12 +123,9 @@ export class CollectionService implements OnDestroy {
 
     async updateCollection(updatedCollection: Collection) {
         try {
-            const docRef = doc(
-                this._firestore,
-                DBCollectionName.Collections,
-                updatedCollection.id
+            await this._collectionDataService.updateCollection(
+                updatedCollection
             )
-            await updateDoc(docRef, <Collection>updatedCollection)
             this._snackBarService.showMessage('Collection updated 👍')
         } catch (e) {
             this._snackBarService.showMessage(
@@ -248,11 +141,21 @@ export class CollectionService implements OnDestroy {
             return
         }
 
-        this._updateFavoriteCollectionIds(
-            arrayUnion(collectionId),
-            'Collection faved 🥰',
-            'Collection could not be faved 😵‍💫'
-        )
+        const authorId = this._authService.getUserId()
+
+        if (!authorId) {
+            this._snackBarService.showGenericErrorMessage()
+            return
+        }
+
+        try {
+            this._collectionDataService.faveCollection(collectionId, authorId)
+            this._snackBarService.showMessage('Collection faved 🥰')
+        } catch (e) {
+            this._snackBarService.showMessage(
+                'Collection could not be faved 😵‍💫'
+            )
+        }
     }
 
     async unfaveCollection(collectionId: string | undefined) {
@@ -261,40 +164,20 @@ export class CollectionService implements OnDestroy {
             return
         }
 
-        this._updateFavoriteCollectionIds(
-            arrayRemove(collectionId),
-            'Collection unfaved 🥲',
-            'Collection could not be unfaved 😵‍💫'
-        )
-    }
+        const authorId = this._authService.getUserId()
 
-    private async _updateFavoriteCollectionIds(
-        collectionIdsFieldValue: FieldValue,
-        successMessage: string,
-        failMessage: string
-    ) {
-        const ref = doc(
-            this._firestore,
-            DBCollectionName.FavoriteCollections,
-            this._authService.getUserId() || ''
-        )
-        try {
-            await setDoc(
-                ref,
-                {
-                    authorId: this._authService.getUserId(),
-                    collectionIds: collectionIdsFieldValue,
-                },
-                { merge: true }
-            )
-            this._snackBarService.showMessage(successMessage)
-        } catch (error) {
-            this._snackBarService.showMessage(failMessage)
+        if (!authorId) {
+            this._snackBarService.showGenericErrorMessage()
+            return
         }
-    }
 
-    ngOnDestroy() {
-        this._destroy$.next()
-        this._destroy$.complete()
+        try {
+            this._collectionDataService.unfaveCollection(collectionId, authorId)
+            this._snackBarService.showMessage('Collection unfaved 🥲')
+        } catch (e) {
+            this._snackBarService.showMessage(
+                'Collection could not be unfaved 😵‍💫'
+            )
+        }
     }
 }

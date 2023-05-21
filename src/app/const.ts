@@ -5,8 +5,3 @@ export enum NavigationLink {
     NewCollection = 'new-collection',
     Browse = 'browse',
 }
-
-export enum DBCollectionName {
-    Collections = 'collections',
-    FavoriteCollections = 'favorite_collections',
-}
