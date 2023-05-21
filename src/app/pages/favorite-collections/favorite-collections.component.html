@@ -7,7 +7,7 @@
     emptyHint="To find collections to fave, click on 'Browse' in the menu on the left"
 >
      <ng-template #actions let-collection>
-        <button mat-icon-button color="primary" aria-label="Unfave collection"
+        <button mat-icon-button color="primary" class="ping" aria-label="Unfave collection"
              (click)="unfaveCollection(collection?.['id'])">
             <mat-icon>favorite</mat-icon>
         </button>
