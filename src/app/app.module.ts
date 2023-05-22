@@ -38,7 +38,8 @@ import { PageHeaderComponent } from './shared/components/ui/page-header/page-hea
 import { MyCollectionDetailsComponent } from './pages/my-collection-details/my-collection-details.component'
 import { MatSnackBarModule } from '@angular/material/snack-bar'
 import { CollectionFormComponent } from './shared/components/features/collection-form/collection-form.component';
-import { SpinnerComponent } from './shared/components/ui/spinner/spinner.component'
+import { SpinnerComponent } from './shared/components/ui/spinner/spinner.component';
+import { FaveButtonComponent } from './pages/browse-collections/fave-button/fave-button.component'
 
 @NgModule({
     declarations: [
@@ -60,6 +61,7 @@ import { SpinnerComponent } from './shared/components/ui/spinner/spinner.compone
         MyCollectionDetailsComponent,
         CollectionFormComponent,
         SpinnerComponent,
+        FaveButtonComponent,
     ],
     imports: [
         BrowserModule,

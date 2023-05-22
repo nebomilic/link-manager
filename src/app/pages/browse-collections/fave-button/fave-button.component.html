@@ -1,0 +1,10 @@
+<button *ngIf="isFavorite | async; else unfav" class="ping" mat-icon-button color="primary" aria-label="Unfave collection"
+    (click)="unfaveCollection(collection['id'])">
+    <mat-icon>favorite</mat-icon>
+</button>
+<ng-template #unfav>
+    <button mat-icon-button color="primary" aria-label="Fave collection"
+    (click)="faveCollection(collection['id'])">
+    <mat-icon>favorite_border</mat-icon>
+</button>
+</ng-template>
