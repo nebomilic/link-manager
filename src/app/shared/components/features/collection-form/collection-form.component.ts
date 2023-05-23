@@ -69,6 +69,14 @@ export class CollectionFormComponent implements OnInit {
         })
     }
 
+    get isFormValid() {
+        return this.collectionForm.valid
+    }
+
+    get formValue() {
+        return this.collectionForm.value
+    }
+
     save() {
         this.saveAttempt = true
         if (this.collectionForm.valid && this.handleSave) {

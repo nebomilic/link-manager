@@ -23,31 +23,24 @@ export class EditCollectionComponent implements AfterViewInit {
 
     save() {
         if (
-            this._collectionFormComponent.collectionForm &&
+            this._collectionFormComponent.formValue &&
             this._selectedCollection
         ) {
             this._collectionService.updateCollection({
                 ...this._selectedCollection,
-                ...(this._collectionFormComponent.collectionForm.value
-                    .title && {
-                    title: this._collectionFormComponent.collectionForm.value
-                        .title,
+                ...(this._collectionFormComponent.formValue.title && {
+                    title: this._collectionFormComponent.formValue.title,
                 }),
-                ...(this._collectionFormComponent.collectionForm.value
-                    .description && {
+                ...(this._collectionFormComponent.formValue.description && {
                     description:
-                        this._collectionFormComponent.collectionForm.value
-                            .description,
+                        this._collectionFormComponent.formValue.description,
                 }),
-                ...(this._collectionFormComponent.collectionForm.value
-                    .public !== undefined && {
-                    public: this._collectionFormComponent.collectionForm.value
-                        .public,
+                ...(this._collectionFormComponent.formValue.public !==
+                    undefined && {
+                    public: this._collectionFormComponent.formValue.public,
                 }),
-                ...(this._collectionFormComponent.collectionForm.value
-                    .links && {
-                    links: this._collectionFormComponent.collectionForm.value
-                        .links,
+                ...(this._collectionFormComponent.formValue.links && {
+                    links: this._collectionFormComponent.formValue.links,
                 }),
             })
             this._router.navigate([NavigationLink.MyCollections])

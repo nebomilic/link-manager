@@ -18,9 +18,9 @@ export class NewCollectionComponent {
     ) {}
 
     save() {
-        if (this._collectionFormComponent.collectionForm.valid) {
+        if (this._collectionFormComponent.isFormValid) {
             this._collectionService.addNewCollection(
-                this._collectionFormComponent.collectionForm.value
+                this._collectionFormComponent.formValue
             )
             this._router.navigate([NavigationLink.MyCollections])
         }
