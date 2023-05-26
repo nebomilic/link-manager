@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { NoCollectionsStateComponent } from './empty-state.component'
+import { EmptyStateComponent } from './empty-state.component'
 
 describe('NoCollectionsStateComponent', () => {
-    let component: NoCollectionsStateComponent
-    let fixture: ComponentFixture<NoCollectionsStateComponent>
+    let component: EmptyStateComponent
+    let fixture: ComponentFixture<EmptyStateComponent>
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            declarations: [NoCollectionsStateComponent],
+            declarations: [EmptyStateComponent],
         }).compileComponents()
 
-        fixture = TestBed.createComponent(NoCollectionsStateComponent)
+        fixture = TestBed.createComponent(EmptyStateComponent)
         component = fixture.componentInstance
         fixture.detectChanges()
     })

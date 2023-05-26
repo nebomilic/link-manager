@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { DiscoveredCollectionsComponent } from './favorite-collections.component'
+import { FavoriteCollectionsComponent } from './favorite-collections.component'
 
 describe('DiscoveredCollectionsComponent', () => {
-    let component: DiscoveredCollectionsComponent
-    let fixture: ComponentFixture<DiscoveredCollectionsComponent>
+    let component: FavoriteCollectionsComponent
+    let fixture: ComponentFixture<FavoriteCollectionsComponent>
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            declarations: [DiscoveredCollectionsComponent],
+            declarations: [FavoriteCollectionsComponent],
         }).compileComponents()
 
-        fixture = TestBed.createComponent(DiscoveredCollectionsComponent)
+        fixture = TestBed.createComponent(FavoriteCollectionsComponent)
         component = fixture.componentInstance
         fixture.detectChanges()
     })
